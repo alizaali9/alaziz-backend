@@ -37,7 +37,10 @@ class StudentAuthController extends Controller
 
         $rollNumber = $currentYear . 'AAI' . $studentCount;
 
-        $account = Student::create([
+        $token = 'Bearer ' . Str::random(60);
+        $tokenExpiresAt = now()->addDays(30);
+
+        $student = Student::create([
             'name' => $request->name,
             'email' => $request->email,
             'whatsapp_no' => $request->whatsapp_no,
@@ -45,10 +48,19 @@ class StudentAuthController extends Controller
             'city' => $request->city,
             'country' => $request->country,
             'roll_no' => $rollNumber,
+            'api_token' => $token,
+            'token_expires_at' => $tokenExpiresAt,
         ]);
 
-        return response()->json(['status' => 201, 'message' => 'Account created successfully', 'roll_no' => $rollNumber], 201);
+        return response()->json([
+            'status' => 201,
+            'message' => 'Account created successfully',
+            'roll_no' => $rollNumber,
+            'token' => $token,
+        ], 201);
     }
+
+
 
 
     public function login(Request $request)
@@ -56,13 +68,29 @@ class StudentAuthController extends Controller
         $credentials = $request->only('email', 'password');
         $student = Student::where('email', $credentials['email'])->first();
 
-        if ($student && Hash::check($credentials['password'], $student->password)) {
-            $token = $student->createToken('authToken')->plainTextToken;
-            return response()->json(['status' => 200, 'token' => $token], 200);
-        } else {
-            return response()->json(['status' => 401,'message' => 'Unauthorized'], 401);
+        if (!$student) {
+            return response()->json(['status' => 401, 'message' => 'Unauthorized'], 401);
         }
+
+        if (!Hash::check($credentials['password'], $student->password)) {
+            return response()->json(['status' => 401, 'message' => 'Your password is wrong'], 401);
+        }
+
+        $token = 'Bearer ' . Str::random(60);
+        $tokenExpiresAt = now()->addDays(30);
+
+        $student->update([
+            'api_token' => `Bearer $token`,
+            'token_expires_at' => $tokenExpiresAt,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'token' => $token,
+            'expires_at' => $tokenExpiresAt,
+        ], 200);
     }
+
 
 
     public function forgotPassword(Request $request)
@@ -71,7 +99,7 @@ class StudentAuthController extends Controller
         $student = Student::where('email', $email)->first();
 
         if (!$student) {
-            return response()->json(['status' => 404,'message' => 'User not found'], 404);
+            return response()->json(['status' => 404, 'message' => 'User not found'], 404);
         }
         $token = Str::random(60);
 
@@ -87,9 +115,9 @@ class StudentAuthController extends Controller
         try {
             Mail::to($email)->send(new StudentResetPasswordMail($token, $email));
 
-            return response()->json(['status' => 200,'message' => 'Reset token sent to your email'], 200);
+            return response()->json(['status' => 200, 'message' => 'Reset token sent to your email'], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 400,'message' => 'Failed to send reset password link. Please try again later.'], 400);
+            return response()->json(['status' => 400, 'message' => 'Failed to send reset password link. Please try again later.'], 400);
         }
     }
 }

@@ -18,7 +18,9 @@ class Student extends Model
         'password',
         'city',
         'country',
-        'roll_no'
+        'roll_no',
+        'api_token',
+        'token_expires_at'
     ];
 
     /**
