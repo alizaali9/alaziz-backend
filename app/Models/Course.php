@@ -17,6 +17,7 @@ class Course extends Model
         'course_stars',
         'course_category',
         'sub_category',
+        'thumbnail',
         'language',
         'created_by',
         'last_updated',
@@ -28,7 +29,6 @@ class Course extends Model
         'total_lessons',
     ];
 
-    // Define the relationships
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

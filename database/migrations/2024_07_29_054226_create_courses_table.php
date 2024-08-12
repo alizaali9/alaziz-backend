@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->string('language');
             $table->timestamp('last_updated')->useCurrent();
+            $table->string('thumbnail');
             $table->string('demo_video')->nullable();
             $table->decimal('price', 12, 2);
             $table->text('overview')->nullable();
@@ -42,7 +43,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('part_id')->constrained('course_parts')->onDelete('cascade');
             $table->string('title');
-            $table->enum('type', ['video', 'pdf']);
+            $table->enum('type', ['video', 'pdf', 'url']);
             $table->string('url');
             $table->timestamps();
         });
@@ -53,7 +54,7 @@ return new class extends Migration {
      */
 
 
-    public function down(): void
+     public function down(): void
     {
         Schema::dropIfExists('course_materials');
         Schema::dropIfExists('course_parts');

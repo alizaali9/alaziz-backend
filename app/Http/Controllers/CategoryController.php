@@ -69,6 +69,27 @@ class CategoryController extends Controller
             return response()->json(['status' => 404, 'error' => 'Category not found'], 404);
         }
 
+        $category->courses->transform(function ($course) {
+
+            $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
+            $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
+
+            $subcategory = Subcategory::find($course->sub_category);
+            $category = Category::find($course->category);
+
+            $course->course_category = $category;
+            $course->sub_category = $subcategory;
+
+            foreach ($course->courseParts as $part) {
+                foreach ($part->courseMaterials as $material) {
+                    $material->url = asset('storage/' . $material->url);
+                }
+            }
+
+            return $course;
+        });
+
+
         return response()->json($category->courses);
     }
 

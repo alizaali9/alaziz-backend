@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Validator;
 class EnrollmentController extends Controller
 {
 
-    public function create(){
+    public function create()
+    {
         $students = Student::all();
         $courses = Course::all();
 
@@ -27,14 +28,14 @@ class EnrollmentController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-            ->withErrors($validator)
-            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
 
         $existingEnrollment = Enrollment::where('student_id', $request->student)
-                                        ->where('course_id', $request->course)
-                                        ->first();
+            ->where('course_id', $request->course)
+            ->first();
 
         if ($existingEnrollment) {
             return redirect()->back()->with('error', 'Student is already in this course.');
@@ -45,9 +46,9 @@ class EnrollmentController extends Controller
             'course_id' => $request->course,
         ]);
 
-        if($enrollment){
+        if ($enrollment) {
             return redirect()->back()->with('success', 'Student enrolled successfully.');
-        }else {
+        } else {
             return redirect()->back()->with('error', 'Something went wrong.');
         }
     }
@@ -55,7 +56,7 @@ class EnrollmentController extends Controller
     public function checkEnrollment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'student_id' => 'required|exists:students,id',
+            'roll_no' => 'required|exists:students,roll_no',
             'course_id' => 'required|exists:courses,id',
         ]);
 
@@ -63,10 +64,15 @@ class EnrollmentController extends Controller
             return response()->json(['status' => 422, 'errors' => $validator->errors()], 422);
         }
 
+        $student = Student::where('roll_no', $request->roll_no)->first();
 
-        $existingEnrollment = Enrollment::where('student_id', $request->student_id)
-                                        ->where('course_id', $request->course_id)
-                                        ->first();
+        if (!$student) {
+            return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
+        }
+
+        $existingEnrollment = Enrollment::where('student_id', $student->id)
+            ->where('course_id', $request->course_id)
+            ->first();
 
         if ($existingEnrollment) {
             return response()->json(['status' => 200, 'enrolled' => true], 200);
@@ -74,6 +80,7 @@ class EnrollmentController extends Controller
 
         return response()->json(['status' => 200, 'enrolled' => false], 200);
     }
+
 
     public function index()
     {

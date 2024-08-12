@@ -8,11 +8,12 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
 
-    Route::post('register', [StudentAuthController::class, 'register']);
-    Route::post('login', [StudentAuthController::class, 'login']);
-    Route::post('forgot-password', [StudentAuthController::class, 'forgotPassword']);
+Route::post('register', [StudentAuthController::class, 'register']);
+Route::post('login', [StudentAuthController::class, 'login']);
+Route::post('forgot-password', [StudentAuthController::class, 'forgotPassword']);
 
 Route::middleware(['student.check'])->group(function () {
+    Route::post('/get-student', [StudentAuthController::class, 'getStudentByRollNumber']);
     Route::get('courses', [CourseController::class, 'getAllCourses']);
     Route::get('courses/{id}', [CourseController::class, 'getCourseDetails']);
     Route::put('courses/{course}/ratings', [CourseController::class, 'updateRatings']);

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\CourseMaterial;
 use App\Models\CoursePart;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class CourseController extends Controller
@@ -37,7 +40,6 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-
         $validation = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -46,6 +48,7 @@ class CourseController extends Controller
             'price' => 'required|numeric',
             'sub_category' => 'required|integer|exists:subcategories,id',
             'demo' => 'nullable|file|mimes:mp4,avi,mkv|max:20480',
+            'thumbnail' => 'required|file|mimes:jpg,jpeg,png|max:2048', // Add validation for thumbnail
             'overview' => 'nullable|string',
             'outcome' => 'nullable|string',
             'requirement' => 'nullable|string',
@@ -73,11 +76,14 @@ class CourseController extends Controller
             $course->outcome = $request->outcome;
             $course->requirements = $request->requirement;
 
-            // dd($category->id, $request->sub_category);
-
             if ($request->hasFile('demo')) {
                 $demoPath = $request->file('demo')->store('demo_videos', 'public');
                 $course->demo_video = $demoPath;
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                $thumbnailPath = $request->file('thumbnail')->store('thumbnails', 'public');
+                $course->thumbnail = $thumbnailPath;
             }
 
             $course->save();
@@ -121,39 +127,86 @@ class CourseController extends Controller
 
     public function storeContent(Request $request)
     {
-        $request->validate([
+        $rules = [
             'course_id' => 'required|integer|exists:courses,id',
             'part' => 'required|integer|exists:course_parts,id',
             'title' => 'required|string|max:255',
             'lesson' => 'nullable|file|mimes:mp4,avi,mkv,pdf|max:20480',
             'lesson_url' => 'nullable|string',
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        DB::beginTransaction();
 
         try {
+            $lessonPath = null;
+            $type = null;
+
             if ($request->hasFile('lesson')) {
                 $lessonPath = $request->file('lesson')->store('course_lessons', 'public');
                 $fileType = $request->file('lesson')->getClientOriginalExtension();
                 $type = in_array($fileType, ['mp4', 'avi', 'mkv']) ? 'video' : 'pdf';
+            } else {
+                $lessonPath = $request->lesson_url;
+                $type = 'url';
             }
 
-            CourseMaterial::create([
+            $material = CourseMaterial::create([
                 'part_id' => $request->part,
                 'title' => $request->title,
                 'type' => $type,
                 'url' => $lessonPath,
             ]);
 
+            DB::commit();
+
             return redirect()->back()->with('success', 'Lesson uploaded successfully.');
         } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Error uploading lesson: ' . $e->getMessage());
+
             return redirect()->back()->withErrors(['error' => 'There was an issue uploading the lesson. Please try again.']);
         }
     }
-
     public function getAllCourses()
     {
         $courses = Course::with(['courseParts.courseMaterials'])->get();
+
+        $courses->transform(function ($course) {
+
+            $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
+            // $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
+
+            // $subcategory = Subcategory::find($course->sub_category);
+            // $category = Category::find($course->category);
+
+            // $course->course_category = $category;
+            // $course->sub_category = $subcategory;
+
+            $course->enrolled_students = $course->students()->count();
+
+            foreach ($course->courseParts as $part) {
+                foreach ($part->courseMaterials as $material) {
+                    if ($material->type != "url") {
+                        $material->url = asset('storage/' . $material->url);
+                    }
+                }
+            }
+
+            return $course;
+        });
+
         return response()->json($courses);
     }
+
 
     public function getCourseDetails($id)
     {
@@ -163,8 +216,31 @@ class CourseController extends Controller
             return response()->json(['error' => 'Course not found'], 404);
         }
 
+        $course->thumbnail = $course->demo_video ? asset('storage/' . $course->thumbnail) : null;
+        $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
+
+        $subcategory = Subcategory::find($course->sub_category);
+        $category = Category::find($course->category);
+
+        $course->course_category = $category;
+        $course->sub_category = $subcategory;
+
+        $course->enrolled_students = $course->students()->count();
+        $course->instructor = $course->creator->name;
+
+        foreach ($course->courseParts as $part) {
+            foreach ($part->courseMaterials as $material) {
+                if ($material->type != "url") {
+                    $material->url = asset('storage/' . $material->url);
+                }
+            }
+        }
+
+        // dd($course);
+
         return response()->json($course);
     }
+
 
     public function updateRatings(Request $request, $courseId)
     {

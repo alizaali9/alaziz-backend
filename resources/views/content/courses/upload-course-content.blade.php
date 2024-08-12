@@ -42,10 +42,28 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="w-50 mb-3">
+                                <select id="content-type"
+                                    class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control"
+                                    name="content_type" onchange="toggleContentInput(this.value)" >
+                                    <option value="">Choose the Lesson Type</option>
+                                    <option value="file">Upload File</option>
+                                    <option value="url">Enter URL</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="w-50 mb-3 d-none" id="file-input-container">
                                 <input id="lesson" name="lesson" type="file" class="form-control signin-email"
                                     style="padding-block: 7px;" placeholder="Upload Lesson">
                                 @if ($errors->has('lesson'))
                                     <div class="text-danger small">{{ $errors->first('lesson') }}</div>
+                                @endif
+                            </div>
+                            <div class="w-50 mb-3 d-none" id="url-input-container">
+                                <input id="lesson_url" name="lesson_url" type="text" class="form-control signin-email"
+                                    placeholder="Enter Lesson URL">
+                                @if ($errors->has('lesson_url'))
+                                    <div class="text-danger small">{{ $errors->first('lesson_url') }}</div>
                                 @endif
                             </div>
                         </div>
@@ -58,4 +76,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleContentInput(value) {
+            if (value === 'file') {
+                document.getElementById('file-input-container').classList.remove('d-none');
+                document.getElementById('url-input-container').classList.add('d-none');
+            } else if (value === 'url') {
+                document.getElementById('file-input-container').classList.add('d-none');
+                document.getElementById('url-input-container').classList.remove('d-none');
+            } else {
+                document.getElementById('file-input-container').classList.add('d-none');
+                document.getElementById('url-input-container').classList.add('d-none');
+            }
+        }
+    </script>
 @endsection

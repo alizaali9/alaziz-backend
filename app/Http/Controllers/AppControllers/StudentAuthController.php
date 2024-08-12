@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
-use App\Mail\ResetPasswordMail;
 use App\Mail\StudentResetPasswordMail;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -21,14 +20,14 @@ class StudentAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:students',
-            'whatsapp_no' => 'required|string|max:20',
+            'whatsapp_no' => 'required|string|max:11',
             'password' => 'required|string|min:8|confirmed',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json([$validator->errors(), "status" => 400], 400);
         }
 
         $currentYear = date('Y');
@@ -60,6 +59,28 @@ class StudentAuthController extends Controller
         ], 201);
     }
 
+    public function getStudentByRollNumber(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'roll_no' => 'required|string|exists:students,roll_no',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 400, 'errors' => $validator->errors()], 400);
+        }
+
+        $student = Student::where('roll_no', $request->roll_no)->first();
+
+        if (!$student) {
+            return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'student' => $student,
+        ], 200);
+    }
+
 
 
 
@@ -80,7 +101,7 @@ class StudentAuthController extends Controller
         $tokenExpiresAt = now()->addDays(30);
 
         $student->update([
-            'api_token' => `Bearer $token`,
+            'api_token' => $token,
             'token_expires_at' => $tokenExpiresAt,
         ]);
 
@@ -88,8 +109,10 @@ class StudentAuthController extends Controller
             'status' => 200,
             'token' => $token,
             'expires_at' => $tokenExpiresAt,
+            'roll_no' => $student->roll_no,
         ], 200);
     }
+
 
 
 

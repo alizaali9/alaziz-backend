@@ -83,6 +83,16 @@
                     </div>
                     <div class="row">
                         <div class="w-100 mb-3">
+                            <label for="thumbnail" class="ps-2 pb-2">Upload Thumbnail Image</label>
+                            <input id="thumbnail" name="thumbnail" type="file" class="form-control"
+                                style="padding-top: 7px;" placeholder="Thumbnail Image">
+                            @if ($errors->has('thumbnail'))
+                                <div class="text-danger small">{{ $errors->first('thumbnail') }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="w-100 mb-3">
                             <label for="demo" class="ps-2 pb-2">Upload your Demo Video</label>
                             <input id="demo" name="demo" type="file" class="form-control"
                                 style="padding-top: 7px;" placeholder="Demo Video">

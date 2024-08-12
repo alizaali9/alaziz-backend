@@ -25,8 +25,8 @@
                                 @endif
                             </div>
                             <div style="width: 5%">
-                                <button type="button" class="btn app-btn-primary theme-btn mx-auto" style="padding-inline: 14px;"
-                                    onclick="cloneContainer()">+
+                                <button type="button" class="btn app-btn-primary theme-btn mx-auto"
+                                    style="padding-inline: 14px;" onclick="cloneContainer()">+
                                 </button>
                             </div>
                             <div style="width: 5%; display: none;">

@@ -16,6 +16,13 @@ class QuizController extends Controller
     {
         $quizzes = Quiz::with(['questions', 'category', 'subcategory'])->get();
 
+        $quizzes->transform(function ($quiz) {
+
+            $quiz->thumbnail = $quiz->thumbnail ? asset('storage/' . $quiz->thumbnail) : null;
+
+            return $quiz;
+        });
+
         if (!$quizzes) {
             return response()->json(['error' => 'Quizes not found'], 404);
         }
@@ -45,7 +52,7 @@ class QuizController extends Controller
         $request->validate([
             'name' => 'required|string',
             'status' => 'required|boolean',
-            'thumbnail' => 'nullable|mimes:png,jpg,jpeg',
+            'thumbnail' => 'nullable|file|mimes:png,jpg,jpeg',
             'price' => 'required|integer',
             'tries' => 'nullable|integer',
             'timelimit' => 'required|integer',
@@ -60,8 +67,14 @@ class QuizController extends Controller
 
         // dd($category);
 
-        $quizData = $request->only(['name', 'status', 'thumbnail', 'tries', 'price', 'timelimit', 'sub_category']);
+        $quizData = $request->only(['name', 'status', 'tries', 'price', 'timelimit', 'sub_category']);
         $quizData["category_id"] = $category;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailPath = $request->file('thumbnail')->store('quiz_thumbnails', 'public');
+            //  dd($thumbnailPath);
+            $quizData["thumbnail"] = $thumbnailPath;
+        }
+
 
         // dd($quizData);
 
@@ -93,17 +106,22 @@ class QuizController extends Controller
         }
 
         try {
-            if ($request->hasFile('thumbnail')) {
-                $thumbnailPath = $request->file('thumbnail')->store('quiz_thumbnails', 'public');
-            }
 
             $quiz = new Quiz();
             $quiz->status = $request->status;
             $quiz->name = $request->name;
-            $quiz->thumbnail = $thumbnailPath ?? null;
             $quiz->time_limit = $request->timelimit;
             $quiz->category_id = $request->category_id;
             $quiz->subcategory_id = $request->subcategory_id;
+
+            // dd($request->hasFile('thumbnail'));
+
+            if ($request->hasFile('thumbnail')) {
+                $thumbnailPath = $request->file('thumbnail')->store('quiz_thumbnails', 'public');
+                //  dd($thumbnailPath);
+                $quiz->thumbnail = $thumbnailPath ?? null;
+            }
+
             $quiz->save();
 
             foreach ($request->questions as $questionData) {
