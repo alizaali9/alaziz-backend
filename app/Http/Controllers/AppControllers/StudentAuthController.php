@@ -143,4 +143,44 @@ class StudentAuthController extends Controller
             return response()->json(['status' => 400, 'message' => 'Failed to send reset password link. Please try again later.'], 400);
         }
     }
+
+    public function editStudent(Request $request, $rollNumber)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:students,email',
+            'whatsapp_no' => 'sometimes|string|max:11',
+            'password' => 'sometimes|string|min:8|confirmed',
+            'city' => 'sometimes|string|max:255',
+            'country' => 'sometimes|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 400, 'errors' => $validator->errors()], 400);
+        }
+
+        $student = Student::where('roll_no', $rollNumber)->first();
+
+        if (!$student) {
+            return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
+        }
+
+        $student->update([
+            'name' => $request->name ?? $student->name,
+            'email' => $request->email ?? $student->email,
+            'whatsapp_no' => $request->whatsapp_no ?? $student->whatsapp_no,
+            'password' => $request->password ? Hash::make($request->password) : $student->password,
+            'city' => $request->city ?? $student->city,
+            'country' => $request->country ?? $student->country,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Student details updated successfully',
+            'student' => $student,
+        ], 200);
+    }
+
+
 }

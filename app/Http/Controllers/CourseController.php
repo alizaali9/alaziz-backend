@@ -216,7 +216,7 @@ class CourseController extends Controller
             return response()->json(['error' => 'Course not found'], 404);
         }
 
-        $course->thumbnail = $course->demo_video ? asset('storage/' . $course->thumbnail) : null;
+        $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
         $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
 
         $subcategory = Subcategory::find($course->sub_category);

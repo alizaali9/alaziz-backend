@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\QuizImport;
 use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\Student;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -141,5 +142,4 @@ class QuizController extends Controller
             return redirect()->back()->withErrors(['error' => 'There was an issue creating the quiz. Please try again.']);
         }
     }
-
 }

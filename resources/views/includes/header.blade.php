@@ -325,6 +325,40 @@
                             </ul>
                         </div>
                     </li><!--//nav-item-->
+                    <li class="nav-item has-submenu">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#submenu-6" aria-expanded="false" aria-controls="submenu-6">
+                            <span class="nav-icon">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                    <path
+                                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-text">Quiz Enrollments</span>
+                            <span class="submenu-arrow">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </span><!--//submenu-arrow-->
+                        </a><!--//nav-link-->
+                        <div id="submenu-6" class="collapse submenu submenu-5" data-bs-parent="#menu-accordion">
+                            <ul class="submenu-list list-unstyled">
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="{{ route('add.quiz.enrollment') }}">Add Quiz Enrollment</a>
+                                </li>
+                                <li class="submenu-item"><a class="submenu-link" href="">Manage Quiz
+                                        Enrollments</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li><!--//nav-item-->
                     @if (Auth::user()->role == 1)
                         <li class="nav-item has-submenu">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->

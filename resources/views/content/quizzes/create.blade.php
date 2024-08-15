@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Create Course
+                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Create Quiz
                         </button>
                     </div>
                 </form>

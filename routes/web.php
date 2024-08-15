@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthControllers\LoginController;
 use App\Http\Controllers\AuthControllers\ResetPasswordController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizEnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name("dashboard")->middleware('auth');
@@ -47,4 +48,6 @@ Route::post('/create-quiz', [QuizController::class, 'import'])->middleware('auth
 Route::get('/add-enrollment', [EnrollmentController::class, 'create'])->middleware('auth')->name('add.enrollment');
 Route::post('/add-enrollment', [EnrollmentController::class, 'store'])->middleware('auth')->name('store.enrollment');
 
+Route::get('/add-quiz-enrollment', [QuizEnrollmentController::class, 'create'])->middleware('auth')->name('add.quiz.enrollment');
+Route::post('/add-quiz-enrollment', [QuizEnrollmentController::class, 'store'])->middleware('auth')->name('store.quiz.enrollment');
 

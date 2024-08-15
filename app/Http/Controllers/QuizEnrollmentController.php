@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
-use App\Models\Enrollment;
+use App\Models\Quiz;
+use App\Models\QuizEnrollment;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class EnrollmentController extends Controller
+class QuizEnrollmentController extends Controller
 {
 
     public function create()
     {
         $students = Student::all();
-        $courses = Course::all();
+        $quizzes = Quiz::all();
 
-        return view('content.enrollments.create', compact("students", "courses"));
+        return view('content.quiz-enrollment.create', compact("students", "quizzes"));
     }
+
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'student' => 'required|exists:students,id',
-            'course' => 'required|exists:courses,id',
+            'quiz' => 'required|exists:quizzes,id',
         ]);
 
         if ($validator->fails()) {
@@ -32,22 +32,21 @@ class EnrollmentController extends Controller
                 ->withInput();
         }
 
-
-        $existingEnrollment = Enrollment::where('student_id', $request->student)
-            ->where('course_id', $request->course)
+        $existingEnrollment = QuizEnrollment::where('student_id', $request->student)
+            ->where('quiz_id', $request->quiz)
             ->first();
 
         if ($existingEnrollment) {
-            return redirect()->back()->with('error', 'Student is already in this course.');
+            return redirect()->back()->with('error', 'Student is already enrolled in this quiz.');
         }
 
-        $enrollment = Enrollment::create([
+        $enrollment = QuizEnrollment::create([
             'student_id' => $request->student,
-            'course_id' => $request->course,
+            'quiz_id' => $request->quiz,
         ]);
 
         if ($enrollment) {
-            return redirect()->back()->with('success', 'Student enrolled successfully.');
+            return redirect()->back()->with('success', 'Student enrolled in quiz successfully.');
         } else {
             return redirect()->back()->with('error', 'Something went wrong.');
         }
@@ -57,7 +56,7 @@ class EnrollmentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'roll_no' => 'required|exists:students,roll_no',
-            'course_id' => 'required|exists:courses,id',
+            'quiz_id' => 'required|exists:quizzes,id',
         ]);
 
         if ($validator->fails()) {
@@ -70,8 +69,8 @@ class EnrollmentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
 
-        $existingEnrollment = Enrollment::where('student_id', $student->id)
-            ->where('course_id', $request->course_id)
+        $existingEnrollment = QuizEnrollment::where('student_id', $student->id)
+            ->where('quiz_id', $request->quiz_id)
             ->first();
 
         if ($existingEnrollment) {
@@ -81,14 +80,13 @@ class EnrollmentController extends Controller
         return response()->json(['status' => 200, 'enrolled' => false], 200);
     }
 
-
     public function index()
     {
-        $enrollments = Enrollment::with(['student', 'course'])->get();
+        $enrollments = QuizEnrollment::with(['student', 'quiz'])->get();
         return response()->json($enrollments);
     }
 
-    public function getCoursesOfStudent($roll_no)
+    public function getQuizzesOfStudent($roll_no)
     {
         $validator = Validator::make(['roll_no' => $roll_no], [
             'roll_no' => 'required|string|exists:students,roll_no',
@@ -104,25 +102,16 @@ class EnrollmentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
 
-        $courses = Enrollment::where('student_id', $student->id)
-            ->with('course')
+        $quizzes = QuizEnrollment::where('student_id', $student->id)
+            ->with('quiz')
             ->get()
-            ->pluck('course');
+            ->pluck('quiz');
 
-        $courses->transform(function ($course) {
+        $quizzes->transform(function ($quiz) {
 
-            $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
-            $course->enrolled_students = $course->students()->count();
+            $quiz->thumbnail = $quiz->thumbnail ? asset('storage/' . $quiz->thumbnail) : null;
 
-            foreach ($course->courseParts as $part) {
-                foreach ($part->courseMaterials as $material) {
-                    if ($material->type != "url") {
-                        $material->url = asset('storage/' . $material->url);
-                    }
-                }
-            }
-
-            return $course;
+            return $quiz;
         });
 
 
@@ -130,9 +119,34 @@ class EnrollmentController extends Controller
             'status' => 200,
             'student' => $student->name,
             'roll_no' => $student->roll_no,
-            'courses' => $courses,
+            'quizzes' => $quizzes,
         ], 200);
     }
 
+    public function updateMarksPercentage(Request $request, $roll_no, $quizId)
+    {
+        $validator = Validator::make($request->all(), [
+            'marks_percentage' => 'required|numeric|min:0|max:100',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json(['status' => 422, 'errors' => $validator->errors()], 422);
+        }
+
+        $student = Student::where('roll_no', $roll_no)->first();
+
+        $quizEnrollment = QuizEnrollment::where('student_id', $student->id)
+            ->where('quiz_id', $quizId)
+            ->first();
+
+        if (!$quizEnrollment) {
+            return response()->json(['status' => 404, 'message' => 'Quiz enrollment not found'], 404);
+        }
+
+        $quizEnrollment->update([
+            'marks_percentage' => $request->marks_percentage,
+        ]);
+
+        return response()->json(['status' => 200, 'message' => 'Marks percentage updated successfully'], 200);
+    }
 }
