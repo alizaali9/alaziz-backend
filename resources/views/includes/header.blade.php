@@ -253,7 +253,8 @@
                                 <li class="submenu-item"><a class="submenu-link"
                                         href="{{ route('create.course') }}">Create Course</a>
                                 </li>
-                                <li class="submenu-item"><a class="submenu-link" href="{{route('courses.show')}}">Manage
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="{{ route('courses.show') }}">Manage
                                         Courses</a>
                                 </li>
                             </ul>
@@ -285,8 +286,8 @@
                                 <li class="submenu-item"><a class="submenu-link"
                                         href="{{ route('create.quiz') }}">Create Quiz</a>
                                 </li>
-                                <li class="submenu-item"><a class="submenu-link" href="">Manage
-                                        Quiz</a>
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="{{ route('manage.quiz') }}">Manage Quiz</a>
                                 </li>
                             </ul>
                         </div>

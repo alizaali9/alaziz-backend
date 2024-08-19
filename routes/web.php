@@ -44,6 +44,11 @@ Route::post('/courses/store-content', [CourseController::class, 'storeContent'])
 
 Route::get('/create-quiz', [QuizController::class, 'create'])->middleware('auth')->name('create.quiz');
 Route::post('/create-quiz', [QuizController::class, 'import'])->middleware('auth')->name('store.quiz');
+Route::get('/manage-quiz', [QuizController::class, 'manageQuizzes'])->middleware('auth')->name('manage.quiz');
+Route::delete('/quizzes/{id}', [QuizController::class, 'destroy'])->name('quizzes.destroy');
+Route::put('/quizzes/{id}', [QuizController::class, 'update'])->name('quizzes.update');
+Route::patch('/quizzes/{id}/status', [QuizController::class, 'updateStatus'])->name('quizzes.updateStatus');
+
 
 Route::get('/add-enrollment', [EnrollmentController::class, 'create'])->middleware('auth')->name('add.enrollment');
 Route::post('/add-enrollment', [EnrollmentController::class, 'store'])->middleware('auth')->name('store.enrollment');
