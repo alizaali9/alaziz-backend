@@ -18,6 +18,13 @@ class EnrollmentController extends Controller
 
         return view('content.enrollments.create', compact("students", "courses"));
     }
+
+    public function manage()
+    {
+        $enrollments = Enrollment::with(['course', 'student'])->get();
+        return view('content.enrollments.manage', compact('enrollments'));
+    }
+
     public function store(Request $request)
     {
 
@@ -132,6 +139,23 @@ class EnrollmentController extends Controller
             'roll_no' => $student->roll_no,
             'courses' => $courses,
         ], 200);
+    }
+
+    public function delete($id)
+    {
+        $enrollment = Enrollment::find($id);
+
+        if (!$enrollment) {
+            return redirect()->back()->with('error', 'Enrollment not found.');
+        }
+
+        $deleted = $enrollment->delete();
+
+        if ($deleted) {
+            return redirect()->back()->with('success', 'Enrollment deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to delete enrollment.');
+        }
     }
 
 

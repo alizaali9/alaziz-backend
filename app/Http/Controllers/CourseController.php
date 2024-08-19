@@ -48,7 +48,7 @@ class CourseController extends Controller
             'price' => 'required|numeric',
             'sub_category' => 'required|integer|exists:subcategories,id',
             'demo' => 'nullable|file|mimes:mp4,avi,mkv|max:20480',
-            'thumbnail' => 'required|file|mimes:jpg,jpeg,png|max:2048', // Add validation for thumbnail
+            'thumbnail' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'overview' => 'nullable|string',
             'outcome' => 'nullable|string',
             'requirement' => 'nullable|string',
@@ -183,13 +183,6 @@ class CourseController extends Controller
         $courses->transform(function ($course) {
 
             $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
-            // $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
-
-            // $subcategory = Subcategory::find($course->sub_category);
-            // $category = Category::find($course->category);
-
-            // $course->course_category = $category;
-            // $course->sub_category = $subcategory;
 
             $course->enrolled_students = $course->students()->count();
 

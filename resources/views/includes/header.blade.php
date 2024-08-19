@@ -320,7 +320,8 @@
                                 <li class="submenu-item"><a class="submenu-link"
                                         href="{{ route('add.enrollment') }}">Add Enrollment</a>
                                 </li>
-                                <li class="submenu-item"><a class="submenu-link" href="">Manage
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="{{ route('manage.enrollment') }}">Manage
                                         Enrollments</a>
                                 </li>
                             </ul>

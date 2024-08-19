@@ -49,9 +49,10 @@ Route::delete('/quizzes/{id}', [QuizController::class, 'destroy'])->name('quizze
 Route::put('/quizzes/{id}', [QuizController::class, 'update'])->name('quizzes.update');
 Route::patch('/quizzes/{id}/status', [QuizController::class, 'updateStatus'])->name('quizzes.updateStatus');
 
-
 Route::get('/add-enrollment', [EnrollmentController::class, 'create'])->middleware('auth')->name('add.enrollment');
 Route::post('/add-enrollment', [EnrollmentController::class, 'store'])->middleware('auth')->name('store.enrollment');
+Route::get('/manage-enrollment', [EnrollmentController::class, 'manage'])->middleware('auth')->name('manage.enrollment');
+Route::delete('/enrollments/{id}', [EnrollmentController::class, 'delete'])->name('enrollments.delete');
 
 Route::get('/add-quiz-enrollment', [QuizEnrollmentController::class, 'create'])->middleware('auth')->name('add.quiz.enrollment');
 Route::post('/add-quiz-enrollment', [QuizEnrollmentController::class, 'store'])->middleware('auth')->name('store.quiz.enrollment');
