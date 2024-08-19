@@ -56,4 +56,8 @@ Route::delete('/enrollments/{id}', [EnrollmentController::class, 'delete'])->nam
 
 Route::get('/add-quiz-enrollment', [QuizEnrollmentController::class, 'create'])->middleware('auth')->name('add.quiz.enrollment');
 Route::post('/add-quiz-enrollment', [QuizEnrollmentController::class, 'store'])->middleware('auth')->name('store.quiz.enrollment');
+Route::get('/manage-quiz-enrollment', [QuizEnrollmentController::class, 'manage'])->middleware('auth')->name('manage.quiz.enrollment');
+Route::delete('/quiz-enrollments/{id}', [QuizEnrollmentController::class, 'delete'])->name('quiz.enrollment.delete');
+
+
 

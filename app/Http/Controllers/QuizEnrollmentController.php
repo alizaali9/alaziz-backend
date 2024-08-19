@@ -19,6 +19,12 @@ class QuizEnrollmentController extends Controller
         return view('content.quiz-enrollment.create', compact("students", "quizzes"));
     }
 
+    public function manage()
+    {
+        $enrollments = QuizEnrollment::with(['quiz', 'student'])->get();
+        return view('content.quiz-enrollment.manage', compact('enrollments'));
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -148,5 +154,21 @@ class QuizEnrollmentController extends Controller
         ]);
 
         return response()->json(['status' => 200, 'message' => 'Marks percentage updated successfully'], 200);
+    }
+    public function delete($id)
+    {
+        $quizEnrollment = QuizEnrollment::find($id);
+
+        if (!$quizEnrollment) {
+            return redirect()->back()->with('error', 'Quiz enrollment not found.');
+        }
+
+        $deleted = $quizEnrollment->delete();
+
+        if ($deleted) {
+            return redirect()->back()->with('success', 'Quiz enrollment deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to delete quiz enrollment.');
+        }
     }
 }

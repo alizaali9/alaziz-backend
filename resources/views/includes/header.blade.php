@@ -355,7 +355,8 @@
                                 <li class="submenu-item"><a class="submenu-link"
                                         href="{{ route('add.quiz.enrollment') }}">Add Quiz Enrollment</a>
                                 </li>
-                                <li class="submenu-item"><a class="submenu-link" href="">Manage Quiz
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="{{ route('manage.quiz.enrollment') }}">Manage Quiz
                                         Enrollments</a>
                                 </li>
                             </ul>
