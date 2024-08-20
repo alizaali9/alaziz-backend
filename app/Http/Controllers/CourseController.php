@@ -41,7 +41,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:courses,name',
             'description' => 'required|string',
             'level' => 'required|string',
             'language' => 'required|string',

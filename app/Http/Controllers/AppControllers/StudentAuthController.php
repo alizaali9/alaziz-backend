@@ -81,8 +81,11 @@ class StudentAuthController extends Controller
         ], 200);
     }
 
-
-
+    public function manage()
+    {
+        $students = Student::all();
+        return view('content.students.view-students', compact('students'));
+    }
 
     public function login(Request $request)
     {
@@ -180,6 +183,19 @@ class StudentAuthController extends Controller
             'message' => 'Student details updated successfully',
             'student' => $student,
         ], 200);
+    }
+    public function deleteStudent($id)
+    {
+
+        $student = Student::find($id);
+
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student not found.');
+        }
+
+        $student->delete();
+
+        return redirect()->back()->with('success', 'Student and related data deleted successfully.');
     }
 
 

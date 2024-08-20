@@ -18,11 +18,7 @@
                     @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                            <p>Something went wrong</p>
                         </div>
                     @endif
                     <div class="row">

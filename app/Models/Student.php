@@ -42,7 +42,16 @@ class Student extends Model
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::deleting(function ($student) {
+            $student->enrollments()->delete();
+
+            $student->quizEnrollments()->delete();
+        });
+    }
 
     public function enrollments()
     {
@@ -52,5 +61,14 @@ class Student extends Model
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'enrollments');
+    }
+    public function quizEnrollments()
+    {
+        return $this->hasMany(QuizEnrollment::class);
+    }
+
+    public function quizzes()
+    {
+        return $this->belongsToMany(Quiz::class, 'quizenrollments');
     }
 }

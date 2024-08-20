@@ -59,7 +59,7 @@ class QuizController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|unique:quizzes,name',
             'status' => 'required|boolean',
             'thumbnail' => 'nullable|file|mimes:png,jpg,jpeg',
             'price' => 'required|integer',

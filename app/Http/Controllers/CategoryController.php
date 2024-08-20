@@ -16,10 +16,16 @@ class CategoryController extends Controller
 
     public function create(Request $request)
     {
+        $messages = [
+            'name.unique' => 'The category name has already been taken.',
+            'subcategory.*.unique' => 'The subcategory ":input" has already been taken.',
+            'subcategory.*.max' => 'The subcategory ":input" may not be greater than 255 characters.',
+        ];
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'subcategory.*' => 'nullable|string|max:255|',
-        ]);
+            'name' => 'required|string|max:255|unique:categories,name',
+            'subcategory.*' => 'nullable|string|max:255|unique:subcategories,name',
+        ], $messages);
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -27,10 +33,12 @@ class CategoryController extends Controller
                 ->withInput();
         }
 
+        // Create the new category
         $category = Category::create([
             'name' => $request->name
         ]);
 
+        // Create associated subcategories if provided
         $subcategories = $request->input('subcategory', []);
         foreach ($subcategories as $subcategoryName) {
             if (!empty($subcategoryName)) {
@@ -42,9 +50,9 @@ class CategoryController extends Controller
         }
 
         if ($category && $subcategories) {
-            return redirect()->back()->with('success', 'Category has been created Successfully.');
+            return redirect()->back()->with('success', 'Category has been created successfully.');
         } else {
-            return redirect()->back()->with('error', 'Something went wrong. Try Again!');
+            return redirect()->back()->with('error', 'Something went wrong. Try again!');
         }
     }
 

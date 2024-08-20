@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppControllers\StudentAuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [IndexController::class, 'index'])->name("dashboard")->middleware('auth');
 Route::get('/login', [LoginController::class, 'index'])->name("login.show")->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->name("login")->middleware('guest');
+
+Route::get('/students', [StudentAuthController::class, 'manage'])->name('students')->middleware('auth');
+Route::delete('/students/{id}', [StudentAuthController::class, 'deleteStudent'])->name('delete.student')->middleware('auth');
+
 Route::get('/logout', [LoginController::class, 'logout'])->name("logout")->middleware('auth');
 Route::get('/forgot-password', [ResetPasswordController::class, 'index'])->name("forgot")->middleware('guest');
 Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLinkEmail'])->name("reset.send")->middleware('guest');
