@@ -76,8 +76,8 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('level'))
-                                <div class="text-danger small">{{ $errors->first('level') }}</div>
+                            @if ($errors->has('sub_category'))
+                                <div class="text-danger small">{{ $errors->first('sub_category') }}</div>
                             @endif
                         </div>
                     </div>
