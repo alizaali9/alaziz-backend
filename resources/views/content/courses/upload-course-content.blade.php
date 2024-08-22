@@ -16,6 +16,19 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="text-danger text-center small pb-3">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="text-danger text-center small pb-3">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
+
                     <div id="input-containers">
                         <div class="row justify-content-center">
                             <div class="w-50 mb-3">
@@ -44,7 +57,7 @@
                             <div class="w-50 mb-3">
                                 <select id="content-type"
                                     class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control"
-                                    name="content_type" onchange="toggleContentInput(this.value)" >
+                                    name="content_type" onchange="toggleContentInput(this.value)">
                                     <option value="">Choose the Lesson Type</option>
                                     <option value="file">Upload File</option>
                                     <option value="url">Enter URL</option>

@@ -57,6 +57,7 @@ class CourseController extends Controller
                 'requirements' => 'nullable|string',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'demo' => 'nullable|mimes:mp4,avi,mkv|max:10240',
+                'url' => 'nullable|string'
             ]);
 
             if ($validator->fails()) {
@@ -83,11 +84,15 @@ class CourseController extends Controller
             }
 
             if ($request->hasFile('demo')) {
-                if ($course->demo) {
-                    Storage::delete($course->demo);
+                if ($course->demo_video) {
+                    Storage::delete($course->demo_video);
                 }
-                $course->demo = $request->file('demo')->store('demos');
+                $course->demo_video = $request->file('demo')->store('demo_videos');
+            } else {
+                $course->demo_video = $request->input('url');
             }
+
+
             $course->save();
 
             return redirect()->back()->with('success', 'Course updated successfully!');
@@ -118,6 +123,7 @@ class CourseController extends Controller
             'price' => 'required|numeric',
             'sub_category' => 'required|integer|exists:subcategories,id',
             'demo' => 'nullable|file|mimes:mp4,avi,mkv|max:20480',
+            'url' => 'nullable|string',
             'thumbnail' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'overview' => 'nullable|string',
             'outcome' => 'nullable|string',
@@ -149,6 +155,8 @@ class CourseController extends Controller
             if ($request->hasFile('demo')) {
                 $demoPath = $request->file('demo')->store('demo_videos', 'public');
                 $course->demo_video = $demoPath;
+            } else {
+                $course->demo_video = $request->input('url');
             }
 
             if ($request->hasFile('thumbnail')) {
@@ -296,12 +304,18 @@ class CourseController extends Controller
             'lesson_url' => 'nullable|string',
         ];
 
+
+
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
+        }
+
+        if ($request->input('lesson') == null && $request->input('lesson_url') == null) {
+            return redirect()->back()->with('error', 'It is must to upload lesson');
         }
 
         DB::beginTransaction();
@@ -451,7 +465,9 @@ class CourseController extends Controller
         }
 
         $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
-        $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
+        $course->demo_video = $course->demo_video && filter_var($course->demo_video, FILTER_VALIDATE_URL)
+            ? $course->demo_video
+            : ($course->demo_video ? asset('storage/' . $course->demo_video) : null);
 
         $subcategory = Subcategory::find($course->sub_category);
         $category = Category::find($course->category);

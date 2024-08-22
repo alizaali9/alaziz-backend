@@ -19,6 +19,7 @@ Route::middleware(['student.check'])->group(function () {
     Route::get('/student/{roll_no}/courses', [EnrollmentController::class, 'getCoursesOfStudent']);
     Route::get('/student/{roll_no}/quizzes', [QuizEnrollmentController::class, 'getQuizzesOfStudent']);
     Route::put('/students/{roll_no}/quizzes/{quizId}/marks', [QuizEnrollmentController::class, 'updateMarksPercentage']);
+    Route::put('/students/{roll_no}/quizzes/{quizId}/tries', [QuizController::class, 'updateTries']);
 
     Route::get('courses', [CourseController::class, 'getAllCourses']);
     Route::get('courses/{id}', [CourseController::class, 'getCourseDetails']);

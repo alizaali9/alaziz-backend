@@ -84,7 +84,9 @@
                                                                 "sub_category": "{{ $course->subcategory->id }}",
                                                                 "price": "{{ $course->price }}",
                                                                 "outcome": "{{ $course->outcome }}",
-                                                                "requirements": "{{ $course->requirements }}"}'>
+                                                                "requirements": "{{ $course->requirements }}",
+                                                                "demo": "{{ $course->demo_video }}"}
+                                                                '>
                                                             Manage Course
                                                         </button>
                                                     </div>
@@ -102,8 +104,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="ps-2">
-                                                        <form
-                                                            action="{{ route('courses.delete', ['id' => $course->id]) }}"
+                                                        <form action="{{ route('courses.delete', ['id' => $course->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -196,11 +197,34 @@
                                     style="padding-top: 7px;" placeholder="Thumbnail Image">
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row justify-content-center flex-wrap">
                             <div class="w-100 mb-3">
-                                <label for="demo" class="ps-2 pb-2">Change Demo Video</label>
-                                <input id="demo" name="demo" type="file" class="form-control"
-                                    style="padding-top: 7px;" placeholder="Demo Video">
+                                <label for="demo" class="ps-2 pb-2">Choose your Demo Type</label>
+                                <select id="content-type"
+                                    class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control"
+                                    name="demo_type" onchange="toggleContentInput(this.value)">
+                                    <option value="file">Upload File</option>
+                                    <option value="url">Enter URL</option>
+                                </select>
+                            </div>
+                            <div class="w-100 mb-3">
+                                <div class="w-100 mb-3" id="file-input-container">
+                                    <label for="demo" class="ps-2 pb-2">Upload your Demo Video</label>
+                                    <input id="demo" name="demo" type="file"
+                                        class="form-control signin-email" style="padding-block: 7px;"
+                                        placeholder="Upload Lesson">
+                                    @if ($errors->has('demo'))
+                                        <div class="text-danger small">{{ $errors->first('demo') }}</div>
+                                    @endif
+                                </div>
+                                <div class="w-100 mb-3 d-none" id="url-input-container">
+                                    <label for="url" class="ps-2 pb-2">Enter your Demo URL</label>
+                                    <input id="url" name="url" type="text"
+                                        class="form-control signin-email" placeholder="Enter Demo URL">
+                                    @if ($errors->has('url'))
+                                        <div class="text-danger small">{{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -214,13 +238,43 @@
         </div>
     </div>
 
-
+    <script>
+        function toggleContentInput(value) {
+            if (value === 'file') {
+                document.getElementById('file-input-container').classList.remove('d-none');
+                document.getElementById('url-input-container').classList.add('d-none');
+            } else if (value === 'url') {
+                document.getElementById('file-input-container').classList.add('d-none');
+                document.getElementById('url-input-container').classList.remove('d-none');
+            } else {
+                document.getElementById('file-input-container').classList.add('d-none');
+                document.getElementById('url-input-container').classList.add('d-none');
+            }
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.edit-course-btn').forEach(function(button) {
                 button.addEventListener('click', function() {
                     const course = this.dataset.course;
                     const courseData = JSON.parse(course);
+
+                    const isValidUrl = (url) => {
+                        try {
+                            new URL(url);
+                            return true;
+                        } catch (_) {
+                            return false;
+                        }
+                    };
+                    console.log(courseData.demo);
+                    if (isValidUrl(courseData.demo)) {
+                        document.getElementById('file-input-container').classList.add('d-none');
+                        document.getElementById('url-input-container').classList.remove('d-none');
+                        document.querySelector('select[name="demo_type"]').value = 'url';
+
+                        document.getElementById('url').value = courseData.demo;
+                    }
 
                     const updateUrl = `{{ url('courses/update') }}/${courseData.id}`;
                     document.getElementById('edit-course-form').action = updateUrl;

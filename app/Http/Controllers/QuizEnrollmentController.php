@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use App\Models\QuizEnrollment;
 use App\Models\Student;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -104,6 +105,7 @@ class QuizEnrollmentController extends Controller
 
         $student = Student::where('roll_no', $roll_no)->first();
 
+
         if (!$student) {
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
@@ -116,7 +118,11 @@ class QuizEnrollmentController extends Controller
         $quizzes->transform(function ($quiz) {
 
             $quiz->thumbnail = $quiz->thumbnail ? asset('storage/' . $quiz->thumbnail) : null;
+            $subcategory = Subcategory::where('id', $quiz->sub_category)->first();
 
+            // dd($subcategory);
+
+            $quiz->sub_category = $subcategory->name;
             return $quiz;
         });
 
@@ -140,6 +146,11 @@ class QuizEnrollmentController extends Controller
         }
 
         $student = Student::where('roll_no', $roll_no)->first();
+        $quiz = Quiz::find($quizId);
+
+        if (!$quiz) {
+            return response()->json(['status' => 404, 'message' => 'Quiz not found'], 404);
+        }
 
         $quizEnrollment = QuizEnrollment::where('student_id', $student->id)
             ->where('quiz_id', $quizId)
@@ -155,6 +166,7 @@ class QuizEnrollmentController extends Controller
 
         return response()->json(['status' => 200, 'message' => 'Marks percentage updated successfully'], 200);
     }
+
     public function delete($id)
     {
         $quizEnrollment = QuizEnrollment::find($id);

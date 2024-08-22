@@ -31,10 +31,12 @@ class StudentAuthController extends Controller
         }
 
         $currentYear = date('Y');
+        $rollNumber = '';
 
-        $studentCount = Student::whereYear('created_at', $currentYear)->count() + 1;
-
-        $rollNumber = $currentYear . 'AAI' . $studentCount;
+        do {
+            $studentCount = Student::whereYear('created_at', $currentYear)->count() + 1;
+            $rollNumber = $currentYear . 'AAI' . $studentCount;
+        } while (Student::where('roll_no', $rollNumber)->exists());
 
         $token = 'Bearer ' . Str::random(60);
         $tokenExpiresAt = now()->addDays(30);
@@ -58,6 +60,7 @@ class StudentAuthController extends Controller
             'token' => $token,
         ], 201);
     }
+
 
     public function getStudentByRollNumber(Request $request)
     {
@@ -113,6 +116,7 @@ class StudentAuthController extends Controller
             'token' => $token,
             'expires_at' => $tokenExpiresAt,
             'roll_no' => $student->roll_no,
+            'username' => $student->name,
         ], 200);
     }
 

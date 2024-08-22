@@ -141,7 +141,6 @@
                                         <div class="item-data">
                                             {{ str_repeat('•', 8) }}
                                         </div>
-
                                     </div><!--//col-->
                                     <div class="col text-end">
                                         <button class="btn-sm app-btn-secondary" data-bs-toggle="modal"

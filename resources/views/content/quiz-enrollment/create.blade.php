@@ -23,13 +23,11 @@
                         </div>
                     @endif
                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <div>
-                                @foreach ($errors->all() as $error)
-                                    <p>{{ $error }}</p>
-                                @endforeach
+                        @foreach ($errors->all() as $error)
+                            <div class="text-danger text-center small pb-3">
+                                {{ $error }}
                             </div>
-                        </div>
+                        @endforeach
                     @endif
                     <div class="row">
                         <div class="w-50 mb-3">

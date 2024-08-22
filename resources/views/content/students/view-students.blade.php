@@ -52,6 +52,7 @@
                                     <thead>
                                         <tr>
                                             <th class="cell text-center">Name</th>
+                                            <th class="cell text-center">Roll No</th>
                                             <th class="cell text-center">Email</th>
                                             <th class="cell text-center">Whatsapp Number</th>
                                             <th class="cell text-center">City</th>
@@ -63,6 +64,7 @@
                                         @foreach ($students as $student)
                                             <tr>
                                                 <td class="cell text-center">{{ $student->name }}</td>
+                                                <td class="cell text-center">{{ $student->roll_no }}</td>
                                                 <td class="cell text-center">{{ $student->email }}</td>
                                                 <td class="cell text-center">{{ $student->whatsapp_no }}</td>
                                                 <td class="cell text-center">{{ $student->city }}</td>
