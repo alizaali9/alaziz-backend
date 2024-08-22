@@ -27,19 +27,21 @@ class CategoryController extends Controller
             'subcategory.*' => 'nullable|string|max:255|unique:subcategories,name',
         ], $messages);
 
+        $subcategories = $request->input('subcategory', []);
+        if (count($subcategories) !== count(array_unique($subcategories))) {
+            return redirect()->back()->withErrors(['subcategory' => 'Duplicate subcategory names are not allowed.'])->withInput();
+        }
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
 
-        // Create the new category
         $category = Category::create([
             'name' => $request->name
         ]);
 
-        // Create associated subcategories if provided
-        $subcategories = $request->input('subcategory', []);
         foreach ($subcategories as $subcategoryName) {
             if (!empty($subcategoryName)) {
                 Subcategory::create([
@@ -49,12 +51,13 @@ class CategoryController extends Controller
             }
         }
 
-        if ($category && $subcategories) {
+        if ($category) {
             return redirect()->back()->with('success', 'Category has been created successfully.');
         } else {
             return redirect()->back()->with('error', 'Something went wrong. Try again!');
         }
     }
+
 
     public function show()
     {

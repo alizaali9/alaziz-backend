@@ -43,6 +43,8 @@ class QuizEnrollmentController extends Controller
             ->where('quiz_id', $request->quiz)
             ->first();
 
+        $quiz = Quiz::findOrFail($request->quiz);
+
         if ($existingEnrollment) {
             return redirect()->back()->with('error', 'Student is already enrolled in this quiz.');
         }
@@ -50,6 +52,7 @@ class QuizEnrollmentController extends Controller
         $enrollment = QuizEnrollment::create([
             'student_id' => $request->student,
             'quiz_id' => $request->quiz,
+            'remaining_tries' => $quiz->tries
         ]);
 
         if ($enrollment) {
@@ -81,7 +84,7 @@ class QuizEnrollmentController extends Controller
             ->first();
 
         if ($existingEnrollment) {
-            return response()->json(['status' => 200, 'enrolled' => true], 200);
+            return response()->json(['status' => 200, 'enrolled' => true, 'remaining_tries' => $existingEnrollment->remaining_tries], 200);
         }
 
         return response()->json(['status' => 200, 'enrolled' => false], 200);
@@ -139,6 +142,7 @@ class QuizEnrollmentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'marks_percentage' => 'required|numeric|min:0|max:100',
+            'remaining_tries' => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -152,6 +156,10 @@ class QuizEnrollmentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Quiz not found'], 404);
         }
 
+        if($request->remaining_tries >= $quiz->tries){
+            return response()->json(['status' => 422, 'error' => "You can't exceed the maximum allowed tries"], 422);
+        }
+
         $quizEnrollment = QuizEnrollment::where('student_id', $student->id)
             ->where('quiz_id', $quizId)
             ->first();
@@ -162,6 +170,7 @@ class QuizEnrollmentController extends Controller
 
         $quizEnrollment->update([
             'marks_percentage' => $request->marks_percentage,
+            'remaining_tries' => $request->remaining_tries
         ]);
 
         return response()->json(['status' => 200, 'message' => 'Marks percentage updated successfully'], 200);

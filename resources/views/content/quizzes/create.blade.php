@@ -17,7 +17,7 @@
                         </div>
                     @endif
                     @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="text-danger text-center small pb-3">
                             <p>Something went wrong</p>
                         </div>
                     @endif

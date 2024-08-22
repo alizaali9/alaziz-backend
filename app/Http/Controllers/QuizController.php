@@ -139,32 +139,5 @@ class QuizController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function updateTries(Request $request, $quizId)
-    {
-        $validator = Validator::make($request->all(), [
-            'tries' => 'required|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['status' => 422, 'errors' => $validator->errors()], 422);
-        }
-
-        $quiz = Quiz::find($quizId);
-
-        if (!$quiz) {
-            return response()->json(['status' => 404, 'message' => 'Quiz not found'], 404);
-        }
-
-        if ($request->input('tries') > $quiz->tries) {
-            return response()->json(['status' => 422, 'message' => "You can't exceed the maximum allowed tries"], 422);
-        }
-
-        $quiz->update([
-            'tries' => $request->input('tries'),
-        ]);
-
-        return response()->json(['status' => 200, 'message' => 'Tries updated successfully'], 200);
-    }
-
 
 }
