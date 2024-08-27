@@ -4,7 +4,6 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
 
-
             <h1 class="app-page-title">My Account</h1>
 
             @if ($errors->any())
@@ -139,8 +138,9 @@
                                     <div class="col-auto">
                                         <div class="item-label"><strong>Password</strong></div>
                                         <div class="item-data">
-                                            {{ str_repeat('â€¢', 8) }}
+                                            ••••••••
                                         </div>
+
                                     </div><!--//col-->
                                     <div class="col text-end">
                                         <button class="btn-sm app-btn-secondary" data-bs-toggle="modal"

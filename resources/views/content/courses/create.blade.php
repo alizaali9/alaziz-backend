@@ -21,6 +21,13 @@
                             {{ session('error') }}
                         </div>
                     @endif
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="text-danger text-center small pb-3">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
                     <div class="row">
                         <div class="w-50 mb-3">
                             <input id="name" name="name" type="text" class="form-control signin-email"
@@ -93,7 +100,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="w-50 mb-3">
-                            <label for="demo" class="ps-2 pb-2">Choose your Demo Type</label>
+                            <label for="demo_type" class="ps-2 pb-2">Choose your Demo Type</label>
                             <select id="content-type"
                                 class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control" name="demo_type"
                                 onchange="toggleContentInput(this.value)">

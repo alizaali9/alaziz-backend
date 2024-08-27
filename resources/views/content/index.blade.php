@@ -13,7 +13,7 @@
                         <div class="row gx-5 gy-3">
                             <div class="col-12 col-lg-9">
 
-                                <div>Happy to see you back! Enjoy your Day 😊</div>
+                                <div>Happy to see you back! Enjoy your Day ??</div>
                             </div><!--//col-->
                             {{-- <div class="col-12 col-lg-3">
                                 <a class="btn app-btn-primary"

@@ -48,6 +48,13 @@
                     {{ session('error') }}
                 </div>
             @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="text-danger text-center small pb-3">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
 
             <div class="tab-content" id="orders-table-tab-content">
                 <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
