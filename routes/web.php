@@ -30,16 +30,19 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/students', [StudentAuthController::class, 'manage'])->name('students');
     Route::delete('/students/{id}', [StudentAuthController::class, 'deleteStudent'])->name('delete.student');
+    Route::get('/students/download-csv', [StudentAuthController::class, 'downloadCSV'])->name('students.downloadCSV');
 
     Route::get('/create-category', [CategoryController::class, 'index'])->name('create.category');
     Route::post('/create-category', [CategoryController::class, 'create'])->name('post.category');
     Route::put('/update-category/{id}', [CategoryController::class, 'update'])->name('update.category');
     Route::get('/categories', [CategoryController::class, 'show'])->name('show.categories');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('delete.category');
+    Route::get('/categories/csv', [CategoryController::class, 'downloadCsv'])->name('download.csv');
 
     Route::get('/create-instructor', [InstructorController::class, 'index'])->name('create.instructor');
     Route::post('/create-instructor', [InstructorController::class, 'create'])->name('post.instructor');
-    Route::get('/instructors', [InstructorController::class, 'show'])->name('show.instructor');
+    Route::get('/instructors', [InstructorController::class, 'manage'])->name('show.instructor');
+    Route::get('/download-instructors', [InstructorController::class, 'downloadCSV'])->name('download.instructor');
     Route::delete('/instructors/{id}', [InstructorController::class, 'destroy'])->name('destroy.instructor');
     Route::put('/instructors/update', [InstructorController::class, 'update'])->name('update.instructor');
 
@@ -58,8 +61,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/lessons/{lessonId}/update', [CourseController::class, 'updateLesson'])->name('lessons.update');
     Route::delete('/lessons/{lessonId}', [CourseController::class, 'deleteLesson'])->name('lessons.delete');
     Route::delete('/courses/{id}', [CourseController::class, 'deleteCourse'])->name('courses.delete');
+    Route::get('/courses/csv', [CourseController::class, 'downloadCsv'])->name('courses.download.csv');
+    Route::get('courses/{courseid}/parts/csv', [CourseController::class, 'downloadPartsCsv'])->name('parts.download.csv');
+    Route::get('courses/{courseid}/lessons/csv', [CourseController::class, 'downloadLessonsCSV'])->name('lessons.download.csv');
 
     Route::get('/create-quiz', [QuizController::class, 'create'])->name('create.quiz');
+    Route::get('/download-quizzes', [QuizController::class, 'downloadQuizzesCSV'])->name('download.quizzes');
     Route::post('/create-quiz', [QuizController::class, 'import'])->name('store.quiz');
     Route::get('/manage-quiz', [QuizController::class, 'manageQuizzes'])->name('manage.quiz');
     Route::delete('/quizzes/{id}', [QuizController::class, 'destroy'])->name('quizzes.destroy');

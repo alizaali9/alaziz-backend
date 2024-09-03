@@ -18,12 +18,55 @@ class EnrollmentController extends Controller
 
         return view('content.enrollments.create', compact("students", "courses"));
     }
-
     public function manage()
     {
-        $enrollments = Enrollment::with(['course', 'student'])->get();
+        $query = Enrollment::with(['course', 'student']);
+
+        if (request()->has('search')) {
+            $search = request()->get('search');
+            $query->whereHas('student', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('roll_no', 'LIKE', "%{$search}%");
+            })->orWhereHas('course', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if (request()->has('download')) {
+            return $this->downloadEnrollmentsCSV($query->get());
+        }
+
+        $enrollments = $query->get();
+
         return view('content.enrollments.manage', compact('enrollments'));
     }
+
+    protected function downloadEnrollmentsCSV($enrollments)
+    {
+        $csvData = [
+            ['Student Name', 'Student Roll No', 'Course Name']
+        ];
+
+        foreach ($enrollments as $enrollment) {
+            $csvData[] = [
+                $enrollment->student->name,
+                $enrollment->student->roll_no,
+                $enrollment->course->name,
+            ];
+        }
+
+        $filename = 'enrollments_' . now()->format('Y_m_d_H_i_s') . '.csv';
+        $handle = fopen($filename, 'w');
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+
+        return response()->download($filename)->deleteFileAfterSend(true);
+    }
+
 
     public function store(Request $request)
     {

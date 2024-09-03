@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use App\Models\Student;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,10 +35,76 @@ class QuizController extends Controller
 
     public function manageQuizzes()
     {
-        $quizzes = Quiz::with(['questions', 'category', 'subcategory'])->get();
+        $query = Quiz::with(['questions', 'category', 'subcategory']);
+
+        if (request()->has('search')) {
+            $search = request()->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhereHas('subcategory', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhere('timelimit', 'LIKE', "%{$search}%")
+                    ->orWhere('price', 'LIKE', "%{$search}%")
+                    ->orWhere('tries', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $quizzes = $query->get();
         $subcategories = Subcategory::all();
+
         return view('content.quizzes.manage', compact('quizzes', 'subcategories'));
     }
+
+    public function downloadQuizzesCSV(Request $request)
+    {
+        try {
+            $query = Quiz::with('subcategory');
+
+            if ($request->has('search')) {
+                $search = $request->get('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhereHas('subcategory', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhere('timelimit', 'LIKE', "%{$search}%")
+                        ->orWhere('price', 'LIKE', "%{$search}%")
+                        ->orWhere('tries', 'LIKE', "%{$search}%");
+                });
+            }
+
+            $quizzes = $query->get();
+
+            $csvData = [];
+
+            $csvData[] = ['Quiz Name', 'Quiz Category', 'Quiz Duration', 'Quiz Price', 'No. of Tries'];
+
+            foreach ($quizzes as $quiz) {
+                $csvData[] = [
+                    $quiz->name,
+                    $quiz->subcategory->name,
+                    $quiz->timelimit,
+                    $quiz->price,
+                    $quiz->tries,
+                ];
+            }
+
+            $filename = "quizzes.csv";
+            $handle = fopen($filename, 'w+');
+            foreach ($csvData as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+
+            return response()->download($filename)->deleteFileAfterSend(true);
+        } catch (\Exception $e) {
+            Log::error('Error downloading quizzes CSV: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'There was an issue downloading the CSV. Please try again.');
+        }
+    }
+
+
 
     public function getQuizById($id)
     {

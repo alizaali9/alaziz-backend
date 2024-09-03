@@ -20,7 +20,7 @@ class InstructorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',  // corrected to 'users'
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|string|min:8',
             'about' => 'required|string|min:10',
@@ -58,12 +58,69 @@ class InstructorController extends Controller
         return back()->with('error', 'An error occurred while creating the instructor.');
     }
 
-    public function show()
+    public function manage(Request $request)
     {
-        $instructors = Instructor::with('user')->get();
+        $query = Instructor::with('user');
 
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('about', 'LIKE', "%{$search}%")
+                    ->orWhere('skills', 'LIKE', "%{$search}%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('email', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $instructors = $query->get();
         return view('content.instructors.manage', compact('instructors'));
     }
+
+    public function downloadCSV(Request $request)
+    {
+        $query = Instructor::query()->with('user');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('about', 'LIKE', "%{$search}%")
+                    ->orWhere('skills', 'LIKE', "%{$search}%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('email', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $instructors = $query->get();
+
+        $csvFileName = 'instructors_' . now()->format('Y_m_d_H_i_s') . '.csv';
+        $handle = fopen($csvFileName, 'w');
+
+        $csvData = [
+            ['Name', 'Email', 'About', 'Skills']
+        ];
+
+        foreach ($instructors as $instructor) {
+            $csvData[] = [
+                $instructor->name,
+                $instructor->user->email,
+                $instructor->about,
+                $instructor->skills,
+            ];
+        }
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+
+        return response()->download($csvFileName)->deleteFileAfterSend(true);
+    }
+
 
     public function update(Request $request)
     {

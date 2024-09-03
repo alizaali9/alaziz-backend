@@ -84,10 +84,71 @@ class StudentAuthController extends Controller
         ], 200);
     }
 
-    public function manage()
+    public function manage(Request $request)
     {
-        $students = Student::all();
+        $query = Student::query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('roll_no', 'LIKE', "%{$search}%")
+                    ->orWhere('whatsapp_no', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('city', 'LIKE', "%{$search}%")
+                    ->orWhere('country', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $students = $query->get();
+
         return view('content.students.view-students', compact('students'));
+    }
+
+    public function downloadCSV(Request $request)
+    {
+        $query = Student::query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('roll_no', 'LIKE', "%{$search}%")
+                    ->orWhere('whatsapp_no', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('city', 'LIKE', "%{$search}%")
+                    ->orWhere('country', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $students = $query->get();
+
+        $csvFileName = 'students_' . now()->format('Y_m_d_H_i_s') . '.csv';
+        $handle = fopen($csvFileName, 'w');
+
+        $csvData = [
+            ['Name', 'Roll Number', 'WhatsApp Number', 'Email', 'City', 'Country']
+        ];
+
+
+        foreach ($students as $student) {
+            $csvData[] = [
+                $student->name,
+                $student->roll_no,
+                $student->whatsapp_no,
+                $student->email,
+                $student->city,
+                $student->country,
+            ];
+        }
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+
+        return response()->download($csvFileName)->deleteFileAfterSend(true);
     }
 
     public function login(Request $request)

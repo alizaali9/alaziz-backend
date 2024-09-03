@@ -6,9 +6,57 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
 
 class CategoryController extends Controller
 {
+
+    public function downloadCsv(Request $request)
+    {
+        $query = Category::with(['subcategories.courses'])->withCount('courses');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhereHas('subcategories', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereHas('subcategories.courses', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $categories = $query->get();
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'csv');
+        $handle = fopen($tempFile, 'w');
+
+        fputcsv($handle, ['Category No', 'Category Name', 'No. of Courses', 'Subcategories', 'Courses in Subcategories']);
+
+
+        foreach ($categories as $category) {
+            $subcategoryNames = $category->subcategories->pluck('name')->implode(', ');
+            $subcategoryCoursesCounts = $category->subcategories->map(function ($subcategory) {
+                return $subcategory->courses->count();
+            })->implode(', ');
+
+            fputcsv($handle, [
+                $category->id,
+                $category->name,
+                $category->courses_count,
+                $subcategoryNames,
+                $subcategoryCoursesCounts,
+            ]);
+        }
+
+        fclose($handle);
+
+        $response = response()->download($tempFile, 'categories_and_subcategories.csv')->deleteFileAfterSend(true);
+
+        return $response;
+    }
     public function index()
     {
         return view('content.categories.create');
@@ -59,11 +107,17 @@ class CategoryController extends Controller
     }
 
 
-    public function show()
+    public function show(Request $request)
     {
-        $categories = Category::withCount('courses')->with(['subcategories', 'subcategories.courses'])->get();
+        $search = $request->input('search');
+        $categories = Category::withCount('courses')
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
 
         return view('content.categories.manage', compact('categories'));
+
     }
 
     public function getAllCategories()

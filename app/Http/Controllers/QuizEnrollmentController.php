@@ -22,8 +22,50 @@ class QuizEnrollmentController extends Controller
 
     public function manage()
     {
-        $enrollments = QuizEnrollment::with(['quiz', 'student'])->get();
+        $query = QuizEnrollment::with(['quiz', 'student']);
+
+        if (request()->has('search')) {
+            $search = request()->get('search');
+            $query->whereHas('student', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('roll_no', 'LIKE', "%{$search}%");
+            })->orWhereHas('quiz', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if (request()->has('download')) {
+            return $this->downloadQuizEnrollmentsCSV($query->get());
+        }
+
+        $enrollments = $query->get();
+
         return view('content.quiz-enrollment.manage', compact('enrollments'));
+    }
+    public function downloadQuizEnrollmentsCSV($enrollments)
+    {
+        $csvData = [
+            ['Student Name', 'Student Roll No', 'Quiz Name']
+        ];
+
+        foreach ($enrollments as $enrollment) {
+            $csvData[] = [
+                $enrollment->student->name,
+                $enrollment->student->roll_no,
+                $enrollment->quiz->name,
+            ];
+        }
+
+        $filename = 'quiz-enrollments_' . now()->format('Y_m_d_H_i_s') . '.csv';
+        $handle = fopen($filename, 'w');
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+
+        return response()->download($filename)->deleteFileAfterSend(true);
     }
 
     public function store(Request $request)
@@ -83,11 +125,23 @@ class QuizEnrollmentController extends Controller
             ->where('quiz_id', $request->quiz_id)
             ->first();
 
+        $totalEnrolled = QuizEnrollment::where('quiz_id', $request->quiz_id)->count();
+
         if ($existingEnrollment) {
-            return response()->json(['status' => 200, 'enrolled' => true, 'remaining_tries' => $existingEnrollment->remaining_tries], 200);
+            return response()->json([
+                'status' => 200,
+                'enrolled' => true,
+                'marks_percentage' => $existingEnrollment->marks_percentage == null ? 0 : $existingEnrollment->marks_percentage,
+                'remaining_tries' => $existingEnrollment->remaining_tries,
+                'total_enrolled' => $totalEnrolled
+            ], 200);
         }
 
-        return response()->json(['status' => 200, 'enrolled' => false], 200);
+        return response()->json([
+            'status' => 200,
+            'enrolled' => false,
+            'total_enrolled' => $totalEnrolled
+        ], 200);
     }
 
     public function index()
@@ -108,7 +162,6 @@ class QuizEnrollmentController extends Controller
 
         $student = Student::where('roll_no', $roll_no)->first();
 
-
         if (!$student) {
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
@@ -121,11 +174,12 @@ class QuizEnrollmentController extends Controller
         $quizzes->transform(function ($quiz) {
 
             $quiz->thumbnail = $quiz->thumbnail ? asset('storage/' . $quiz->thumbnail) : null;
+
             $subcategory = Subcategory::where('id', $quiz->sub_category)->first();
-
-            // dd($subcategory);
-
             $quiz->sub_category = $subcategory->name;
+
+            $quiz->questions_count = $quiz->questions()->count();
+
             return $quiz;
         });
 
@@ -156,7 +210,7 @@ class QuizEnrollmentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Quiz not found'], 404);
         }
 
-        if($request->remaining_tries >= $quiz->tries){
+        if ($request->remaining_tries >= $quiz->tries) {
             return response()->json(['status' => 422, 'error' => "You can't exceed the maximum allowed tries"], 422);
         }
 

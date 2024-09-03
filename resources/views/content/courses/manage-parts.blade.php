@@ -16,17 +16,19 @@
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
                                 <div class="app-search-box">
-                                    <form class="app-search-form">
+                                    <form class="app-search-form" method="GET"
+                                        action="{{ route('update.courses.parts', ['id' => $course->id]) }}">
                                         <input type="text" placeholder="Search..." name="search"
-                                            class="form-control search-input">
-                                        <button type="submit" class="btn search-btn btn-primary" value="Search">
+                                            class="form-control search-input" value="{{ request('search') }}">
+                                        <button type="submit" class="btn search-btn" value="Search">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </button>
                                     </form>
                                 </div><!--//app-search-box-->
                             </div><!--//col-->
                             <div class="col-auto">
-                                <a class="btn app-btn-secondary" href="#">
+                                <a class="btn app-btn-secondary"
+                                    href="{{ route('parts.download.csv', ['courseid' => $course->id, 'search' => request()->get('search')]) }}">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -36,6 +38,7 @@
                                     </svg>
                                     Download CSV
                                 </a>
+
                             </div>
                         </div><!--//row-->
                     </div><!--//table-utilities-->
@@ -83,7 +86,8 @@
                                                     <button type="button"
                                                         class="btn app-btn-primary theme-btn edit-part-btn"
                                                         data-bs-toggle="modal" data-bs-target="#editPartModal"
-                                                        data-id="{{ $part->id }}" data-name="{{ $part->name }}" data-courseId="{{$part->course_id}}">
+                                                        data-id="{{ $part->id }}" data-name="{{ $part->name }}"
+                                                        data-courseId="{{ $part->course_id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                             height="16" fill="currentColor" class="bi bi-pen-fill"
                                                             viewBox="0 0 16 16">

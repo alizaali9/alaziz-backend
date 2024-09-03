@@ -9,6 +9,7 @@ use App\Models\CoursePart;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -22,24 +23,133 @@ class CourseController extends Controller
         $categories = Subcategory::all();
         return view('content.courses.create', compact('categories'));
     }
-    public function showCourses()
+    public function showCourses(Request $request)
     {
-        $courses = Course::all();
+        $search = $request->input('search');
+        $courses = Course::with('subcategory.category')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%")
+                    ->orWhereHas('subcategory', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+
+                    });
+            })
+            ->get();
         $categories = Subcategory::all();
         return view('content.courses.manage', compact('courses', 'categories'));
     }
 
-    public function getCourseParts($courseId)
+    public function downloadCsv()
+    {
+        $courses = Course::with(['subcategory.category'])->get();
+
+        $headers = [
+            'Course Name',
+            'Description',
+            'Category',
+            'Subcategory',
+            'Price',
+            'Requirements',
+            'Level',
+            'Overview',
+            'Outcome',
+            'Thumbnail Path',
+            'Demo Path'
+        ];
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'courses_');
+
+        $file = fopen($tempFile, 'w');
+
+        fputs($file, $bom = (chr(0xEF) . chr(0xBB) . chr(0xBF)));
+
+        fputcsv($file, $headers);
+
+        foreach ($courses as $course) {
+            $isYouTube = preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//', $course->demo_video) ? true : false;
+            $videoUrl = $isYouTube
+                ? $course->demo_video
+                : ($course->demo_video
+                    ? asset('storage/' . $course->demo_video)
+                    : null);
+
+            fputcsv($file, [
+                $course->name,
+                $course->description,
+                optional($course->subcategory->category)->name,
+                optional($course->subcategory)->name,
+                $course->price,
+                $course->requirements,
+                $course->level,
+                $course->overview,
+                $course->outcome,
+                $course->thumbnail ? asset('storage/' . $course->thumbnail) : null,
+                $videoUrl
+            ]);
+        }
+
+        fclose($file);
+
+        $filename = 'courses_' . date('Y-m-d_H-i-s') . '.csv';
+
+        $response = response()->stream(function () use ($tempFile) {
+            readfile($tempFile);
+        }, 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename={$filename}",
+        ]);
+
+        unlink($tempFile);
+
+        return $response;
+    }
+
+
+    public function getCourseParts($courseId, Request $request)
     {
         try {
-            $parts = CoursePart::where('course_id', $courseId)->get();
             $course = Course::findOrFail($courseId);
+
+            $query = $request->input('search');
+            $parts = CoursePart::where('course_id', $courseId)
+                ->when($query, function ($q) use ($query) {
+                    return $q->where('name', 'LIKE', '%' . $query . '%');
+                })
+                ->get();
+
             return view('content.courses.manage-parts', compact('parts', 'course'));
         } catch (\Exception $e) {
             Log::error('Error retrieving course parts: ' . $e->getMessage());
             return redirect()->back()->with('error', 'There was an issue retrieving the course parts. Please try again.');
         }
     }
+
+    public function downloadPartsCsv(Request $request, $courseId)
+    {
+        $course = Course::findOrFail($courseId);
+
+        $query = CoursePart::where('course_id', $courseId);
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+
+        $parts = $query->get();
+
+        $csvData = "Part Name\n";
+        foreach ($parts as $part) {
+            $csvData .= $part->name . "\n";
+        }
+
+        $fileName = 'course_parts_' . $course->name . '.csv';
+
+        return response($csvData)
+            ->header('Content-Type', 'text/csv')
+            ->header('Content-Disposition', "attachment; filename=\"$fileName\"");
+    }
+
 
 
     public function update(Request $request, $id)
@@ -381,14 +491,84 @@ class CourseController extends Controller
         try {
             $course = Course::findOrFail($courseId);
             $courseParts = CoursePart::where('course_id', $courseId)->get();
-            $lessons = CourseMaterial::whereIn('part_id', $courseParts->pluck('id'))->with('coursePart')->get();
-            // dd($lessons);
+
+            $query = CourseMaterial::whereIn('part_id', $courseParts->pluck('id'))->with('coursePart');
+
+            if (request()->has('search')) {
+                $search = request()->get('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhereHas('coursePart', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhere('type', 'LIKE', "%{$search}%");
+                });
+            }
+
+
+            $lessons = $query->get();
+
             return view('content.courses.manage-lessons', compact('course', 'lessons', 'courseParts'));
         } catch (\Exception $e) {
             Log::error('Error retrieving lessons: ' . $e->getMessage());
             return redirect()->back()->with('error', 'There was an issue retrieving the lessons. Please try again.');
         }
     }
+
+    public function downloadLessonsCSV($courseId)
+    {
+        try {
+            $course = Course::findOrFail($courseId);
+            $courseParts = CoursePart::where('course_id', $courseId)->get();
+
+            $query = CourseMaterial::whereIn('part_id', $courseParts->pluck('id'))->with('coursePart');
+
+            if (request()->has('search')) {
+                $search = request()->get('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhereHas('coursePart', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhere('type', 'LIKE', "%{$search}%");
+                });
+            }
+
+            $lessons = $query->get();
+
+            $csvData = [];
+
+            $csvData[] = ['Lesson Name', 'Lesson Type', 'Lesson Part', 'Lesson URL'];
+
+            foreach ($lessons as $lesson) {
+                $isYouTube = preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//', $lesson->url) ? true : false;
+                $lessonUrl = $isYouTube
+                    ? $lesson->url
+                    : ($lesson->url
+                        ? asset('storage/' . $lesson->url)
+                        : null);
+                $csvData[] = [
+                    $lesson->title,
+                    $lesson->type,
+                    $lesson->coursePart->name,
+                    $lessonUrl
+                ];
+            }
+
+            $filename = "lessons_of_{$course->name}.csv";
+            $handle = fopen($filename, 'w+');
+            foreach ($csvData as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+
+            return response()->download($filename)->deleteFileAfterSend(true);
+        } catch (\Exception $e) {
+            Log::error('Error downloading lessons CSV: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'There was an issue downloading the CSV. Please try again.');
+        }
+    }
+
 
     public function updateLesson(Request $request, $lessonId)
     {
