@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->string('city');
             $table->string('country');
             $table->string('roll_no')->unique();
+            $table->string('immi_number')->nullable();
+            $table->string('picture')->nullable();
             $table->timestamps();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

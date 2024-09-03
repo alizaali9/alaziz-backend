@@ -24,7 +24,6 @@
                                                 class="fa-solid fa-magnifying-glass"></i></button>
                                     </form>
                                 </div><!--//app-search-box-->
-
                             </div><!--//col-->
                             <div class="col-auto">
                                 <a class="btn app-btn-secondary"
@@ -52,25 +51,39 @@
                                 <table class="table app-table-hover mb-0 text-left">
                                     <thead>
                                         <tr>
+                                            <th class="cell text-center">Picture</th>
                                             <th class="cell text-center">Name</th>
                                             <th class="cell text-center">Roll No</th>
                                             <th class="cell text-center">Email</th>
                                             <th class="cell text-center">Whatsapp Number</th>
                                             <th class="cell text-center">City</th>
                                             <th class="cell text-center">Country</th>
+                                            <th class="cell text-center">IMMI Number</th>
                                             <th class="cell text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($students as $student)
                                             <tr>
+                                                <td class="cell text-center">
+                                                    @if ($student->picture)
+                                                        <img src="{{ asset('storage/' . $student->picture) }}"
+                                                            alt="{{ $student->name }}'s Picture" class="img-thumbnail"
+                                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                                    @else
+                                                        <img src="{{ asset('assets/images/user.png') }}"
+                                                            alt="{{ $student->name }}'s Picture" class="img-thumbnail"
+                                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                                    @endif
+                                                </td>
                                                 <td class="cell text-center">{{ $student->name }}</td>
                                                 <td class="cell text-center">{{ $student->roll_no }}</td>
                                                 <td class="cell text-center">{{ $student->email }}</td>
                                                 <td class="cell text-center">{{ $student->whatsapp_no }}</td>
                                                 <td class="cell text-center">{{ $student->city }}</td>
                                                 <td class="cell text-center">{{ $student->country }}</td>
-                                                <td class="cell d-flex justify-content-center">
+                                                <td class="cell text-center">{{ $student->immi_number }}</td>
+                                                <td class="cell text-center">
                                                     <div class="ps-3">
                                                         <form action="{{ route('delete.student', $student->id) }}"
                                                             method="post">
@@ -92,7 +105,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div><!--//table-responsive-->
+                            </div>
                         </div><!--//app-card-body-->
                     </div><!--//app-card-->
                 </div><!--//tab-pane-->

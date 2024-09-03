@@ -16,11 +16,13 @@ class Student extends Model
         'email',
         'whatsapp_no',
         'password',
+        "picture",
+        'immi_number',
         'city',
         'country',
         'roll_no',
         'api_token',
-        'token_expires_at'
+        'token_expires_at',
     ];
 
     /**

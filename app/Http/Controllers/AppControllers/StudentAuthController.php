@@ -24,6 +24,7 @@ class StudentAuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'city' => 'required|string|max:255',
             'country' => 'required|string|max:255',
+            'immi_number' => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -49,6 +50,7 @@ class StudentAuthController extends Controller
             'city' => $request->city,
             'country' => $request->country,
             'roll_no' => $rollNumber,
+            'immi_number' => $request->immi_number,
             'api_token' => $token,
             'token_expires_at' => $tokenExpiresAt,
         ]);
@@ -96,7 +98,8 @@ class StudentAuthController extends Controller
                     ->orWhere('whatsapp_no', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
                     ->orWhere('city', 'LIKE', "%{$search}%")
-                    ->orWhere('country', 'LIKE', "%{$search}%");
+                    ->orWhere('country', 'LIKE', "%{$search}%")
+                    ->orWhere('immi_number', 'LIKE', "%{$search}%");
             });
         }
 
@@ -117,7 +120,8 @@ class StudentAuthController extends Controller
                     ->orWhere('whatsapp_no', 'LIKE', "%{$search}%")
                     ->orWhere('email', 'LIKE', "%{$search}%")
                     ->orWhere('city', 'LIKE', "%{$search}%")
-                    ->orWhere('country', 'LIKE', "%{$search}%");
+                    ->orWhere('country', 'LIKE', "%{$search}%")
+                    ->orWhere('immi_number', 'LIKE', "%{$search}%");
             });
         }
 
@@ -127,7 +131,7 @@ class StudentAuthController extends Controller
         $handle = fopen($csvFileName, 'w');
 
         $csvData = [
-            ['Name', 'Roll Number', 'WhatsApp Number', 'Email', 'City', 'Country']
+            ['Name', 'Roll Number', 'WhatsApp Number', 'Email', 'City', 'Country', "IMMI Number"]
         ];
 
 
@@ -139,6 +143,7 @@ class StudentAuthController extends Controller
                 $student->email,
                 $student->city,
                 $student->country,
+                $student->immi_number,
             ];
         }
 
@@ -178,6 +183,7 @@ class StudentAuthController extends Controller
             'expires_at' => $tokenExpiresAt,
             'roll_no' => $student->roll_no,
             'username' => $student->name,
+            'immi_number' => $student->immi_number
         ], 200);
     }
 
@@ -214,14 +220,15 @@ class StudentAuthController extends Controller
 
     public function editStudent(Request $request, $rollNumber)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|string|email|max:255|unique:students,email',
+            'email' => 'sometimes|string|email|max:255|unique:students,email,' . $rollNumber . ',roll_no',
             'whatsapp_no' => 'sometimes|string|max:11',
             'password' => 'sometimes|string|min:8|confirmed',
             'city' => 'sometimes|string|max:255',
             'country' => 'sometimes|string|max:255',
+            'immi_number' => 'sometimes|string|max:255',
+            'picture' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for picture
         ]);
 
         if ($validator->fails()) {
@@ -234,6 +241,17 @@ class StudentAuthController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
 
+        if ($request->hasFile('picture')) {
+            $picture = $request->file('picture');
+            $picturePath = $picture->store('student_pictures', 'public');
+
+            if ($student->picture && file_exists(storage_path('app/public/' . $student->picture))) {
+                unlink(storage_path('app/public/' . $student->picture));
+            }
+
+            $student->picture = $picturePath;
+        }
+
         $student->update([
             'name' => $request->name ?? $student->name,
             'email' => $request->email ?? $student->email,
@@ -241,6 +259,8 @@ class StudentAuthController extends Controller
             'password' => $request->password ? Hash::make($request->password) : $student->password,
             'city' => $request->city ?? $student->city,
             'country' => $request->country ?? $student->country,
+            'immi_number' => $request->immi_number ?? $student->immi_number,
+
         ]);
 
         return response()->json([
@@ -249,6 +269,7 @@ class StudentAuthController extends Controller
             'student' => $student,
         ], 200);
     }
+
     public function deleteStudent($id)
     {
 
