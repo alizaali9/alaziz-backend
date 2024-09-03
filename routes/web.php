@@ -97,4 +97,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/update-about/{id}', [SettingsController::class, 'updateInstructorAbout'])->name('updateInstructorAbout');
     Route::put('/settings/update-skills/{id}', [SettingsController::class, 'updateInstructorSkills'])->name('updateInstructorSkills');
     Route::put('/settings/update-password/{id}', [SettingsController::class, 'updatePassword'])->name('updatePassword');
+    Route::put('/settings/update-picture/{id}', [SettingsController::class, 'updateInstructorPic'])->name('updateInstructorPic');
 });

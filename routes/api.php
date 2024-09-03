@@ -16,6 +16,7 @@ Route::post('forgot-password', [StudentAuthController::class, 'forgotPassword'])
 Route::middleware(['student.check'])->group(function () {
     Route::post('/get-student', [StudentAuthController::class, 'getStudentByRollNumber']);
     Route::put('/student/{rollNumber}', [StudentAuthController::class, 'editStudent']);
+    Route::post('/upload-picture', [StudentAuthController::class, 'uploadPicture']);
     Route::get('/student/{roll_no}/courses', [EnrollmentController::class, 'getCoursesOfStudent']);
     Route::get('/student/{roll_no}/quizzes', [QuizEnrollmentController::class, 'getQuizzesOfStudent']);
     Route::put('/students/{roll_no}/quizzes/{quizId}/marks', [QuizEnrollmentController::class, 'updateMarksPercentage']);

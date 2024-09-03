@@ -85,6 +85,26 @@ class SettingsController extends Controller
         return redirect()->back()->with('success', 'Skills updated successfully.');
     }
 
+    public function updateInstructorPic(Request $request, $id)
+    {
+        $user = Instructor::findOrFail($id);
+
+        $validated = $request->validate([
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $picturePath = null;
+        if ($request->hasFile('picture')) {
+            $picturePath =  $validated['picture']->store('instructors', 'public');
+        }
+
+        $user->picture = $picturePath;
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Picture updated successfully.');
+    }
+
     public function updatePassword(Request $request, $id)
     {
         $user = User::findOrFail($id);

@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -75,6 +76,8 @@ class StudentAuthController extends Controller
         }
 
         $student = Student::where('roll_no', $request->roll_no)->first();
+
+        $student->picture = $student->picture ? asset('storage/' . $student->picture) : null;
 
         if (!$student) {
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
@@ -218,9 +221,34 @@ class StudentAuthController extends Controller
         }
     }
 
+    public function uploadPicture(Request $request)
+    {
+        $request->validate([
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('picture')) {
+            $picture = $request->file('picture');
+            $picturePath = $picture->store('student_pictures', 'public');
+
+            $pictureUrl = Storage::url($picturePath);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Picture uploaded successfully',
+                'picture_url' => $picturePath,
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 400,
+            'message' => 'No picture found',
+        ], 400);
+    }
+
     public function editStudent(Request $request, $rollNumber)
     {
-        dd($request->all(), $request->hasFile('picture'), $request->file('picture'));
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:students,email,' . $rollNumber . ',roll_no',
@@ -229,7 +257,7 @@ class StudentAuthController extends Controller
             'city' => 'sometimes|string|max:255',
             'country' => 'sometimes|string|max:255',
             'immi_number' => 'sometimes|string|max:255',
-            'picture' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'picture' => 'sometimes|nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -242,17 +270,6 @@ class StudentAuthController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
 
-        if ($request->hasFile('picture')) {
-            $picture = $request->file('picture');
-            $picturePath = $picture->store('student_pictures', 'public');
-
-            if ($student->picture && file_exists(storage_path('app/public/' . $student->picture))) {
-                unlink(storage_path('app/public/' . $student->picture));
-            }
-
-            $student->picture = $picturePath;
-        }
-
         $student->update([
             'name' => $request->name ?? $student->name,
             'email' => $request->email ?? $student->email,
@@ -261,7 +278,7 @@ class StudentAuthController extends Controller
             'city' => $request->city ?? $student->city,
             'country' => $request->country ?? $student->country,
             'immi_number' => $request->immi_number ?? $student->immi_number,
-
+            'picture' => $request->picture ?? $student->picture,
         ]);
 
         return response()->json([

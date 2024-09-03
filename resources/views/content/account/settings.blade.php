@@ -68,14 +68,14 @@
                                     <div class="col-auto">
                                         <div class="item-label"><strong>Role</strong></div>
                                         <div class="item-data">
-                                            {{ Auth::user()->role == 1 ? 'Admin' : 'Instructor' }}
+                                            {{ (Auth::user()->role == 1 ? 'Admin' : Auth::user()->role == 2) ? 'Instructor' : 'Sub Admin' }}
                                         </div>
                                     </div><!--//col-->
                                     <div class="col text-end">
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
-                            @if (!(Auth::user()->role == 1))
+                            @if (Auth::user()->role == 2)
                                 <div class="item border-bottom py-3">
                                     <div class="row justify-content-between align-items-center">
                                         <div class="col-auto">
@@ -101,6 +101,22 @@
                                         <div class="col text-end">
                                             <button class="btn-sm app-btn-secondary" data-bs-toggle="modal"
                                                 data-bs-target="#editSkillsModal">Change</button>
+                                        </div><!--//col-->
+                                    </div><!--//row-->
+                                </div><!--//item-->
+                                <div class="item border-bottom py-3">
+                                    <div class="row justify-content-between align-items-center">
+                                        <div class="col-auto">
+                                            <div class="item-label"><strong>Picture</strong></div>
+                                            <div class="item-data">
+                                                <img src="{{ asset('storage/' . $instructor->picture) }}"
+                                                    alt="{{ $instructor->name }}'s Picture" class="img-thumbnail"
+                                                    style="width: 100px; height: 100px; object-fit: cover;">
+                                            </div>
+                                        </div><!--//col-->
+                                        <div class="col text-end">
+                                            <button class="btn-sm app-btn-secondary" data-bs-toggle="modal"
+                                                data-bs-target="#editPictureModal">Change</button>
                                         </div><!--//col-->
                                     </div><!--//row-->
                                 </div><!--//item-->
@@ -138,7 +154,7 @@
                                     <div class="col-auto">
                                         <div class="item-label"><strong>Password</strong></div>
                                         <div class="item-data">
-                                            ••••••••
+                                            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                                         </div>
 
                                     </div><!--//col-->
@@ -211,7 +227,7 @@
             </div>
         </div>
     </div>
-    @if (Auth::user()->role != 1)
+    @if (Auth::user()->role == 2)
         <div class="modal fade" id="editAboutModal" tabindex="-1" aria-labelledby="editAboutModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -264,6 +280,35 @@
                             <button type="button" class="btn app-btn-secondary theme-btn"
                                 data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn app-btn-primary theme-btn">Change Skills</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editPictureModal" tabindex="-1" aria-labelledby="editSkillsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="editSkillsForm" method="POST" enctype="multipart/form-data"
+                        action="{{ route('updateInstructorPic', ['id' => $instructor->id]) }}">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editSkillsModalLabel">Change Your Skills</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="picture" class="form-label text-primary fw-bold">Change Your Picture</label>
+                                <input type="file" name="picture" id="picture" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn app-btn-secondary theme-btn"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn app-btn-primary theme-btn">Change Picture</button>
                         </div>
                     </form>
                 </div>
