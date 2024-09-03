@@ -5,7 +5,7 @@
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Instructors</h1>
+                    <h1 class="app-page-title mb-0">Sub Admins</h1>
                     @if (session('success'))
                         <div class="text-success text-center small pt-2">
                             {{ session('success') }}
@@ -17,7 +17,7 @@
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
                                 <div class="app-search-box">
-                                    <form class="app-search-form" method="GET" action="{{ route('show.instructor') }}">
+                                    <form class="app-search-form" method="GET" action="{{ route('show.subadmin') }}">
                                         <input type="text" placeholder="Search..." name="search"
                                             class="form-control search-input" value="{{ request('search') }}">
                                         <button type="submit" class="btn search-btn" value="Search"><i
@@ -27,8 +27,7 @@
 
                             </div><!--//col-->
                             <div class="col-auto">
-                                <a class="btn app-btn-secondary"
-                                    href="{{ route('download.instructor', ['search' => request('search')]) }}">
+                                <a class="btn app-btn-secondary" href="{{ route('download.subadmin', ['search'=> request('search')]) }}">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -52,41 +51,23 @@
                                 <table class="table app-table-hover mb-0 text-left">
                                     <thead>
                                         <tr>
-                                            <th class="cell text-center">Picture</th>
                                             <th class="cell text-center">Name</th>
                                             <th class="cell text-center">Email</th>
-                                            <th class="cell text-center">About</th>
-                                            <th class="cell text-center">Skills</th>
                                             <th class="cell text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($instructors as $instructor)
+                                        @foreach ($subadmins as $subadmin)
                                             <tr>
-                                                <td class="cell text-center">
-                                                    @if ($instructor->picture)
-                                                        <img src="{{ asset('storage/' . $instructor->picture) }}"
-                                                            alt="{{ $instructor->name }}'s Picture" class="img-thumbnail"
-                                                            style="width: 50px; height: 50px; object-fit: cover;">
-                                                    @else
-                                                        <img src="{{ asset('assets/images/user.png') }}"
-                                                            alt="{{ $instructor->name }}'s Picture" class="img-thumbnail"
-                                                            style="width: 50px; height: 50px; object-fit: cover;">
-                                                    @endif
-                                                </td>
-                                                <td class="cell text-center">{{ $instructor->name }}</td>
-                                                <td class="cell text-center">{{ $instructor->user->email }}</td>
-                                                <td class="cell text-center">{{ $instructor->about }}</td>
-                                                <td class="cell text-center">{{ $instructor->skills }}</td>
+                                                <td class="cell text-center">{{ $subadmin->name }}</td>
+                                                <td class="cell text-center">{{ $subadmin->email }}</td>
                                                 <td class="cell d-flex justify-content-center">
                                                     <div>
                                                         <button type="button" class="btn app-btn-primary theme-btn mx-auto"
-                                                            data-bs-toggle="modal" data-bs-target="#editInstructorModal"
-                                                            data-id="{{ $instructor->id }}"
-                                                            data-name="{{ $instructor->name }}"
-                                                            data-email="{{ $instructor->user->email }}"
-                                                            data-about="{{ $instructor->about }}"
-                                                            data-skills="{{ $instructor->skills }}">
+                                                            data-bs-toggle="modal" data-bs-target="#editSubAdminModal"
+                                                            data-id="{{ $subadmin->id }}"
+                                                            data-name="{{ $subadmin->name }}"
+                                                            data-email="{{ $subadmin->email }}">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16"
                                                                 height="16" fill="currentColor" class="bi bi-pen-fill"
                                                                 viewBox="0 0 16 16">
@@ -96,7 +77,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="ps-3">
-                                                        <form action="{{ route('destroy.instructor', $instructor->id) }}"
+                                                        <form action="{{ route('destroy.subadmin', $subadmin->id) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('DELETE')
@@ -125,40 +106,26 @@
     </div>
 
     <!-- Edit Instructor Modal -->
-    <div class="modal fade" id="editInstructorModal" tabindex="-1" aria-labelledby="editInstructorModalLabel"
+    <div class="modal fade" id="editSubAdminModal" tabindex="-1" aria-labelledby="editSubAdminModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editInstructorModalLabel">Edit Instructor</h5>
+                    <h5 class="modal-title" id="editSubAdminModalLabel">Edit Sub Admin</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('update.instructor') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('update.subadmin') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="instructor-id">
+                        <input type="hidden" name="id" id="subadmin-id">
                         <div class="mb-3">
-                            <label for="instructor-name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="instructor-name" name="name" required>
+                            <label for="subadmin-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="subadmin-name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="instructor-email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="instructor-email" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="instructor-about" class="form-label">About</label>
-                            <textarea class="form-control" id="instructor-about" name="about" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="instructor-skills" class="form-label">Skills</label>
-                            <input type="text" class="form-control" id="instructor-skills" name="skills" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="instructor-picture" class="form-label">Picture</label>
-                            <input type="file" class="form-control" id="instructor-picture" name="picture">
-                            <small class="text-muted">Leave blank to keep current picture.</small>
-                            <div id="current-picture" class="mt-2"></div>
+                            <label for="subadmin-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="subadmin-email" name="email" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -173,38 +140,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var editInstructorModal = document.getElementById('editInstructorModal');
-            editInstructorModal.addEventListener('show.bs.modal', function(event) {
+            var editSubAdminModal = document.getElementById('editSubAdminModal');
+            editSubAdminModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget;
                 var id = button.getAttribute('data-id');
                 var name = button.getAttribute('data-name');
                 var email = button.getAttribute('data-email');
-                var about = button.getAttribute('data-about');
-                var skills = button.getAttribute('data-skills');
-                var picture = button.getAttribute('data-picture');
 
-                var modalTitle = editInstructorModal.querySelector('.modal-title');
-                var modalBodyInputId = editInstructorModal.querySelector('#instructor-id');
-                var modalBodyInputName = editInstructorModal.querySelector('#instructor-name');
-                var modalBodyInputEmail = editInstructorModal.querySelector('#instructor-email');
-                var modalBodyTextareaAbout = editInstructorModal.querySelector('#instructor-about');
-                var modalBodyInputSkills = editInstructorModal.querySelector('#instructor-skills');
-                var modalBodyCurrentPicture = editInstructorModal.querySelector('#current-picture');
+                var modalTitle = editSubAdminModal.querySelector('.modal-title');
+                var modalBodyInputId = editSubAdminModal.querySelector('#subadmin-id');
+                var modalBodyInputName = editSubAdminModal.querySelector('#subadmin-name');
+                var modalBodyInputEmail = editSubAdminModal.querySelector('#subadmin-email');
 
-                modalTitle.textContent = 'Edit Instructor';
+                modalTitle.textContent = 'Edit Sub Admin';
                 modalBodyInputId.value = id;
                 modalBodyInputName.value = name;
                 modalBodyInputEmail.value = email;
-                modalBodyTextareaAbout.value = about;
-                modalBodyInputSkills.value = skills;
-
-                if (picture) {
-                    modalBodyCurrentPicture.innerHTML = `
-                        <img src="{{ asset('storage/') }}/${picture}" alt="Instructor Picture" width="100">
-                    `;
-                } else {
-                    modalBodyCurrentPicture.innerHTML = '';
-                }
             });
         });
     </script>

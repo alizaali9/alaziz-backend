@@ -406,15 +406,17 @@ class CourseController extends Controller
 
     public function storeContent(Request $request)
     {
+        // $file = $request->file('lesson_file');
+
+        // dd($file);
+
         $rules = [
             'course_id' => 'required|integer|exists:courses,id',
             'part' => 'required|integer|exists:course_parts,id',
             'title' => 'required|string|max:255',
-            'lesson' => 'nullable|file|mimes:mp4,avi,mkv,pdf|max:20480',
+            'lesson_file' => 'nullable|file|mimes:mp4,avi,mkv,pdf',
             'lesson_url' => 'nullable|string',
         ];
-
-
 
         $validator = Validator::make($request->all(), $rules);
 
@@ -423,8 +425,7 @@ class CourseController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        if ($request->input('lesson') == null && $request->input('lesson_url') == null) {
+        if ($request->file('lesson_file') == null && $request->input('lesson_url') == null) {
             return redirect()->back()->with('error', 'It is must to upload lesson');
         }
 
@@ -434,9 +435,9 @@ class CourseController extends Controller
             $lessonPath = null;
             $type = null;
 
-            if ($request->hasFile('lesson')) {
-                $lessonPath = $request->file('lesson')->store('course_lessons', 'public');
-                $fileType = $request->file('lesson')->getClientOriginalExtension();
+            if ($request->hasFile('lesson_file')) {
+                $lessonPath = $request->file('lesson_file')->store('course_lessons', 'public');
+                $fileType = $request->file('lesson_file')->getClientOriginalExtension();
                 $type = in_array($fileType, ['mp4', 'avi', 'mkv']) ? 'video' : 'pdf';
             } else {
                 $lessonPath = $request->lesson_url;

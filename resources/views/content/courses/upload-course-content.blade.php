@@ -57,7 +57,7 @@
                             <div class="w-50 mb-3">
                                 <select id="content-type"
                                     class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control"
-                                    name="content_type" onchange="toggleContentInput(this.value)">
+                                    name="content_type" onchange="toggleContent(this.value)">
                                     <option value="">Choose the Lesson Type</option>
                                     <option value="file">Upload File</option>
                                     <option value="url">Enter URL</option>
@@ -82,8 +82,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Submit
-                        </button>
+                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Submit</button>
                     </div>
                 </form>
             </div>
@@ -91,16 +90,27 @@
     </div>
 
     <script>
-        function toggleContentInput(value) {
-            if (value === 'file') {
-                document.getElementById('file-input-container').classList.remove('d-none');
-                document.getElementById('url-input-container').classList.add('d-none');
-            } else if (value === 'url') {
-                document.getElementById('file-input-container').classList.add('d-none');
-                document.getElementById('url-input-container').classList.remove('d-none');
+        function toggleContent(value) {
+            const fileInputContainer = document.getElementById('file-input-container');
+            const urlInputContainer = document.getElementById('url-input-container');
+            const fileInput = document.getElementById('lesson');
+            const urlInput = document.getElementById('lesson_url');
+
+            if (value == 'file') {
+                fileInputContainer.classList.remove('d-none');
+                urlInputContainer.classList.add('d-none');
+                fileInput.disabled = false;
+                urlInput.disabled = true;
+            } else if (value == 'url') {
+                fileInputContainer.classList.add('d-none');
+                urlInputContainer.classList.remove('d-none');
+                fileInput.disabled = true;
+                urlInput.disabled = false;
             } else {
-                document.getElementById('file-input-container').classList.add('d-none');
-                document.getElementById('url-input-container').classList.add('d-none');
+                fileInputContainer.classList.add('d-none');
+                urlInputContainer.classList.add('d-none');
+                fileInput.disabled = true;
+                urlInput.disabled = true;
             }
         }
     </script>

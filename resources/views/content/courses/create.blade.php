@@ -101,7 +101,7 @@
                     <div class="row justify-content-center">
                         <div class="w-50 mb-3">
                             <label for="demo_type" class="ps-2 pb-2">Choose your Demo Type</label>
-                            <select id="content-type"
+                            <select id="demo-type"
                                 class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control" name="demo_type"
                                 onchange="toggleContentInput(this.value)">
                                 <option value="file">Upload File</option>
@@ -112,7 +112,7 @@
                             <div class="w-100 mb-3" id="file-input-container">
                                 <label for="demo" class="ps-2 pb-2">Upload your Demo Video</label>
                                 <input id="demo" name="demo" type="file" class="form-control signin-email"
-                                    style="padding-block: 7px;" placeholder="Upload Lesson">
+                                    style="padding-block: 7px;" placeholder="Upload Video">
                                 @if ($errors->has('demo'))
                                     <div class="text-danger small">{{ $errors->first('demo') }}</div>
                                 @endif

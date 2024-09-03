@@ -251,7 +251,7 @@
                     courseIdInput.value = '{{ $course->id }}';
                     lessonNameInput.value = name;
                     lessonPartSelect.value = partId;
-                    lessonTypeSelect.value = type == 'video' || type == 'pdf' ? 'file' : url;
+                    lessonTypeSelect.value = (type == 'video' || type == 'pdf') ? 'file' : "url";
                     lessonUrlInput.value = url;
 
                     if (type == 'video' || type == 'pdf') {

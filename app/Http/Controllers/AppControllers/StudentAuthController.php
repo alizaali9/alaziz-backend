@@ -36,7 +36,7 @@ class StudentAuthController extends Controller
 
         do {
             $studentCount = Student::whereYear('created_at', $currentYear)->count() + 1;
-            $rollNumber = $currentYear . 'AAI' . $studentCount;
+            $rollNumber = $currentYear . '-ACP-' . str_pad($studentCount, 2, '0', STR_PAD_LEFT);
         } while (Student::where('roll_no', $rollNumber)->exists());
 
         $token = 'Bearer ' . Str::random(60);
@@ -220,6 +220,7 @@ class StudentAuthController extends Controller
 
     public function editStudent(Request $request, $rollNumber)
     {
+        dd($request->all(), $request->hasFile('picture'), $request->file('picture'));
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:students,email,' . $rollNumber . ',roll_no',
@@ -228,7 +229,7 @@ class StudentAuthController extends Controller
             'city' => 'sometimes|string|max:255',
             'country' => 'sometimes|string|max:255',
             'immi_number' => 'sometimes|string|max:255',
-            'picture' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation for picture
+            'picture' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {

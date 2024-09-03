@@ -6,6 +6,7 @@ use App\Models\Instructor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,6 +26,7 @@ class InstructorController extends Controller
             'password_confirmation' => 'required|string|min:8',
             'about' => 'required|string|min:10',
             'skills' => 'required|string',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -41,15 +43,20 @@ class InstructorController extends Controller
             'remember_token' => Str::random(10),
         ]);
 
+        $picturePath = null;
+        if ($request->hasFile('picture')) {
+            $picturePath = $request->file('picture')->store('instructors', 'public');
+        }
+
         if ($user) {
             Instructor::create([
                 'user_id' => $user->id,
                 'name' => $request->name,
                 'about' => $request->about,
                 'skills' => $request->skills,
+                'picture' => $picturePath,
                 'total_students' => 0,
-                'courses' => 0,
-                'reviews' => 0,
+                'courses' => 0
             ]);
 
             return back()->with('success', 'Instructor has been created successfully.');
@@ -130,6 +137,7 @@ class InstructorController extends Controller
             'email' => 'required|email|max:255',
             'about' => 'required|string',
             'skills' => 'required|string',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $instructor = Instructor::find($request->id);
@@ -139,6 +147,14 @@ class InstructorController extends Controller
         $user->email = $request->email;
         $instructor->about = $request->about;
         $instructor->skills = $request->skills;
+
+        if ($request->hasFile('picture')) {
+            if ($instructor->picture) {
+                Storage::disk('public')->delete($instructor->picture);
+            }
+
+            $instructor->picture = $request->file('picture')->store('instructors', 'public');
+        }
 
         $user->save();
         $instructor->save();

@@ -11,6 +11,7 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizEnrollmentController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SubAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -43,8 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/create-instructor', [InstructorController::class, 'create'])->name('post.instructor');
     Route::get('/instructors', [InstructorController::class, 'manage'])->name('show.instructor');
     Route::get('/download-instructors', [InstructorController::class, 'downloadCSV'])->name('download.instructor');
-    Route::delete('/instructors/{id}', [InstructorController::class, 'destroy'])->name('destroy.instructor');
+    Route::delete('/delete-instructors/{id}', [InstructorController::class, 'destroy'])->name('destroy.instructor');
     Route::put('/instructors/update', [InstructorController::class, 'update'])->name('update.instructor');
+
+    Route::get('/create-subadmin', [SubAdminController::class, 'index'])->name('create.subadmin');
+    Route::post('/create-subadmin', [SubAdminController::class, 'create'])->name('post.subadmin');
+    Route::get('/subadmins', [SubAdminController::class, 'manage'])->name('show.subadmin');
+    Route::get('/download-subadmins', [SubAdminController::class, 'downloadCSV'])->name('download.subadmin');
+    Route::delete('/subadmins/{id}', [SubAdminController::class, 'destroy'])->name('destroy.subadmin');
+    Route::put('/subadmins/update', [SubAdminController::class, 'update'])->name('update.subadmin');
 
     Route::get('/create-course', [CourseController::class, 'index'])->name('create.course');
     Route::get('/courses', [CourseController::class, 'showCourses'])->name('courses.show');
