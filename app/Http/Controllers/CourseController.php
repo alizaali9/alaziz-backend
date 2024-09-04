@@ -188,20 +188,19 @@ class CourseController extends Controller
 
             if ($request->hasFile('thumbnail')) {
                 if ($course->thumbnail) {
-                    Storage::delete($course->thumbnail);
+                    Storage::delete('public/' . $course->thumbnail);
                 }
-                $course->thumbnail = $request->file('thumbnail')->store('thumbnails');
+                $course->thumbnail = $request->file('thumbnail')->store('thumbnails', 'public');
             }
 
             if ($request->hasFile('demo')) {
                 if ($course->demo_video) {
-                    Storage::delete($course->demo_video);
+                    Storage::delete('public/' . $course->demo_video);
                 }
-                $course->demo_video = $request->file('demo')->store('demo_videos');
+                $course->demo_video = $request->file('demo')->store('demo_videos', 'public');
             } else {
                 $course->demo_video = $request->input('url');
             }
-
 
             $course->save();
 
@@ -212,6 +211,7 @@ class CourseController extends Controller
             return redirect()->back()->with('error', 'There was an error updating the course. Please try again.');
         }
     }
+
     public function createParts($courseid)
     {
         return view('content.courses.create-parts', compact('courseid'));
