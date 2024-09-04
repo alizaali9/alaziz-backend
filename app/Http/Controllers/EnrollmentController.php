@@ -44,7 +44,7 @@ class EnrollmentController extends Controller
     protected function downloadEnrollmentsCSV($enrollments)
     {
         $csvData = [
-            ['Student Name', 'Student Roll No', 'Course Name']
+            ['Student Name', 'Student Roll No', 'Course Name', 'Status']
         ];
 
         foreach ($enrollments as $enrollment) {
@@ -52,6 +52,7 @@ class EnrollmentController extends Controller
                 $enrollment->student->name,
                 $enrollment->student->roll_no,
                 $enrollment->course->name,
+                $enrollment->is_active,
             ];
         }
 
@@ -120,9 +121,12 @@ class EnrollmentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
 
-        $existingEnrollment = Enrollment::where('student_id', $student->id)
-            ->where('course_id', $request->course_id)
+        $existingEnrollment = Enrollment::where(function ($query) use ($student, $request) {
+            $query->where('student_id', $student->id)
+                ->where('course_id', $request->course_id);
+        })->orWhere('is_active', true)
             ->first();
+
 
         if ($existingEnrollment) {
             return response()->json(['status' => 200, 'enrolled' => true], 200);
@@ -131,6 +135,20 @@ class EnrollmentController extends Controller
         return response()->json(['status' => 200, 'enrolled' => false], 200);
     }
 
+
+    public function toggleStatus(Request $request, $id)
+    {
+        $enrollment = Enrollment::find($id);
+
+        if (!$enrollment) {
+            return response()->json(['success' => false, 'message' => 'Enrollment not found.']);
+        }
+
+        $enrollment->is_active = $request->status;
+        $enrollment->save();
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+    }
 
     public function index()
     {
@@ -155,12 +173,12 @@ class EnrollmentController extends Controller
         }
 
         $courses = Enrollment::where('student_id', $student->id)
+            ->where('is_active', true)
             ->with('course')
             ->get()
             ->pluck('course');
 
         $courses->transform(function ($course) {
-
             $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
             $course->enrolled_students = $course->students()->count();
 
@@ -175,7 +193,6 @@ class EnrollmentController extends Controller
             return $course;
         });
 
-
         return response()->json([
             'status' => 200,
             'student' => $student->name,
@@ -183,6 +200,7 @@ class EnrollmentController extends Controller
             'courses' => $courses,
         ], 200);
     }
+
 
     public function delete($id)
     {

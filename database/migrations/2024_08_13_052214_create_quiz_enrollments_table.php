@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('quiz_id')->constrained()->onDelete('cascade');
             $table->decimal('marks_percentage', 5, 2)->nullable();
             $table->integer('remaining_tries')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
 
             $table->unique(['student_id', 'quiz_id']);

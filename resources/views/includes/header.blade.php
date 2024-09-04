@@ -42,7 +42,9 @@
                         @endphp
                         <div class="app-utility-item app-user-dropdown dropdown">
                             <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
-                                href="#" role="button" aria-expanded="false"><img src="{{ $instructorImage }}" class="img-fluid" style="border-radius: 50%; object-fit: cover"
+                                href="#" role="button" aria-expanded="false"><img
+                                    src="{{ Auth::user()->role == 2 ? $instructorImage : asset('assets/images/user.png') }}"
+                                    class="img-fluid" style="border-radius: 50%; object-fit: cover"
                                     alt="user profile"></a>
                             <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                                 <li><a class="dropdown-item" href="{{ route('settings') }}">{{ Auth::user()->name }}</a>

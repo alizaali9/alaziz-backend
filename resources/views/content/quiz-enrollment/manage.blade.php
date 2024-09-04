@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="app-content pt-3 p-md-3 p-lg-4">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
@@ -23,7 +25,8 @@
                                 </div><!--//app-search-box-->
                             </div><!--//col-->
                             <div class="col-auto">
-                                <a class="btn app-btn-secondary" href="{{ route('manage.quiz.enrollment',  ['download' => 'csv', 'search' => request()->get('search')]) }}">
+                                <a class="btn app-btn-secondary"
+                                    href="{{ route('manage.quiz.enrollment', ['download' => 'csv', 'search' => request()->get('search')]) }}">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -63,6 +66,7 @@
                                             <th class="cell text-center">Student Name</th>
                                             <th class="cell text-center">Student Roll No</th>
                                             <th class="cell text-center">Quiz Name</th>
+                                            <th class="cell text-center">Status</th>
                                             <th class="cell text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -72,6 +76,14 @@
                                                 <td class="cell text-center">{{ $enrollment->student->name }}</td>
                                                 <td class="cell text-center">{{ $enrollment->student->roll_no }}</td>
                                                 <td class="cell text-center">{{ $enrollment->quiz->name }}</td>
+                                                <td class="cell text-center">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="status-toggle"
+                                                            data-id="{{ $enrollment->id }}"
+                                                            {{ $enrollment->is_active == true ? 'checked' : '' }}>
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
                                                 <td class="cell d-flex justify-content-center">
                                                     <div class="ps-3">
                                                         <form
@@ -102,4 +114,39 @@
             </div><!--//tab-content-->
         </div><!--//container-fluid-->
     </div><!--//app-content-->
+    <script>
+        const successmsg = document.getElementById('success-msg');
+
+        document.querySelectorAll('.status-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                successmsg.innerText = '';
+                const enrollmentId = this.getAttribute('data-id');
+                const status = this.checked ? 1 : 0;
+
+                fetch(`/quiz-enrollments/${enrollmentId}/toggle-status`, {
+                        method: 'PATCH',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector(
+                                'meta[name="csrf-token"]').getAttribute('content'),
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            status
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            successmsg.innerText = 'Status Updated Successfully';
+                        } else {
+                            successmsg.innerText = 'Failed to Update Status';
+                        }
+                    })
+                    .catch(error => {
+                        successmsg.innerText = 'An error occurred. Please try again.';
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
 @endsection

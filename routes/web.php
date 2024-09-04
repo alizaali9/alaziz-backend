@@ -85,11 +85,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/add-enrollment', [EnrollmentController::class, 'store'])->name('store.enrollment');
     Route::get('/manage-enrollment', [EnrollmentController::class, 'manage'])->name('manage.enrollment');
     Route::delete('/enrollments/{id}', [EnrollmentController::class, 'delete'])->name('enrollments.delete');
+    Route::patch('/enrollments/{id}/toggle-status', [EnrollmentController::class, 'toggleStatus']);
 
     Route::get('/add-quiz-enrollment', [QuizEnrollmentController::class, 'create'])->name('add.quiz.enrollment');
     Route::post('/add-quiz-enrollment', [QuizEnrollmentController::class, 'store'])->name('store.quiz.enrollment');
     Route::get('/manage-quiz-enrollment', [QuizEnrollmentController::class, 'manage'])->name('manage.quiz.enrollment');
     Route::delete('/quiz-enrollments/{id}', [QuizEnrollmentController::class, 'delete'])->name('quiz.enrollment.delete');
+    Route::patch('/quiz-enrollments/{id}/toggle-status', [QuizEnrollmentController::class, 'toggleStatus']);
 
     Route::get('/settings', [SettingsController::class, 'settings'])->name('settings');
     Route::put('/settings/update-name/{id}', [SettingsController::class, 'updateUserName'])->name('updateUserName');

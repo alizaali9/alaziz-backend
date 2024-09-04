@@ -11,7 +11,8 @@ class QuizEnrollment extends Model
         'student_id',
         'quiz_id',
         'marks_percentage',
-        'remaining_tries'
+        'remaining_tries',
+        'is_active'
     ];
 
     public function student()

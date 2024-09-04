@@ -178,6 +178,14 @@ class InstructorController extends Controller
     public function getAllInstructors()
     {
         $instructors = Instructor::with('user')->get();
+
+        $instructors->transform(function ($instructor) {
+
+            $instructor->picture = $instructor->picture ? asset('storage/' . $instructor->picture) : null;
+
+            return $instructor;
+        });
+
         return response()->json($instructors);
     }
 

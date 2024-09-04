@@ -121,8 +121,10 @@ class QuizEnrollmentController extends Controller
             return response()->json(['status' => 404, 'message' => 'Student not found'], 404);
         }
 
-        $existingEnrollment = QuizEnrollment::where('student_id', $student->id)
-            ->where('quiz_id', $request->quiz_id)
+        $existingEnrollment = QuizEnrollment::where(function ($query) use ($student, $request) {
+            $query->where('student_id', $student->id)
+                ->where('quiz_id', $request->quiz_id);
+        })->orWhere('is_active', true)
             ->first();
 
         $totalEnrolled = QuizEnrollment::where('quiz_id', $request->quiz_id)->count();
@@ -167,6 +169,7 @@ class QuizEnrollmentController extends Controller
         }
 
         $quizzes = QuizEnrollment::where('student_id', $student->id)
+            ->where('is_active', true)
             ->with('quiz')
             ->get()
             ->pluck('quiz');
@@ -190,6 +193,20 @@ class QuizEnrollmentController extends Controller
             'roll_no' => $student->roll_no,
             'quizzes' => $quizzes,
         ], 200);
+    }
+
+    public function toggleStatus(Request $request, $id)
+    {
+        $enrollment = QuizEnrollment::find($id);
+
+        if (!$enrollment) {
+            return response()->json(['success' => false, 'message' => 'Enrollment not found.']);
+        }
+
+        $enrollment->is_active = $request->status;
+        $enrollment->save();
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
     }
 
     public function updateMarksPercentage(Request $request, $roll_no, $quizId)
