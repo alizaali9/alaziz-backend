@@ -11,6 +11,7 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizEnrollmentController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SubAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -100,4 +101,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/update-skills/{id}', [SettingsController::class, 'updateInstructorSkills'])->name('updateInstructorSkills');
     Route::put('/settings/update-password/{id}', [SettingsController::class, 'updatePassword'])->name('updatePassword');
     Route::put('/settings/update-picture/{id}', [SettingsController::class, 'updateInstructorPic'])->name('updateInstructorPic');
+
+    Route::get('sliders/create', [SliderController::class, 'index'])->name('sliders.create');
+    Route::post('sliders/store', [SliderController::class, 'store'])->name('sliders.store');
+    Route::get('sliders/manage', [SliderController::class, 'manage'])->name('sliders.manage');
+    Route::delete('sliders/{id}', [SliderController::class, 'destroy'])->name('sliders.destroy');
+
 });

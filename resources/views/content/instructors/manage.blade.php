@@ -78,7 +78,7 @@
                                                 <td class="cell text-center">{{ $instructor->user->email }}</td>
                                                 <td class="cell text-center">{{ $instructor->about }}</td>
                                                 <td class="cell text-center">{{ $instructor->skills }}</td>
-                                                <td class="cell d-flex justify-content-center">
+                                                <td class="cell text-center">
                                                     <div>
                                                         <button type="button" class="btn app-btn-primary theme-btn mx-auto"
                                                             data-bs-toggle="modal" data-bs-target="#editInstructorModal"

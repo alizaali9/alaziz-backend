@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\CourseMaterial;
 use App\Models\CoursePart;
+use App\Models\Instructor;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -156,7 +157,7 @@ class CourseController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
+                'name' => 'required|string|max:55',
                 'language' => 'required|string|max:50',
                 'overview' => 'nullable|string',
                 'description' => 'required|string',
@@ -226,7 +227,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|unique:courses,name',
+            'name' => 'required|string|max:55|unique:courses,name',
             'description' => 'required|string',
             'level' => 'required|string',
             'language' => 'required|string',
@@ -657,7 +658,13 @@ class CourseController extends Controller
         $course->sub_category = $subcategory;
 
         $course->enrolled_students = $course->students()->count();
-        $course->instructor = $course->creator->name;
+
+        if ($course->creator->role == 2) {
+            $instructor = Instructor::where('user_id', $course->creator->id)->first();
+            $course->instructor = $instructor->picture ? asset('storage/' . $instructor->picture) : null;
+        } else {
+            $course->instructor = null;
+        }
 
         foreach ($course->courseParts as $part) {
             foreach ($part->courseMaterials as $material) {
@@ -666,8 +673,6 @@ class CourseController extends Controller
                 }
             }
         }
-
-        // dd($course);
 
         return response()->json($course);
     }

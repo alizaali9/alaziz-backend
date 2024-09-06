@@ -126,7 +126,7 @@ class QuizController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:quizzes,name',
+            'name' => 'required|string|max:30|unique:quizzes,name',
             'status' => 'required|boolean',
             'thumbnail' => 'nullable|file|mimes:png,jpg,jpeg',
             'price' => 'required|integer',
@@ -183,19 +183,32 @@ class QuizController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'name' => 'required|string|max:30|unique:quizzes,name,' . $id,
+            'timelimit' => 'required|integer',
+            'price' => 'required|integer',
+            'sub_category' => 'required|integer|exists:subcategories,id',
+            'tries' => 'nullable|integer',
+            'thumbnail' => 'nullable|file|mimes:png,jpg,jpeg',
+        ]);
+
         $quiz = Quiz::findOrFail($id);
 
-        $quiz->update([
+        $quizData = [
             'name' => $request->name,
             'timelimit' => $request->timelimit,
             'price' => $request->price,
             'sub_category' => $request->sub_category,
             'tries' => $request->tries,
             'thumbnail' => $request->hasFile('thumbnail') ? $request->file('thumbnail')->store('thumbnails') : $quiz->thumbnail,
-        ]);
+        ];
+
+        $quiz->update($quizData);
 
         return redirect()->back()->with('success', 'Quiz updated successfully!');
     }
+
 
     public function updateStatus(Request $request, $id)
     {

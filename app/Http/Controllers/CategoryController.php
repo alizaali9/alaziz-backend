@@ -71,7 +71,7 @@ class CategoryController extends Controller
         ];
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|unique:categories,name',
+            'name' => 'required|string|max:30|unique:categories,name',
             'subcategory.*' => 'nullable|string|max:255|unique:subcategories,name',
         ], $messages);
 
@@ -161,7 +161,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:30',
             'subcategories' => 'array',
             'subcategories.*.id' => 'nullable',
             'subcategories.*.name' => 'required|string|max:255',

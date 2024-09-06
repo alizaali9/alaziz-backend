@@ -7,6 +7,7 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizEnrollmentController;
+use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('register', [StudentAuthController::class, 'register']);
@@ -39,6 +40,8 @@ Route::middleware(['student.check'])->group(function () {
 
     Route::get('quiz-enrollments', [QuizEnrollmentController::class, 'index']);
     Route::post('check-quiz-enrollment', [QuizEnrollmentController::class, 'checkEnrollment']);
+
+    Route::get('sliders', [SliderController::class, 'getSliders']);
 });
 
 

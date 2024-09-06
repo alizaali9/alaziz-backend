@@ -124,19 +124,22 @@ class QuizEnrollmentController extends Controller
         $existingEnrollment = QuizEnrollment::where(function ($query) use ($student, $request) {
             $query->where('student_id', $student->id)
                 ->where('quiz_id', $request->quiz_id);
-        })->orWhere('is_active', true)
-            ->first();
+        })->first();
+
+        // dd($existingEnrollment);
 
         $totalEnrolled = QuizEnrollment::where('quiz_id', $request->quiz_id)->count();
 
         if ($existingEnrollment) {
-            return response()->json([
-                'status' => 200,
-                'enrolled' => true,
-                'marks_percentage' => $existingEnrollment->marks_percentage == null ? 0 : $existingEnrollment->marks_percentage,
-                'remaining_tries' => $existingEnrollment->remaining_tries,
-                'total_enrolled' => $totalEnrolled
-            ], 200);
+            if ($existingEnrollment->is_active == 1) {
+                return response()->json([
+                    'status' => 200,
+                    'enrolled' => true,
+                    'marks_percentage' => $existingEnrollment->marks_percentage == null ? 0 : $existingEnrollment->marks_percentage,
+                    'remaining_tries' => $existingEnrollment->remaining_tries,
+                    'total_enrolled' => $totalEnrolled
+                ], 200);
+            }
         }
 
         return response()->json([
