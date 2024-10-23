@@ -12,17 +12,17 @@
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
                                 <div class="app-search-box">
-                                    <form class="app-search-form">
-                                        <input type="text" placeholder="Search..." name="search"
-                                            class="form-control search-input">
-                                        <button type="submit" class="btn search-btn btn-primary" value="Search">
+                                    <form class="app-search-form" action="{{ route('show.categories') }}" method="GET">
+                                        <input type="text" placeholder="Search..." name="search" class="form-control search-input"
+                                            value="{{ request('search') }}">
+                                        <button type="submit" class="btn search-btn" value="Search">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </button>
                                     </form>
                                 </div><!--//app-search-box-->
                             </div><!--//col-->
                             <div class="col-auto">
-                                <a class="btn app-btn-secondary" href="#">
+                                <a class="btn app-btn-secondary" href="{{ route('download.csv', ['search' => request()->get('search')]) }}">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -47,6 +47,13 @@
                 <div class="text-danger text-center small pb-3">
                     {{ session('error') }}
                 </div>
+            @endif
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="text-danger text-center small pb-3">
+                        {{ $error }}
+                    </div>
+                @endforeach
             @endif
 
             <div class="tab-content" id="orders-table-tab-content">

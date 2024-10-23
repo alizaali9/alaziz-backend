@@ -14,9 +14,9 @@ class Instructor extends Model
         'name',
         'about',
         'skills',
+        'picture',
         'total_students',
         'courses',
-        'reviews',
     ];
 
     public function user()

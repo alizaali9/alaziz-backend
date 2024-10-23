@@ -6,6 +6,8 @@ use App\Models\Instructor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,11 +22,12 @@ class InstructorController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',  // corrected to 'users'
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|string|min:8',
             'about' => 'required|string|min:10',
             'skills' => 'required|string',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -41,15 +44,28 @@ class InstructorController extends Controller
             'remember_token' => Str::random(10),
         ]);
 
+        $picturePath = null;
+        if ($request->hasFile('picture')) {
+            $profilePicture = $request->file('picture');
+
+            $extension = $profilePicture->getClientOriginalExtension();
+            $fileData = File::get($profilePicture);
+            $profilePath = env('GOOGLE_DERIVE_FOLDER_NAME') . '/instructors/instructor_' . uniqid() . '.' . $extension;
+            Storage::disk('google')->put($profilePath, $fileData);
+            Storage::disk('google')->setVisibility($profilePath, 'public');
+
+            $picturePath = $profilePath;
+        }
+
         if ($user) {
             Instructor::create([
                 'user_id' => $user->id,
                 'name' => $request->name,
                 'about' => $request->about,
                 'skills' => $request->skills,
+                'picture' => $picturePath,
                 'total_students' => 0,
-                'courses' => 0,
-                'reviews' => 0,
+                'courses' => 0
             ]);
 
             return back()->with('success', 'Instructor has been created successfully.');
@@ -58,12 +74,74 @@ class InstructorController extends Controller
         return back()->with('error', 'An error occurred while creating the instructor.');
     }
 
-    public function show()
+    public function manage(Request $request)
     {
-        $instructors = Instructor::with('user')->get();
+        $query = Instructor::with('user');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('about', 'LIKE', "%{$search}%")
+                    ->orWhere('skills', 'LIKE', "%{$search}%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('email', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $instructors = $query->get();
+
+        foreach ($instructors as $instructor) {
+            $instructor->picture = Storage::disk('google')->url($instructor->picture);
+        }
 
         return view('content.instructors.manage', compact('instructors'));
     }
+
+    public function downloadCSV(Request $request)
+    {
+        $query = Instructor::query()->with('user');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('about', 'LIKE', "%{$search}%")
+                    ->orWhere('skills', 'LIKE', "%{$search}%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('email', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $instructors = $query->get();
+
+        $csvFileName = 'instructors_' . now()->format('Y_m_d_H_i_s') . '.csv';
+        $handle = fopen($csvFileName, 'w');
+
+        $csvData = [
+            ['Name', 'Email', 'About', 'Skills']
+        ];
+
+        foreach ($instructors as $instructor) {
+            $csvData[] = [
+                $instructor->name,
+                $instructor->user->email,
+                $instructor->about,
+                $instructor->skills,
+            ];
+        }
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+
+        return response()->download($csvFileName)->deleteFileAfterSend(true);
+    }
+
 
     public function update(Request $request)
     {
@@ -73,6 +151,7 @@ class InstructorController extends Controller
             'email' => 'required|email|max:255',
             'about' => 'required|string',
             'skills' => 'required|string',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $instructor = Instructor::find($request->id);
@@ -82,6 +161,21 @@ class InstructorController extends Controller
         $user->email = $request->email;
         $instructor->about = $request->about;
         $instructor->skills = $request->skills;
+
+        if ($request->hasFile('picture')) {
+            if ($instructor->picture) {
+                Storage::disk('google')->delete($instructor->picture);
+            }
+            $profilePicture = $request->file('picture');
+
+            $extension = $profilePicture->getClientOriginalExtension();
+            $fileData = File::get($profilePicture);
+            $profilePath = env('GOOGLE_DERIVE_FOLDER_NAME') . '/instructors/instructor_' . uniqid() . '.' . $extension;
+            Storage::disk('google')->put($profilePath, $fileData);
+            Storage::disk('google')->setVisibility($profilePath, 'public');
+
+            $instructor->picture = $profilePath;
+        }
 
         $user->save();
         $instructor->save();
@@ -105,6 +199,14 @@ class InstructorController extends Controller
     public function getAllInstructors()
     {
         $instructors = Instructor::with('user')->get();
+
+        $instructors->transform(function ($instructor) {
+
+            $instructor->picture = $instructor->picture ? Storage::disk('google')->url($instructor->picture) : null;
+
+            return $instructor;
+        });
+
         return response()->json($instructors);
     }
 
@@ -115,6 +217,8 @@ class InstructorController extends Controller
         if (!$instructor) {
             return response()->json(['error' => 'Instructor not found'], 404);
         }
+
+        $instructor->picture = Storage::disk('google')->url($instructor->picture);
 
         return response()->json($instructor);
     }

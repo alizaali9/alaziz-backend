@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
 
             $table->unique(['student_id', 'course_id']);

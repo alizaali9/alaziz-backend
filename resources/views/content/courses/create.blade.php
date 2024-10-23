@@ -21,6 +21,13 @@
                             {{ session('error') }}
                         </div>
                     @endif
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="text-danger text-center small pb-3">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
                     <div class="row">
                         <div class="w-50 mb-3">
                             <input id="name" name="name" type="text" class="form-control signin-email"
@@ -76,19 +83,48 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('level'))
-                                <div class="text-danger small">{{ $errors->first('level') }}</div>
+                            @if ($errors->has('sub_category'))
+                                <div class="text-danger small">{{ $errors->first('sub_category') }}</div>
                             @endif
                         </div>
                     </div>
                     <div class="row">
                         <div class="w-100 mb-3">
-                            <label for="demo" class="ps-2 pb-2">Upload your Demo Video</label>
-                            <input id="demo" name="demo" type="file" class="form-control"
-                                style="padding-top: 7px;" placeholder="Demo Video">
-                            @if ($errors->has('demo'))
-                                <div class="text-danger small">{{ $errors->first('demo') }}</div>
+                            <label for="thumbnail" class="ps-2 pb-2">Upload Thumbnail Image</label>
+                            <input id="thumbnail" name="thumbnail" type="file" class="form-control"
+                                style="padding-top: 7px;" placeholder="Thumbnail Image">
+                            @if ($errors->has('thumbnail'))
+                                <div class="text-danger small">{{ $errors->first('thumbnail') }}</div>
                             @endif
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="w-50 mb-3">
+                            <label for="demo_type" class="ps-2 pb-2">Choose your Demo Type</label>
+                            <select id="demo-type"
+                                class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control" name="demo_type"
+                                onchange="toggleContentInput(this.value)">
+                                <option value="file">Upload File</option>
+                                <option value="url">Enter URL</option>
+                            </select>
+                        </div>
+                        <div class="w-50 mb-3">
+                            <div class="w-100 mb-3" id="file-input-container">
+                                <label for="demo" class="ps-2 pb-2">Upload your Demo Video</label>
+                                <input id="demo" name="demo" type="file" class="form-control signin-email"
+                                    style="padding-block: 7px;" placeholder="Upload Lesson">
+                                @if ($errors->has('demo'))
+                                    <div class="text-danger small">{{ $errors->first('demo') }}</div>
+                                @endif
+                            </div>
+                            <div class="w-100 mb-3 d-none" id="url-input-container">
+                                <label for="url" class="ps-2 pb-2">Enter your Demo URL</label>
+                                <input id="url" name="url" type="text" class="form-control signin-email"
+                                    placeholder="Enter Demo URL">
+                                @if ($errors->has('url'))
+                                    <div class="text-danger small">{{ $errors->first('url') }}</div>
+                                @endif
+                            </div>
                         </div>
                     </div>
 
@@ -130,4 +166,18 @@
 
         </div>
     </div>
+    <script>
+        function toggleContentInput(value) {
+            if (value === 'file') {
+                document.getElementById('file-input-container').classList.remove('d-none');
+                document.getElementById('url-input-container').classList.add('d-none');
+            } else if (value === 'url') {
+                document.getElementById('file-input-container').classList.add('d-none');
+                document.getElementById('url-input-container').classList.remove('d-none');
+            } else {
+                document.getElementById('file-input-container').classList.add('d-none');
+                document.getElementById('url-input-container').classList.add('d-none');
+            }
+        }
+    </script>
 @endsection

@@ -15,18 +15,26 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="text-success text-center small pb-3">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div id="input-containers">
                         <div class="row justify-content-center input-container">
                             <div class="w-50 mb-3">
                                 <input id="name-0" name="name[0]" type="text" class="form-control signin-email"
                                     placeholder="Course Part Name">
-                                @if ($errors->has('name'))
-                                    <div class="text-danger small">{{ $errors->first('name') }}</div>
-                                @endif
+                                @foreach ($errors->get('name.*') as $key => $errorMessages)
+                                    @foreach ($errorMessages as $message)
+                                        <div class="text-danger small">{{ $message }}</div>
+                                    @endforeach
+                                @endforeach
+
                             </div>
                             <div style="width: 5%">
-                                <button type="button" class="btn app-btn-primary theme-btn mx-auto" style="padding-inline: 14px;"
-                                    onclick="cloneContainer()">+
+                                <button type="button" class="btn app-btn-primary theme-btn mx-auto"
+                                    style="padding-inline: 14px;" onclick="cloneContainer()">+
                                 </button>
                             </div>
                             <div style="width: 5%; display: none;">
@@ -82,7 +90,7 @@
 
             const removeButtonDiv = document.createElement('div');
             removeButtonDiv.style.width = '5%';
-            removeButtonDiv.style.display = 'none';
+            // removeButtonDiv.style.display = 'none';
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.className = 'btn app-btn-danger theme-btn mx-auto';
@@ -108,8 +116,13 @@
             const containers = document.querySelectorAll('.input-container');
             if (containers.length > 0) {
                 const lastContainer = containers[containers.length - 1];
-                lastContainer.children[1].style.display = 'block';
-                lastContainer.children[2].style.display = 'none';
+                if (containers.length == 1) {
+                    lastContainer.children[1].style.display = 'block';
+                    lastContainer.children[2].style.display = 'none';
+                } else {
+                    lastContainer.children[1].style.display = 'block';
+                    lastContainer.children[2].style.display = 'block';
+                }
             }
         }
     </script>

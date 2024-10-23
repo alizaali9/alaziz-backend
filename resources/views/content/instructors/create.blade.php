@@ -7,7 +7,7 @@
                 <div class="col-auto">
                     <h1 class="app-page-title mb-5 ps-2">Create Instructor</h1>
                 </div>
-                <form class="auth-form login-form" action="{{ route('post.instructor') }}" method="POST">
+                <form class="auth-form login-form" action="{{ route('post.instructor') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @if (session('success'))
                         <div class="text-success text-center small pb-3">
@@ -65,6 +65,16 @@
                             <div class="text-danger small my-4 text-center">{{ $errors->first('invalid') }}
                             </div>
                         @endif
+                    </div>
+                    <div class="row">
+                        <div class="w-50 mb-3">
+                            <label for="picture" class="ps-2 pb-2">Upload Instructor Picture</label>
+                            <input id="picture" name="picture" type="file" class="form-control signin-email"
+                                placeholder="Upload Picture">
+                            @if ($errors->has('picture'))
+                                <div class="text-danger small">{{ $errors->first('picture') }}</div>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="text-center">

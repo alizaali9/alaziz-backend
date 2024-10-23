@@ -17,12 +17,8 @@
                         </div>
                     @endif
                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                        <div class="text-danger text-center small pb-3">
+                            <p>Something went wrong</p>
                         </div>
                     @endif
                     <div class="row">
@@ -106,7 +102,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Create Course
+                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Create Quiz
                         </button>
                     </div>
                 </form>
