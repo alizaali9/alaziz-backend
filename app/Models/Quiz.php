@@ -31,6 +31,11 @@ class Quiz extends Model
         return $this->belongsTo(Subcategory::class, 'sub_category');
     }
 
+    public function enrollments()
+    {
+        return $this->hasMany(QuizEnrollment::class);
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class);

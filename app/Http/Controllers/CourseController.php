@@ -8,7 +8,9 @@ use App\Models\Course;
 use App\Models\CourseMaterial;
 use App\Models\CoursePart;
 use App\Models\CourseCreator;
+use App\Models\CourseRating;
 use App\Models\Instructor;
+use App\Models\Student;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -837,6 +839,12 @@ class CourseController extends Controller
     }
     public function getCourseDetails($id)
     {
+        $token = request()->header('Authorization');
+        $student = null;
+        if ($token) {
+            $student = Student::where('api_token', $token)->first();
+        }
+
         $course = Course::with([
             'courseParts' => function ($query) {
                 $query->orderBy('order', 'asc');
@@ -860,6 +868,19 @@ class CourseController extends Controller
 
         $course->course_category = $category;
         $course->sub_category = $subcategory;
+
+
+        $courseRating = CourseRating::where('user_id', $student->id)
+            ->where('course_id', $id)
+            ->first();
+
+        if ($courseRating) {
+            $stars = $courseRating->stars;
+            $course->isRated = true;
+            $course->stars = $stars;
+        } else {
+            $course->isRated = false;
+        }
 
         $course->enrolled_students = $course->students()->count();
         $creators = $course->creators->map(function ($creator) {
@@ -892,23 +913,54 @@ class CourseController extends Controller
     public function updateRatings(Request $request, $courseId)
     {
         $validation = Validator::make($request->all(), [
-            'no_of_raters' => 'required|integer|min:0',
-            'course_stars' => 'required|numeric|min:0|max:5',
+            'stars' => 'required|numeric|min:0|max:5',
+            'roll_no' => 'required|exists:students,roll_no',
         ]);
 
         if ($validation->fails()) {
             return response()->json(['errors' => $validation->errors()], 422);
         }
 
+        $student = Student::where('roll_no', $request->roll_no)->first();
+        if (!$student) {
+            return response()->json([
+                'error' => 'Student not found with the given roll number.',
+            ], 404);
+        }
+
         try {
-            $course = Course::findOrFail($courseId);
-            $course->no_of_raters = $request->input('no_of_raters');
-            $course->course_stars = $request->input('course_stars');
+            $courseRating = CourseRating::updateOrCreate(
+                [
+                    'user_id' => $student->id,
+                    'course_id' => $courseId,
+                ],
+                [
+                    'stars' => $request->stars,
+                ]
+            );
+
+            $course = Course::find($courseId);
+
+            $noOfRaters = CourseRating::where('course_id', $courseId)->count();
+
+            $course->no_of_raters = $noOfRaters;
+
+            $totalStars = CourseRating::where('course_id', $courseId)->sum('stars');
+            $course->course_stars = $noOfRaters > 0
+                ? number_format($totalStars / $noOfRaters, 2, '.', '')
+                : 0;
+
             $course->save();
 
-            return response()->json(['status' => 200, 'message' => 'Course ratings updated successfully', 'course' => $course], 200);
+            return response()->json([
+                'message' => $courseRating->wasRecentlyCreated
+                    ? 'Course rating created successfully.'
+                    : 'Course rating updated successfully.',
+                'course_stars' => $course->course_stars,
+                'no_of_raters' => $course->no_of_raters,
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['status' => 400, 'error' => 'There was an issue updating the course ratings. Please try again.'], 500);
+            return response()->json(['status' => 500, 'error' => 'There was an issue updating the course ratings. Please try again.'], 500);
         }
     }
 }
