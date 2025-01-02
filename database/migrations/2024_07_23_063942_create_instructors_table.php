@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('about');
             $table->text('skills');
+            $table->string('picture')->nullable();
             $table->integer('total_students')->default(0);
             $table->integer('courses')->default(0);
-            $table->integer('reviews')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

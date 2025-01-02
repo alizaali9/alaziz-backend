@@ -6,9 +6,57 @@ use App\Models\Category;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
 
 class CategoryController extends Controller
 {
+
+    public function downloadCsv(Request $request)
+    {
+        $query = Category::with(['subcategories.courses'])->withCount('courses');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhereHas('subcategories', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereHas('subcategories.courses', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $categories = $query->get();
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'csv');
+        $handle = fopen($tempFile, 'w');
+
+        fputcsv($handle, ['Category No', 'Category Name', 'No. of Courses', 'Subcategories', 'Courses in Subcategories']);
+
+
+        foreach ($categories as $category) {
+            $subcategoryNames = $category->subcategories->pluck('name')->implode(', ');
+            $subcategoryCoursesCounts = $category->subcategories->map(function ($subcategory) {
+                return $subcategory->courses->count();
+            })->implode(', ');
+
+            fputcsv($handle, [
+                $category->id,
+                $category->name,
+                $category->courses_count,
+                $subcategoryNames,
+                $subcategoryCoursesCounts,
+            ]);
+        }
+
+        fclose($handle);
+
+        $response = response()->download($tempFile, 'categories_and_subcategories.csv')->deleteFileAfterSend(true);
+
+        return $response;
+    }
     public function index()
     {
         return view('content.categories.create');
@@ -16,10 +64,21 @@ class CategoryController extends Controller
 
     public function create(Request $request)
     {
+        $messages = [
+            'name.unique' => 'The category name has already been taken.',
+            'subcategory.*.unique' => 'The subcategory ":input" has already been taken.',
+            'subcategory.*.max' => 'The subcategory ":input" may not be greater than 255 characters.',
+        ];
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'subcategory.*' => 'nullable|string|max:255|',
-        ]);
+            'name' => 'required|string|max:30|unique:categories,name',
+            'subcategory.*' => 'nullable|string|max:255|unique:subcategories,name',
+        ], $messages);
+
+        $subcategories = $request->input('subcategory', []);
+        if (count($subcategories) !== count(array_unique($subcategories))) {
+            return redirect()->back()->withErrors(['subcategory' => 'Duplicate subcategory names are not allowed.'])->withInput();
+        }
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -31,7 +90,6 @@ class CategoryController extends Controller
             'name' => $request->name
         ]);
 
-        $subcategories = $request->input('subcategory', []);
         foreach ($subcategories as $subcategoryName) {
             if (!empty($subcategoryName)) {
                 Subcategory::create([
@@ -41,18 +99,24 @@ class CategoryController extends Controller
             }
         }
 
-        if ($category && $subcategories) {
-            return redirect()->back()->with('success', 'Category has been created Successfully.');
+        if ($category) {
+            return redirect()->back()->with('success', 'Category has been created successfully.');
         } else {
-            return redirect()->back()->with('error', 'Something went wrong. Try Again!');
+            return redirect()->back()->with('error', 'Something went wrong. Try again!');
         }
     }
 
-    public function show()
-    {
-        $categories = Category::withCount('courses')->with(['subcategories', 'subcategories.courses'])->get();
 
+    public function show(Request $request)
+    {
+        $search = $request->input('search');
+        $categories = Category::withCount('courses')
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
         return view('content.categories.manage', compact('categories'));
+
     }
 
     public function getAllCategories()
@@ -69,13 +133,34 @@ class CategoryController extends Controller
             return response()->json(['status' => 404, 'error' => 'Category not found'], 404);
         }
 
+        $category->courses->transform(function ($course) {
+
+            $course->thumbnail = $course->thumbnail ? asset('storage/' . $course->thumbnail) : null;
+            $course->demo_video = $course->demo_video ? asset('storage/' . $course->demo_video) : null;
+
+            $subcategory = Subcategory::find($course->sub_category);
+            $category = Category::find($course->category);
+
+            $course->course_category = $category;
+            $course->sub_category = $subcategory;
+
+            foreach ($course->courseParts as $part) {
+                foreach ($part->courseMaterials as $material) {
+                    $material->url = asset('storage/' . $material->url);
+                }
+            }
+
+            return $course;
+        });
+
+
         return response()->json($category->courses);
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:30',
             'subcategories' => 'array',
             'subcategories.*.id' => 'nullable',
             'subcategories.*.name' => 'required|string|max:255',

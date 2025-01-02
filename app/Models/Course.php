@@ -17,22 +17,18 @@ class Course extends Model
         'course_stars',
         'course_category',
         'sub_category',
+        'thumbnail',
         'language',
         'created_by',
         'last_updated',
         'demo_video',
         'price',
+        'discount',
         'overview',
         'outcome',
         'requirements',
         'total_lessons',
     ];
-
-    // Define the relationships
-    public function creator()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
 
     public function category()
     {
@@ -57,6 +53,12 @@ class Course extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'enrollments');
+    }
+
+    public function creators()
+    {
+        return $this->belongsToMany(User::class, 'course_creators', 'course_id', 'user_id')
+                    ->withTimestamps();
     }
 
 }

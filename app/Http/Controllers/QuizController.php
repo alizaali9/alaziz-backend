@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Imports\QuizImport;
 use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\Student;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -14,14 +17,98 @@ class QuizController extends Controller
 {
     public function getAllQuizes()
     {
-        $quizzes = Quiz::with(['questions', 'category', 'subcategory'])->get();
+        $quizzes = Quiz::with(['questions', 'category', 'subcategory'])
+            ->where('status', true)
+            ->get();
 
-        if (!$quizzes) {
-            return response()->json(['error' => 'Quizes not found'], 404);
+        $quizzes->transform(function ($quiz) {
+            $thumbnail = $quiz->thumbnail ? asset('storage/' . $quiz->thumbnail) : null;
+            $quiz->thumbnail = $thumbnail;
+
+            return $quiz;
+        });
+
+        if ($quizzes->isEmpty()) {
+            return response()->json(['error' => 'Quizzes not found'], 404);
         }
 
         return response()->json($quizzes);
     }
+
+
+    public function manageQuizzes()
+    {
+        $query = Quiz::with(['questions', 'category', 'subcategory']);
+
+        if (request()->has('search')) {
+            $search = request()->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhereHas('subcategory', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhere('timelimit', 'LIKE', "%{$search}%")
+                    ->orWhere('price', 'LIKE', "%{$search}%")
+                    ->orWhere('tries', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $quizzes = $query->get();
+        $subcategories = Subcategory::all();
+
+        return view('content.quizzes.manage', compact('quizzes', 'subcategories'));
+    }
+
+    public function downloadQuizzesCSV(Request $request)
+    {
+        try {
+            $query = Quiz::with('subcategory');
+
+            if ($request->has('search')) {
+                $search = $request->get('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhereHas('subcategory', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', "%{$search}%");
+                        })
+                        ->orWhere('timelimit', 'LIKE', "%{$search}%")
+                        ->orWhere('price', 'LIKE', "%{$search}%")
+                        ->orWhere('tries', 'LIKE', "%{$search}%");
+                });
+            }
+
+            $quizzes = $query->get();
+
+            $csvData = [];
+
+            $csvData[] = ['Quiz Name', 'Quiz Category', 'Quiz Duration', 'Quiz Price', 'Quiz Discount', 'No. of Tries'];
+
+            foreach ($quizzes as $quiz) {
+                $csvData[] = [
+                    $quiz->name,
+                    $quiz->subcategory->name,
+                    $quiz->timelimit,
+                    $quiz->price,
+                    $quiz->discount,
+                    $quiz->tries,
+                ];
+            }
+
+            $filename = "quizzes.csv";
+            $handle = fopen($filename, 'w+');
+            foreach ($csvData as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+
+            return response()->download($filename)->deleteFileAfterSend(true);
+        } catch (\Exception $e) {
+            Log::error('Error downloading quizzes CSV: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'There was an issue downloading the CSV. Please try again.');
+        }
+    }
+
+
 
     public function getQuizById($id)
     {
@@ -43,15 +130,21 @@ class QuizController extends Controller
     public function import(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:18|unique:quizzes,name',
             'status' => 'required|boolean',
-            'thumbnail' => 'nullable|mimes:png,jpg,jpeg',
+            'thumbnail' => 'nullable|file|mimes:png,jpg,jpeg',
             'price' => 'required|integer',
+            'discount' => 'nullable|integer',
             'tries' => 'nullable|integer',
             'timelimit' => 'required|integer',
             'sub_category' => 'required|integer|exists:subcategories,id',
             'file' => 'required|mimes:xlsx,xls',
         ]);
+
+        $sheets = Excel::toCollection(null, $request->file('file'));
+        if ($sheets->count() > 1) {
+            return redirect()->back()->withErrors(['file' => 'The file contains more than one sheet.']);
+        }
 
         $subcategory = Subcategory::find($request->sub_category);
 
@@ -60,8 +153,15 @@ class QuizController extends Controller
 
         // dd($category);
 
-        $quizData = $request->only(['name', 'status', 'thumbnail', 'tries', 'price', 'timelimit', 'sub_category']);
+        $quizData = $request->only(['name', 'status', 'tries', 'price', 'discount', 'timelimit', 'sub_category']);
         $quizData["category_id"] = $category;
+        $quizData["discount"] = $request->discount ? $request->discount : 0;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailPath = $request->file('thumbnail')->store('quiz_thumbnails', 'public');
+            //  dd($thumbnailPath);
+            $quizData["thumbnail"] = $thumbnailPath;
+        }
+
 
         // dd($quizData);
 
@@ -70,58 +170,73 @@ class QuizController extends Controller
         return redirect()->back()->with('success', 'Quiz imported successfully.');
     }
 
-    public function store(Request $request)
+    public function destroy($id)
     {
-        $validation = Validator::make($request->all(), [
-            'status' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'thumbnail' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'timelimit' => 'required|integer',
-            'tries' => 'required|integer',
-            'category_id' => 'required|integer|exists:categories,id',
-            'subcategory_id' => 'required|integer|exists:subcategories,id',
-            'questions.*.question' => 'required|string',
-            'questions.*.option_a' => 'required|string',
-            'questions.*.option_b' => 'required|string',
-            'questions.*.option_c' => 'required|string',
-            'questions.*.option_d' => 'required|string',
-            'questions.*.answer' => 'required|string|in:a,b,c,d',
-        ]);
+        $quiz = Quiz::with('questions')->find($id);
 
-        if ($validation->fails()) {
-            return redirect()->back()->withErrors($validation)->withInput();
+        if (!$quiz) {
+            return redirect()->back()->withErrors(['error' => 'Quiz not found']);
         }
 
         try {
-            if ($request->hasFile('thumbnail')) {
-                $thumbnailPath = $request->file('thumbnail')->store('quiz_thumbnails', 'public');
+            if ($quiz->thumbnail) {
+                Storage::disk('public')->delete($quiz->thumbnail);
             }
+            $quiz->questions()->delete();
 
-            $quiz = new Quiz();
-            $quiz->status = $request->status;
-            $quiz->name = $request->name;
-            $quiz->thumbnail = $thumbnailPath ?? null;
-            $quiz->time_limit = $request->timelimit;
-            $quiz->category_id = $request->category_id;
-            $quiz->subcategory_id = $request->subcategory_id;
-            $quiz->save();
+            $quiz->delete();
 
-            foreach ($request->questions as $questionData) {
-                $question = new Question();
-                $question->quiz_id = $quiz->id;
-                $question->question = $questionData['question'];
-                $question->option_a = $questionData['option_a'];
-                $question->option_b = $questionData['option_b'];
-                $question->option_c = $questionData['option_c'];
-                $question->option_d = $questionData['option_d'];
-                $question->answer = $questionData['answer'];
-                $question->save();
-            }
-
-            return redirect()->route('quizzes.index')->with('success', 'Quiz created successfully.');
+            return redirect()->route('manage.quiz')->with('success', 'Quiz deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'There was an issue creating the quiz. Please try again.']);
+            return redirect()->back()->with('error', 'There was an issue deleting the quiz. Please try again.');
         }
     }
+
+    public function update(Request $request, $id)
+    {
+
+        // dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:18|unique:quizzes,name,' . $id,
+            'timelimit' => 'required|integer',
+            'price' => 'required|numeric',
+            'discount' => 'nullable|numeric',
+            'sub_category' => 'required|integer|exists:subcategories,id',
+            'tries' => 'nullable|integer',
+            'thumbnail' => 'nullable|file|mimes:png,jpg,jpeg',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $quiz = Quiz::findOrFail($id);
+
+        $quizData = [
+            'name' => $request->name,
+            'timelimit' => $request->timelimit,
+            'price' => $request->price,
+            'discount' => $request->discount ? $request->discount : 0,
+            'sub_category' => $request->sub_category,
+            'tries' => $request->tries,
+            'thumbnail' => $request->hasFile('thumbnail') ? $request->file('thumbnail')->store('quiz_thumbnails', 'public') : $quiz->thumbnail,
+        ];
+
+        $quiz->update($quizData);
+
+        return redirect()->back()->with('success', 'Quiz updated successfully!');
+    }
+
+
+    public function updateStatus(Request $request, $id)
+    {
+        $quiz = Quiz::findOrFail($id);
+        $quiz->status = $request->status;
+        $quiz->save();
+
+        return response()->json(['success' => true]);
+    }
+
 
 }

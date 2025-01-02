@@ -17,17 +17,18 @@
                         <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                             <div class="col-auto">
                                 <div class="app-search-box">
-                                    <form class="app-search-form">
+                                    <form class="app-search-form" method="GET" action="{{ route('show.instructor') }}">
                                         <input type="text" placeholder="Search..." name="search"
-                                            class="form-control search-input">
-                                        <button type="submit" class="btn search-btn btn-primary" value="Search"><i
+                                            class="form-control search-input" value="{{ request('search') }}">
+                                        <button type="submit" class="btn search-btn" value="Search"><i
                                                 class="fa-solid fa-magnifying-glass"></i></button>
                                     </form>
                                 </div><!--//app-search-box-->
 
                             </div><!--//col-->
                             <div class="col-auto">
-                                <a class="btn app-btn-secondary" href="#">
+                                <a class="btn app-btn-secondary"
+                                    href="{{ route('download.instructor', ['search' => request('search')]) }}">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
@@ -51,6 +52,7 @@
                                 <table class="table app-table-hover mb-0 text-left">
                                     <thead>
                                         <tr>
+                                            <th class="cell text-center">Picture</th>
                                             <th class="cell text-center">Name</th>
                                             <th class="cell text-center">Email</th>
                                             <th class="cell text-center">About</th>
@@ -61,11 +63,22 @@
                                     <tbody>
                                         @foreach ($instructors as $instructor)
                                             <tr>
+                                                <td class="cell text-center">
+                                                    @if ($instructor->picture)
+                                                        <img src="{{ asset('storage/' . $instructor->picture) }}"
+                                                            alt="{{ $instructor->name }}'s Picture" class="img-thumbnail"
+                                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                                    @else
+                                                        <img src="{{ asset('assets/images/user.png') }}"
+                                                            alt="{{ $instructor->name }}'s Picture" class="img-thumbnail"
+                                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                                    @endif
+                                                </td>
                                                 <td class="cell text-center">{{ $instructor->name }}</td>
                                                 <td class="cell text-center">{{ $instructor->user->email }}</td>
                                                 <td class="cell text-center">{{ $instructor->about }}</td>
                                                 <td class="cell text-center">{{ $instructor->skills }}</td>
-                                                <td class="cell d-flex justify-content-center">
+                                                <td class="cell text-center">
                                                     <div>
                                                         <button type="button" class="btn app-btn-primary theme-btn mx-auto"
                                                             data-bs-toggle="modal" data-bs-target="#editInstructorModal"
@@ -106,19 +119,6 @@
                             </div><!--//table-responsive-->
                         </div><!--//app-card-body-->
                     </div><!--//app-card-->
-                    <nav class="app-pagination">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav><!--//app-pagination-->
                 </div><!--//tab-pane-->
             </div><!--//tab-content-->
         </div><!--//container-fluid-->
@@ -133,7 +133,7 @@
                     <h5 class="modal-title" id="editInstructorModalLabel">Edit Instructor</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('update.instructor') }}" method="post">
+                <form action="{{ route('update.instructor') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -153,6 +153,12 @@
                         <div class="mb-3">
                             <label for="instructor-skills" class="form-label">Skills</label>
                             <input type="text" class="form-control" id="instructor-skills" name="skills" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="instructor-picture" class="form-label">Picture</label>
+                            <input type="file" class="form-control" id="instructor-picture" name="picture">
+                            <small class="text-muted">Leave blank to keep current picture.</small>
+                            <div id="current-picture" class="mt-2"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -175,6 +181,7 @@
                 var email = button.getAttribute('data-email');
                 var about = button.getAttribute('data-about');
                 var skills = button.getAttribute('data-skills');
+                var picture = button.getAttribute('data-picture');
 
                 var modalTitle = editInstructorModal.querySelector('.modal-title');
                 var modalBodyInputId = editInstructorModal.querySelector('#instructor-id');
@@ -182,6 +189,7 @@
                 var modalBodyInputEmail = editInstructorModal.querySelector('#instructor-email');
                 var modalBodyTextareaAbout = editInstructorModal.querySelector('#instructor-about');
                 var modalBodyInputSkills = editInstructorModal.querySelector('#instructor-skills');
+                var modalBodyCurrentPicture = editInstructorModal.querySelector('#current-picture');
 
                 modalTitle.textContent = 'Edit Instructor';
                 modalBodyInputId.value = id;
@@ -189,6 +197,14 @@
                 modalBodyInputEmail.value = email;
                 modalBodyTextareaAbout.value = about;
                 modalBodyInputSkills.value = skills;
+
+                if (picture) {
+                    modalBodyCurrentPicture.innerHTML = `
+                        <img src="{{ asset('storage/') }}/${picture}" alt="Instructor Picture" width="100">
+                    `;
+                } else {
+                    modalBodyCurrentPicture.innerHTML = '';
+                }
             });
         });
     </script>

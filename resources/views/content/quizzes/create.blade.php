@@ -17,12 +17,8 @@
                         </div>
                     @endif
                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                        <div class="text-danger text-center small pb-3">
+                            <p>Something went wrong</p>
                         </div>
                     @endif
                     <div class="row">
@@ -78,14 +74,21 @@
                     </div>
 
                     <div class="row h-auto">
-                        <div class="w-50 mb-3">
+                        <div class="col-4 mb-3">
                             <input id="price" name="price" type="number" class="form-control signin-email"
                                 placeholder="Quiz Price">
                             @if ($errors->has('price'))
                                 <div class="text-danger small">{{ $errors->first('price') }}</div>
                             @endif
                         </div>
-                        <div class="w-50 mb-3">
+                        <div class="col-4 mb-3">
+                            <input id="discount" name="discount" type="number" class="form-control signin-email"
+                                placeholder="Discount">
+                            @if ($errors->has('discount'))
+                                <div class="text-danger small">{{ $errors->first('discount') }}</div>
+                            @endif
+                        </div>
+                        <div class="col-4 mb-3">
                             <input id="tries" name="tries" type="number" class="form-control signin-email"
                                 placeholder="How many times student can try?">
                             @if ($errors->has('tries'))
@@ -106,7 +109,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Create Course
+                        <button type="submit" class="btn app-btn-primary theme-btn mx-auto">Create Quiz
                         </button>
                     </div>
                 </form>

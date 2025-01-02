@@ -16,6 +16,7 @@ class CourseMaterial extends Model
         'title',
         'type',
         'url',
+        'order'
     ];
 
     public function coursePart()

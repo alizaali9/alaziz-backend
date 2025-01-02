@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Instructor::class);
     }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_creators', 'user_id', 'course_id')
+                    ->withTimestamps();
+    }
 }

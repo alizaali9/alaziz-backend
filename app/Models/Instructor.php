@@ -14,14 +14,19 @@ class Instructor extends Model
         'name',
         'about',
         'skills',
+        'picture',
         'total_students',
         'courses',
-        'reviews',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    public function coursesCount()
+    {
+        return $this->hasMany(CourseCreator::class, 'user_id', 'user_id');
+    }
+
 
 }

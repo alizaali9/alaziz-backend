@@ -15,6 +15,7 @@ class Quiz extends Model
         'thumbnail',
         'timelimit',
         'price',
+        'discount',
         'tries',
         'category_id',
         'sub_category',
@@ -27,7 +28,7 @@ class Quiz extends Model
 
     public function subcategory()
     {
-        return $this->belongsTo(SubCategory::class, 'sub_category');
+        return $this->belongsTo(Subcategory::class, 'sub_category');
     }
 
     public function questions()

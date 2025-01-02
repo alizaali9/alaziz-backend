@@ -17,123 +17,10 @@
                     <div class="search-mobile-trigger d-sm-none col">
                         <i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
                     </div><!--//col-->
-                    <div class="app-search-box col">
-                        <form class="app-search-form">
-                            <input type="text" placeholder="Search..." name="search"
-                                class="form-control search-input">
-                            <button type="submit" class="btn search-btn btn-primary" value="Search"><i
-                                    class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>
-                    </div><!--//app-search-box-->
 
                     <div class="app-utilities col-auto">
-                        <div class="app-utility-item app-notifications-dropdown dropdown">
-                            <a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
-                                data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
-                                title="Notifications">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
-                                    <path fill-rule="evenodd"
-                                        d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-                                </svg>
-                                <span class="icon-badge">3</span>
-                            </a><!--//dropdown-toggle-->
-
-                            <div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
-                                <div class="dropdown-menu-header p-3">
-                                    <h5 class="dropdown-menu-title mb-0">Notifications</h5>
-                                </div><!--//dropdown-menu-title-->
-                                <div class="dropdown-menu-content">
-                                    <div class="item p-3">
-                                        <div class="row gx-2 justify-content-between align-items-center">
-                                            <div class="col-auto">
-                                                <img class="profile-image"
-                                                    src="{{ asset('assets') }}/images/profiles/profile-1.png"
-                                                    alt="">
-                                            </div><!--//col-->
-                                            <div class="col">
-                                                <div class="info">
-                                                    <div class="desc">Amy shared a file with you. Lorem ipsum dolor
-                                                        sit amet, consectetur adipiscing elit. </div>
-                                                    <div class="meta"> 2 hrs ago</div>
-                                                </div>
-                                            </div><!--//col-->
-                                        </div><!--//row-->
-                                        <a class="link-mask" href="notifications.html"></a>
-                                    </div><!--//item-->
-                                    <div class="item p-3">
-                                        <div class="row gx-2 justify-content-between align-items-center">
-                                            <div class="col-auto">
-                                                <div class="app-icon-holder">
-                                                    <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                        class="bi bi-receipt" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
-                                                    </svg>
-                                                </div>
-                                            </div><!--//col-->
-                                            <div class="col">
-                                                <div class="info">
-                                                    <div class="desc">You have a new invoice. Proin venenatis
-                                                        interdum est.</div>
-                                                    <div class="meta"> 1 day ago</div>
-                                                </div>
-                                            </div><!--//col-->
-                                        </div><!--//row-->
-                                        <a class="link-mask" href="notifications.html"></a>
-                                    </div><!--//item-->
-                                    <div class="item p-3">
-                                        <div class="row gx-2 justify-content-between align-items-center">
-                                            <div class="col-auto">
-                                                <div class="app-icon-holder icon-holder-mono">
-                                                    <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                        class="bi bi-bar-chart-line" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd"
-                                                            d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
-                                                    </svg>
-                                                </div>
-                                            </div><!--//col-->
-                                            <div class="col">
-                                                <div class="info">
-                                                    <div class="desc">Your report is ready. Proin venenatis interdum
-                                                        est.</div>
-                                                    <div class="meta"> 3 days ago</div>
-                                                </div>
-                                            </div><!--//col-->
-                                        </div><!--//row-->
-                                        <a class="link-mask" href="notifications.html"></a>
-                                    </div><!--//item-->
-                                    <div class="item p-3">
-                                        <div class="row gx-2 justify-content-between align-items-center">
-                                            <div class="col-auto">
-                                                <img class="profile-image"
-                                                    src="{{ asset('assets') }}/images/profiles/profile-2.png"
-                                                    alt="">
-                                            </div><!--//col-->
-                                            <div class="col">
-                                                <div class="info">
-                                                    <div class="desc">James sent you a new message.</div>
-                                                    <div class="meta"> 7 days ago</div>
-                                                </div>
-                                            </div><!--//col-->
-                                        </div><!--//row-->
-                                        <a class="link-mask" href="notifications.html"></a>
-                                    </div><!--//item-->
-                                </div><!--//dropdown-menu-content-->
-
-                                <div class="dropdown-menu-footer p-2 text-center">
-                                    <a href="notifications.html">View all</a>
-                                </div>
-
-                            </div><!--//dropdown-menu-->
-                        </div><!--//app-utility-item-->
                         <div class="app-utility-item">
-                            <a href="settings.html" title="Settings">
+                            <a href="{{ route('settings') }}" title="Settings">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear icon"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -144,14 +31,24 @@
                                 </svg>
                             </a>
                         </div><!--//app-utility-item-->
-
+                        @php
+                            $instructorImage = null;
+                            if (Auth::user()->role == 2) {
+                                $instructor = \App\Models\Instructor::where('user_id', Auth::user()->id)->first();
+                                $instructorImage = $instructor->picture
+                                    ? asset('storage/' . $instructor->picture)
+                                    : asset('assets/images/user.png');
+                            }
+                        @endphp
                         <div class="app-utility-item app-user-dropdown dropdown">
                             <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
                                 href="#" role="button" aria-expanded="false"><img
-                                    src="{{ asset('assets') }}/images/user.png" alt="user profile"></a>
+                                    src="{{ Auth::user()->role == 2 ? $instructorImage : asset('assets/images/user.png') }}"
+                                    class="img-fluid" style="border-radius: 50%; object-fit: cover"
+                                    alt="user profile"></a>
                             <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                                <li><a class="dropdown-item" href="account.html">Account</a></li>
-                                <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                                <li><a class="dropdown-item" href="{{ route('settings') }}">{{ Auth::user()->name }}</a>
+                                </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -168,14 +65,14 @@
         <div class="sidepanel-inner d-flex flex-column">
             <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
             <div class="app-branding">
-                <a class="app-logo" href="index.html"><img class="logo-icon me-2"
-                        src="{{ asset('assets') }}/images/logo_without_bg.png" alt="logo"><span
-                        class="logo-text">Al Aziz Institute</span></a>
+                <a class="app-logo" href="{{ route('dashboard') }}"><img class="logo-icon me-2"
+                        src="{{ asset('assets') }}/images/logo_without_bg.png" alt="logo"><span class="logo-text">Al
+                        Aziz Institute</span></a>
 
             </div><!--//app-branding-->
 
             <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
-                <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+                <ul class="app-menu list-unstyled accordion pb-3" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                         <a class="nav-link active" href="{{ route('dashboard') }}">
@@ -253,7 +150,8 @@
                                 <li class="submenu-item"><a class="submenu-link"
                                         href="{{ route('create.course') }}">Create Course</a>
                                 </li>
-                                <li class="submenu-item"><a class="submenu-link" href="{{route('courses.show')}}">Manage
+                                <li class="submenu-item"><a class="submenu-link"
+                                        href="{{ route('courses.show') }}">Manage
                                         Courses</a>
                                 </li>
                             </ul>
@@ -271,7 +169,7 @@
                                         d="M5.933.87a2.89 2.89 0 0 1 4.134 0l.622.638.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01zM7.002 11a1 1 0 1 0 2 0 1 1 0 0 0-2 0m1.602-2.027c.04-.534.198-.815.846-1.26.674-.475 1.05-1.09 1.05-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.7 1.7 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745.336 0 .504-.24.554-.627" />
                                 </svg>
                             </span>
-                            <span class="nav-link-text">Quizes</span>
+                            <span class="nav-link-text">Quizzes</span>
                             <span class="submenu-arrow">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -285,62 +183,26 @@
                                 <li class="submenu-item"><a class="submenu-link"
                                         href="{{ route('create.quiz') }}">Create Quiz</a>
                                 </li>
-                                <li class="submenu-item"><a class="submenu-link" href="">Manage
-                                        Quiz</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li><!--//nav-item-->
-                    <li class="nav-item has-submenu">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#submenu-5" aria-expanded="false" aria-controls="submenu-2">
-                            <span class="nav-icon">
-                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                    <path
-                                        d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-text">Enrollments</span>
-                            <span class="submenu-arrow">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                                </svg>
-                            </span><!--//submenu-arrow-->
-                        </a><!--//nav-link-->
-                        <div id="submenu-5" class="collapse submenu submenu-5" data-bs-parent="#menu-accordion">
-                            <ul class="submenu-list list-unstyled">
                                 <li class="submenu-item"><a class="submenu-link"
-                                        href="{{ route('add.enrollment') }}">Add Enrollment</a>
-                                </li>
-                                <li class="submenu-item"><a class="submenu-link" href="">Manage
-                                        Enrollments</a>
+                                        href="{{ route('manage.quiz') }}">Manage Quiz</a>
                                 </li>
                             </ul>
                         </div>
                     </li><!--//nav-item-->
-                    @if (Auth::user()->role == 1)
+                    @if (Auth::user()->role == 1 || Auth::user()->role == 3)
                         <li class="nav-item has-submenu">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#submenu-3" aria-expanded="false" aria-controls="submenu-3">
+                                data-bs-target="#submenu-9" aria-expanded="false" aria-controls="submenu-2">
                                 <span class="nav-icon">
                                     <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+                                        fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
                                         <path
-                                            d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z" />
-                                        <path
-                                            d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z" />
+                                            d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5" />
                                     </svg>
                                 </span>
-                                <span class="nav-link-text">Instructors</span>
+                                <span class="nav-link-text">Social Links</span>
                                 <span class="submenu-arrow">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16"
                                         class="bi bi-chevron-down" fill="currentColor"
@@ -350,18 +212,211 @@
                                     </svg>
                                 </span><!--//submenu-arrow-->
                             </a><!--//nav-link-->
-                            <div id="submenu-3" class="collapse submenu submenu-3" data-bs-parent="#menu-accordion">
+                            <div id="submenu-9" class="collapse submenu submenu-4" data-bs-parent="#menu-accordion">
                                 <ul class="submenu-list list-unstyled">
                                     <li class="submenu-item"><a class="submenu-link"
-                                            href="{{ route('create.instructor') }}">Create Instructor</a>
+                                            href="{{ route('social.links.create') }}">Create Social Links</a>
                                     </li>
                                     <li class="submenu-item"><a class="submenu-link"
-                                            href="{{ route('show.instructor') }}">Manage
-                                            Instructors</a>
+                                            href="{{ route('social.links.manage') }}">Manage Social Links</a>
                                     </li>
                                 </ul>
                             </div>
                         </li><!--//nav-item-->
+                        <li class="nav-item has-submenu">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-8" aria-expanded="false" aria-controls="submenu-2">
+                                <span class="nav-icon">
+                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                                        <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+                                        <path
+                                            d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1z" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-text">Sliders</span>
+                                <span class="submenu-arrow">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                        class="bi bi-chevron-down" fill="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </span><!--//submenu-arrow-->
+                            </a><!--//nav-link-->
+                            <div id="submenu-8" class="collapse submenu submenu-8" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="{{ route('sliders.create') }}">Upload Slider</a>
+                                    </li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="{{ route('sliders.manage') }}">Manage
+                                            Sliders</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li><!--//nav-item-->
+                        <li class="nav-item has-submenu">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-5" aria-expanded="false" aria-controls="submenu-2">
+                                <span class="nav-icon">
+                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                        <path
+                                            d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-text">Enrollments</span>
+                                <span class="submenu-arrow">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                        class="bi bi-chevron-down" fill="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </span><!--//submenu-arrow-->
+                            </a><!--//nav-link-->
+                            <div id="submenu-5" class="collapse submenu submenu-5" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="{{ route('add.enrollment') }}">Add Enrollment</a>
+                                    </li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="{{ route('manage.enrollment') }}">Manage
+                                            Enrollments</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li><!--//nav-item-->
+                        <li class="nav-item has-submenu">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-6" aria-expanded="false" aria-controls="submenu-6">
+                                <span class="nav-icon">
+                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                        <path
+                                            d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-text">Quiz Enrollments</span>
+                                <span class="submenu-arrow">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                        class="bi bi-chevron-down" fill="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </span><!--//submenu-arrow-->
+                            </a><!--//nav-link-->
+                            <div id="submenu-6" class="collapse submenu submenu-5" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="{{ route('add.quiz.enrollment') }}">Add Quiz Enrollment</a>
+                                    </li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="{{ route('manage.quiz.enrollment') }}">Manage Quiz
+                                            Enrollments</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li><!--//nav-item-->
+                        <li class="nav-item">
+                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                            <a class="nav-link active" href="{{ route('students') }}">
+                                <span class="nav-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                    </svg>
+                                </span>
+                                <span class="nav-link-text">Students</span>
+                            </a><!--//nav-link-->
+                        </li><!--//nav-item-->
+                        @if (Auth::user()->role == 1)
+                            <li class="nav-item has-submenu">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#submenu-3" aria-expanded="false" aria-controls="submenu-3">
+                                    <span class="nav-icon">
+                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z" />
+                                            <path
+                                                d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">Instructors</span>
+                                    <span class="submenu-arrow">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                            class="bi bi-chevron-down" fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </span><!--//submenu-arrow-->
+                                </a><!--//nav-link-->
+                                <div id="submenu-3" class="collapse submenu submenu-3"
+                                    data-bs-parent="#menu-accordion">
+                                    <ul class="submenu-list list-unstyled">
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('create.instructor') }}">Create Instructor</a>
+                                        </li>
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('show.instructor') }}">Manage
+                                                Instructors</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li><!--//nav-item-->
+                            <li class="nav-item has-submenu">
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#submenu-7" aria-expanded="false" aria-controls="submenu-6">
+                                    <span class="nav-icon">
+                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-person-video" viewBox="0 0 16 16">
+                                            <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                                            <path
+                                                d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm10.798 11c-.453-1.27-1.76-3-4.798-3-3.037 0-4.345 1.73-4.798 3H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1z" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">Sub Admins</span>
+                                    <span class="submenu-arrow">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                            class="bi bi-chevron-down" fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </span><!--//submenu-arrow-->
+                                </a><!--//nav-link-->
+                                <div id="submenu-7" class="collapse submenu submenu-7"
+                                    data-bs-parent="#menu-accordion">
+                                    <ul class="submenu-list list-unstyled">
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('create.subadmin') }}">Create Sub Admin</a>
+                                        </li>
+                                        <li class="submenu-item"><a class="submenu-link"
+                                                href="{{ route('show.subadmin') }}">Manage Sub Admins</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li><!--//nav-item-->
+                        @endif
                     @endif
                 </ul><!--//app-menu-->
             </nav><!--//app-nav-->
@@ -370,7 +425,7 @@
                     <ul class="app-menu footer-menu list-unstyled">
                         <li class="nav-item">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link" href="settings.html">
+                            <a class="nav-link" href="{{ route('settings') }}">
                                 <span class="nav-icon">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear"
                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -381,37 +436,6 @@
                                     </svg>
                                 </span>
                                 <span class="nav-link-text">Settings</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link"
-                                href="https://themes.3rdwavemedia.com/bootstrap-templates/admin-dashboard/portal-free-bootstrap-admin-dashboard-template-for-developers/">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                        <path fill-rule="evenodd"
-                                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Download</span>
-                            </a><!--//nav-link-->
-                        </li><!--//nav-item-->
-                        <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link"
-                                href="https://themes.3rdwavemedia.com/bootstrap-templates/admin-dashboard/portal-free-bootstrap-admin-dashboard-template-for-developers/">
-                                <span class="nav-icon">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-person"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M12 1H4a1 1 0 0 0-1 1v10.755S4 11 8 11s5 1.755 5 1.755V2a1 1 0 0 0-1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
-                                        <path fill-rule="evenodd" d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">License</span>
                             </a><!--//nav-link-->
                         </li><!--//nav-item-->
                     </ul><!--//footer-menu-->

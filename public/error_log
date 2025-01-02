@@ -1,0 +1,603 @@
+[27-Aug-2024 06:07:46 UTC] PHP Fatal error:  Uncaught Symfony\Component\Routing\Exception\RouteNotFoundException: Route [dashboard] not defined. in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(831): Illuminate\Routing\UrlGenerator->route('dashboard', Array, true)
+#1 /home4/alazizin/app.alazizinstitute.com/storage/framework/views/4c298fc9f044d4439231383b6f00aa5a.php(23): route('dashboard')
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/home4/alazizin...')
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home4/alazizin...', Array)
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#9 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#10 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#13 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#14 [internal function]: {closure}(Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#16 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException))
+#17 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#18 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#19 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#20 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#21 {main}
+
+Next Illuminate\View\ViewException: Route [dashboard] not defined. (View: /home4/alazizin/app.alazizinstitute.com/resources/views/errors/500.blade.php) in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Routing\Exception\RouteNotFoundException), 0)
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#9 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#10 [internal function]: {closure}(Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException))
+#13 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#14 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#16 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#17 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php on line 512
+[27-Aug-2024 06:07:51 UTC] PHP Fatal error:  Uncaught Symfony\Component\Routing\Exception\RouteNotFoundException: Route [dashboard] not defined. in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(831): Illuminate\Routing\UrlGenerator->route('dashboard', Array, true)
+#1 /home4/alazizin/app.alazizinstitute.com/storage/framework/views/4c298fc9f044d4439231383b6f00aa5a.php(23): route('dashboard')
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/home4/alazizin...')
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home4/alazizin...', Array)
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#9 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#10 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#13 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#14 [internal function]: {closure}(Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#16 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException))
+#17 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#18 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#19 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#20 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#21 {main}
+
+Next Illuminate\View\ViewException: Route [dashboard] not defined. (View: /home4/alazizin/app.alazizinstitute.com/resources/views/errors/500.blade.php) in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Routing\Exception\RouteNotFoundException), 0)
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#9 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#10 [internal function]: {closure}(Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\JsonResponse), Object(Illuminate\View\ViewException))
+#13 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#14 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#16 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#17 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php on line 512
+[27-Aug-2024 06:07:58 UTC] PHP Fatal error:  Uncaught Symfony\Component\Routing\Exception\RouteNotFoundException: Route [dashboard] not defined. in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(831): Illuminate\Routing\UrlGenerator->route('dashboard', Array, true)
+#1 /home4/alazizin/app.alazizinstitute.com/storage/framework/views/4c298fc9f044d4439231383b6f00aa5a.php(23): route('dashboard')
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/home4/alazizin...')
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home4/alazizin...', Array)
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#9 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#10 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#13 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#14 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#16 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#17 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#18 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#19 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#20 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#21 {main}
+
+Next Illuminate\View\ViewException: Route [dashboard] not defined. (View: /home4/alazizin/app.alazizinstitute.com/resources/views/errors/500.blade.php) in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Routing\Exception\RouteNotFoundException), 0)
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#9 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#10 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#13 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#14 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#16 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#17 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php on line 512
+[27-Aug-2024 06:08:03 UTC] PHP Fatal error:  Uncaught Symfony\Component\Routing\Exception\RouteNotFoundException: Route [dashboard] not defined. in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(831): Illuminate\Routing\UrlGenerator->route('dashboard', Array, true)
+#1 /home4/alazizin/app.alazizinstitute.com/storage/framework/views/4c298fc9f044d4439231383b6f00aa5a.php(23): route('dashboard')
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/home4/alazizin...')
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home4/alazizin...', Array)
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#9 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#10 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#13 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#14 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#16 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#17 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#18 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#19 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#20 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#21 {main}
+
+Next Illuminate\View\ViewException: Route [dashboard] not defined. (View: /home4/alazizin/app.alazizinstitute.com/resources/views/errors/500.blade.php) in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Routing\Exception\RouteNotFoundException), 0)
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#9 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#10 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#13 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#14 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#16 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#17 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php on line 512
+[27-Aug-2024 06:08:08 UTC] PHP Fatal error:  Uncaught Symfony\Component\Routing\Exception\RouteNotFoundException: Route [dashboard] not defined. in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(831): Illuminate\Routing\UrlGenerator->route('dashboard', Array, true)
+#1 /home4/alazizin/app.alazizinstitute.com/storage/framework/views/4c298fc9f044d4439231383b6f00aa5a.php(23): route('dashboard')
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/home4/alazizin...')
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home4/alazizin...', Array)
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#9 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#10 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#13 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#14 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#16 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#17 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#18 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#19 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#20 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#21 {main}
+
+Next Illuminate\View\ViewException: Route [dashboard] not defined. (View: /home4/alazizin/app.alazizinstitute.com/resources/views/errors/500.blade.php) in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Routing\Exception\RouteNotFoundException), 0)
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#9 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#10 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#13 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#14 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#16 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#17 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php on line 512
+[27-Aug-2024 06:09:02 UTC] PHP Fatal error:  Uncaught Symfony\Component\Routing\Exception\RouteNotFoundException: Route [dashboard] not defined. in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php(831): Illuminate\Routing\UrlGenerator->route('dashboard', Array, true)
+#1 /home4/alazizin/app.alazizinstitute.com/storage/framework/views/4c298fc9f044d4439231383b6f00aa5a.php(23): route('dashboard')
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(123): require('/home4/alazizin...')
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(124): Illuminate\Filesystem\Filesystem::Illuminate\Filesystem\{closure}()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(58): Illuminate\Filesystem\Filesystem->getRequire('/home4/alazizin...', Array)
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#9 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#10 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#13 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#14 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#16 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#17 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#18 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#19 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#20 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#21 {main}
+
+Next Illuminate\View\ViewException: Route [dashboard] not defined. (View: /home4/alazizin/app.alazizinstitute.com/resources/views/errors/500.blade.php) in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php:512
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/PhpEngine.php(60): Illuminate\View\Engines\CompilerEngine->handleViewException(Object(Symfony\Component\Routing\Exception\RouteNotFoundException), 0)
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/Engines/CompilerEngine.php(73): Illuminate\View\Engines\PhpEngine->evaluatePath('/home4/alazizin...', Array)
+#2 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(208): Illuminate\View\Engines\CompilerEngine->get('/home4/alazizin...', Array)
+#3 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(191): Illuminate\View\View->getContents()
+#4 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/View/View.php(160): Illuminate\View\View->renderContents()
+#5 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(70): Illuminate\View\View->render()
+#6 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Http/Response.php(35): Illuminate\Http\Response->setContent(Object(Illuminate\View\View))
+#7 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(58): Illuminate\Http\Response->__construct(Object(Illuminate\View\View), 500, Array)
+#8 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/ResponseFactory.php(88): Illuminate\Routing\ResponseFactory->make(Object(Illuminate\View\View), 500, Array)
+#9 /home4/alazizin/app.alazizinstitute.com/bootstrap/app.php(24): Illuminate\Routing\ResponseFactory->view('errors.500', Array, 500)
+#10 [internal function]: {closure}(Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#11 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(602): call_user_func(Object(Closure), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException), Object(Illuminate\Http\Request))
+#12 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(583): Illuminate\Foundation\Exceptions\Handler->finalizeRenderedResponse(Object(Illuminate\Http\Request), Object(Illuminate\Http\Response), Object(Illuminate\View\ViewException))
+#13 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(219): Illuminate\Foundation\Exceptions\Handler->render(Object(Illuminate\Http\Request), Object(Illuminate\View\ViewException))
+#14 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Illuminate\View\ViewException))
+#15 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Illuminate\View\ViewException))
+#16 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Illuminate\View\ViewException))
+#17 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Routing/UrlGenerator.php on line 512
+[03-Sep-2024 07:28:49 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:28:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:29:33 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:31:15 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:32:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:37:12 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:37:55 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:38:29 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:38:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:39:32 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:45:57 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:48:30 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:51:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:51:31 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:54:52 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:55:38 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:57:57 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:58:33 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 07:59:16 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:00:02 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:02:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:03:47 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:05:19 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:07:01 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:07:55 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:08:44 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:10:47 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:11:58 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:13:38 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:16:22 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:18:43 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:22:26 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:23:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:25:47 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:26:23 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:29:14 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:29:35 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:30:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:30:34 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:30:37 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:30:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:31:09 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:31:13 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:34:42 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:38:16 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[03-Sep-2024 08:38:52 UTC] PHP Fatal error:  Uncaught Error: Call to a member function send() on null in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php:219
+Stack trace:
+#0 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(196): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse(Object(Error))
+#1 /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(256): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(Error))
+#2 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}(Object(Error))
+#3 {main}
+  thrown in /home4/alazizin/app.alazizinstitute.com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php on line 219
+[14-Nov-2024 11:13:06 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\CourseController, because the name is already in use in /home4/alazizin/app.alazizinstitute.com/storage/framework/views/e354a2b027572dbf29b2ec3a946ae831.php on line 20
+[14-Nov-2024 11:14:19 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\CourseController, because the name is already in use in /home4/alazizin/app.alazizinstitute.com/storage/framework/views/e354a2b027572dbf29b2ec3a946ae831.php on line 20
+[14-Nov-2024 11:16:15 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\CourseController, because the name is already in use in /home4/alazizin/app.alazizinstitute.com/storage/framework/views/e354a2b027572dbf29b2ec3a946ae831.php on line 20
+[18-Nov-2024 06:15:23 UTC] PHP Fatal error:  Unparenthesized `a ? b : c ? d : e` is not supported. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)` in /home4/alazizin/app.alazizinstitute.com/storage/framework/views/5b4473101c09444ac0b3e42ae6354dec.php on line 70
+[22-Nov-2024 07:02:53 UTC] PHP Fatal error:  Cannot use App\Models\Subcategory as Subcategory because the name is already in use in /home4/alazizin/app.alazizinstitute.com/app/Http/Controllers/CourseController.php on line 19
