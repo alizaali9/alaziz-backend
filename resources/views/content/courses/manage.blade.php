@@ -118,7 +118,7 @@
                                                                 json_encode([
                                                                     'id' => $course->id,
                                                                     'name' => addslashes($course->name),
-                                                                    'creators' => addslashes($course->creators),
+                                                                    'creators' => $course->creators,
                                                                     'language' => addslashes($course->language),
                                                                     'overview' => addslashes($course->overview),
                                                                     'description' => addslashes($course->description),
@@ -183,7 +183,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editCourseModalLabel">Edit Course</h5>
+                    <h5 class="modal-title" id="editCourseModalLabel">Edit Course
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" method="post" id="edit-course-form" enctype="multipart/form-data">
@@ -192,7 +193,8 @@
                     <div class="modal-body">
                         <input type="hidden" name="id" id="course-id">
                         <div class="mb-3">
-                            <label for="course-name" class="form-label">Course Name</label>
+                            <label for="course-name" class="form-label">Course
+                                Name</label>
                             <input type="text" class="form-control" id="course-name" name="name" required>
                         </div>
                         <div class="mb-3">
@@ -206,7 +208,8 @@
                         <div class="mb-3">
                             <label for="course-description" class="form-label">Description</label>
                             <textarea class="form-control" id="course-description" name="description" rows="4" value='' required></textarea>
-                            <div id="error-message" class="text-danger small"></div>
+                            <div id="error-message" class="text-danger small">
+                            </div>
                             <script>
                                 const descriptionInput = document.getElementById('course-description');
                                 const errorMessage = document.getElementById('error-message');
@@ -238,7 +241,8 @@
                             <select class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control"
                                 name="sub_category" required>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -260,14 +264,16 @@
                         </div>
                         <div class="row">
                             <div class="w-100 mb-3">
-                                <label for="thumbnail" class="ps-2 pb-2">Change Thumbnail Image</label>
+                                <label for="thumbnail" class="ps-2 pb-2">Change
+                                    Thumbnail Image</label>
                                 <input id="thumbnail" name="thumbnail" type="file" class="form-control"
                                     style="padding-top: 7px;" placeholder="Thumbnail Image">
                             </div>
                         </div>
                         <div class="row justify-content-center flex-wrap">
                             <div class="w-100 mb-3">
-                                <label for="demo" class="ps-2 pb-2">Choose your Demo Type</label>
+                                <label for="demo" class="ps-2 pb-2">Choose
+                                    your Demo Type</label>
                                 <select id="content-type"
                                     class="form-select form-select-sm ms-auto d-inline-flex w-100 form-control"
                                     name="demo_type" onchange="toggleContentInput(this.value)">
@@ -277,20 +283,24 @@
                             </div>
                             <div class="w-100 mb-3">
                                 <div class="w-100 mb-3" id="file-input-container">
-                                    <label for="demo" class="ps-2 pb-2">Upload your Demo Video</label>
+                                    <label for="demo" class="ps-2 pb-2">Upload
+                                        your Demo Video</label>
                                     <input id="demo" name="demo" type="file"
                                         class="form-control signin-email" style="padding-block: 7px;"
                                         placeholder="Upload Lesson">
                                     @if ($errors->has('demo'))
-                                        <div class="text-danger small">{{ $errors->first('demo') }}</div>
+                                        <div class="text-danger small">
+                                            {{ $errors->first('demo') }}</div>
                                     @endif
                                 </div>
                                 <div class="w-100 mb-3 d-none" id="url-input-container">
-                                    <label for="url" class="ps-2 pb-2">Enter your Demo URL</label>
+                                    <label for="url" class="ps-2 pb-2">Enter
+                                        your Demo URL</label>
                                     <input id="url" name="url" type="text"
                                         class="form-control signin-email" placeholder="Enter Demo URL">
                                     @if ($errors->has('url'))
-                                        <div class="text-danger small">{{ $errors->first('url') }}</div>
+                                        <div class="text-danger small">
+                                            {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
                             </div>
@@ -299,25 +309,6 @@
                             <div class="mb-3">
                                 <div id="selected-instructors-container">
                                     <div id="selected-instructors-box" class="d-flex align-items-center px-2 bg-white">
-                                        @foreach ($course->creators as $creator)
-                                            <div class="d-flex m-0 align-items-center instructor-name">
-                                                <input type="hidden" name="instructors[]" value="{{ $creator->id }}">
-                                                <div class="px-2 me-1 d-flex align-items-center"
-                                                    style="background-color: #ccc; border-radius: 14px;">
-                                                    <p class="text-black me-1 mb-0" style="font-size: 14px;">
-                                                        {{ $creator->name }}</p>
-                                                    <button type="button"
-                                                        class="btn border-0 p-0 remove-instructor-btn btn-sm">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                            height="16" fill="#000000" class="bi bi-x"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        @endforeach
                                     </div>
                                 </div>
 
@@ -336,7 +327,8 @@
                                         </div>
                                         @foreach ($users as $user)
                                             <li><a class="dropdown-item" href="#"
-                                                    data-instructor-id="{{ $user->id }}">{{ $user->name }}</a></li>
+                                                    data-instructor-id="{{ $user->id }}">{{ $user->name }}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -346,13 +338,13 @@
                     <div class="modal-footer">
                         <button type="button" class="btn app-btn-secondary theme-btn"
                             data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn app-btn-primary theme-btn">Save changes</button>
+                        <button type="submit" class="btn app-btn-primary theme-btn">Save
+                            changes</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const instructorSearch = document.getElementById('instructor-search');
@@ -464,7 +456,43 @@
                     // console.log(decodedCourse);
                     const courseData = JSON.parse(decodedCourse);
                     console.log(courseData.creators);
+                    const dropdownMenu = document.getElementById('instructor-dropdown-menu');
+                    const listItems = dropdownMenu.querySelectorAll('li');
 
+                    const creatorsList = courseData.creators.map((creator, index) => {
+
+                        return `
+                         <div class="d-flex m-0 align-items-center instructor-name">
+                                                <input type="hidden" name="instructors[${index}]" value="${ creator.id }">
+                                                <div class="px-2 me-1 d-flex align-items-center"
+                                                    style="background-color: #ccc; border-radius: 14px;">
+                                                    <p class="text-black me-1 mb-0" style="font-size: 14px;">
+                                                        ${ creator.name }</p>
+                                                    <button type="button"
+                                                        class="btn border-0 p-0 remove-instructor-btn btn-sm">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="#000000" class="bi bi-x"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>`;
+                    }).join('');
+                    document.getElementById('selected-instructors-box').innerHTML = creatorsList;
+
+                    listItems.forEach(item => {
+                        const instructorId = item.querySelector('a').getAttribute(
+                            'data-instructor-id');
+                        const creatorExists = courseData.creators.some(creator => creator
+                            .id ==
+                            instructorId);
+
+                        if (creatorExists) {
+                            item.remove();
+                        }
+                    });
                     const isValidUrl = (url) => {
                         try {
                             new URL(url);
@@ -474,37 +502,52 @@
                         }
                     };
 
-                    console.log(courseData.demo);
+                    console.log(courseData);
                     if (isValidUrl(courseData.demo)) {
-                        document.getElementById('file-input-container').classList.add('d-none');
-                        document.getElementById('url-input-container').classList.remove('d-none');
+                        document.getElementById('file-input-container').classList.add(
+                            'd-none');
+                        document.getElementById('url-input-container').classList.remove(
+                            'd-none');
                         document.querySelector('select[name="demo_type"]').value = 'url';
 
                         document.getElementById('url').value = courseData.demo;
                     }
 
-                    const updateUrl = `{{ url('courses/update') }}/${courseData.id}`;
-                    document.getElementById('edit-course-form').action = updateUrl;
+                    const updateUrl =
+                        `{{ url('courses/update') }}/${courseData.id}`;
+                    document
+                        .getElementById('edit-course-form').action = updateUrl;
 
                     document.getElementById('course-id').value = courseData.id;
-                    document.getElementById('course-name').value = decodeHTML(courseData.name);
-                    document.getElementById('course-language').value = decodeHTML(courseData
+                    document
+                        .getElementById('course-name').value = decodeHTML(courseData
+                            .name);
+                    document.getElementById('course-language').value = decodeHTML(
+                        courseData
                         .language);
-                    document.getElementById('course-overview').value = decodeHTML(courseData
-                        .overview);
-                    document.getElementById('course-description').value = decodeHTML(courseData
-                        .description);
-                    document.querySelector('select[name="level"]').value = courseData.level;
-                    document.querySelector('select[name="sub_category"]').value = courseData
+                    document.getElementById('course-overview').value =
+                        decodeHTML(courseData
+                            .overview);
+                    document.getElementById('course-description').value =
+                        decodeHTML(courseData
+                            .description);
+                    document.querySelector('select[name="level"]')
+                        .value = courseData.level;
+                    document.querySelector(
+                            'select[name="sub_category"]').value = courseData
                         .sub_category;
                     // document.querySelector('select[name="instructor"]').value = courseData
                     //     .created_by;
-                    document.getElementById('course-price').value = courseData.price;
-                    document.getElementById('course-discount').value = courseData.discount;
-                    document.getElementById('course-outcome').value = decodeHTML(courseData
+                    document.getElementById('course-price').value = courseData
+                        .price;
+                    document.getElementById('course-discount').value = courseData
+                        .discount;
+                    document.getElementById('course-outcome').value = decodeHTML(
+                        courseData
                         .outcome);
-                    document.getElementById('course-requirements').value = decodeHTML(courseData
-                        .requirements);
+                    document.getElementById('course-requirements').value =
+                        decodeHTML(courseData
+                            .requirements);
 
                     const editCourseModal = new bootstrap.Modal(document.getElementById(
                         'editCourseModal'));

@@ -15,6 +15,16 @@ class QuizEnrollment extends Model
         'is_active'
     ];
 
+
+    protected static function booted()
+    {
+        static::saving(function ($quizEnrollment) {
+            if ($quizEnrollment->remaining_tries == 0) {
+                $quizEnrollment->is_active = false;
+            }
+        });
+    }
+
     public function student()
     {
         return $this->belongsTo(Student::class);

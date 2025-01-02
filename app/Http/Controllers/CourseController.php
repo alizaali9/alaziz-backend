@@ -36,7 +36,6 @@ class CourseController extends Controller
                     ->orWhere('description', 'LIKE', "%{$search}%")
                     ->orWhereHas('subcategory', function ($q) use ($search) {
                         $q->where('name', 'LIKE', "%{$search}%");
-
                     });
             })
             ->get();
@@ -308,7 +307,7 @@ class CourseController extends Controller
                         'user_id' => $instructorId,
                     ]);
                 }
-            }else{
+            } else {
                 $instructor = CourseCreator::create([
                     'course_id' => $course->id,
                     'user_id' => Auth::id(),
@@ -868,7 +867,7 @@ class CourseController extends Controller
                 $instructor = Instructor::where('user_id', $creator->id)->first();
                 if ($instructor) {
                     $instructor->picture = $instructor->picture ? asset('storage/' . $instructor->picture) : null;
-                    $creator->instructor = $instructor; // Attach instructor data
+                    $creator->instructor = $instructor;
                 }
             }
             return $creator;
@@ -912,5 +911,4 @@ class CourseController extends Controller
             return response()->json(['status' => 400, 'error' => 'There was an issue updating the course ratings. Please try again.'], 500);
         }
     }
-
 }

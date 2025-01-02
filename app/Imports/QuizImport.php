@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class QuizImport implements  ToCollection, WithHeadingRow
+class QuizImport implements ToCollection, WithHeadingRow
 {
     protected $quizData;
 
@@ -20,8 +20,9 @@ class QuizImport implements  ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
-        // dd($this->quizData);
         $quiz = Quiz::create($this->quizData);
+
+        dd($this->quizData, $rows);
 
 
         foreach ($rows as $row) {
@@ -36,10 +37,9 @@ class QuizImport implements  ToCollection, WithHeadingRow
                     'answer' => $row['answer'],
                 ]);
             } catch (\Exception $e) {
-                Log::info($row); 
-                Log::info($e->getMessage()); 
+                Log::info($row);
+                Log::info($e->getMessage());
             }
         }
-        
     }
 }

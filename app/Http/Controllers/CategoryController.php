@@ -116,7 +116,6 @@ class CategoryController extends Controller
             })
             ->get();
         return view('content.categories.manage', compact('categories'));
-
     }
 
     public function getAllCategories()
@@ -155,6 +154,28 @@ class CategoryController extends Controller
 
 
         return response()->json($category->courses);
+    }
+
+    public function getCategoryQuizzes($id)
+    {
+        $category = Category::with('quizzes.questions')->find($id);
+
+        if (!$category) {
+            return response()->json(['status' => 404, 'error' => 'Category not found'], 404);
+        }
+
+        $category->quizzes->transform(function ($quiz) {
+            $quiz->thumbnail = $quiz->thumbnail ? asset('storage/' . $quiz->thumbnail) : null;
+
+            $subcategory = Subcategory::find($quiz->sub_category);
+            $category = Category::find($quiz->category_id);
+
+            $quiz->category = $category;
+            $quiz->sub_category = $subcategory;
+
+            return $quiz;
+        });
+        return response()->json($category->quizzes);
     }
 
     public function update(Request $request, $id)
@@ -223,5 +244,4 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
-
 }

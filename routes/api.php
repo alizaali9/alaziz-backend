@@ -33,6 +33,7 @@ Route::middleware(['student.check'])->group(function () {
 
     Route::get('categories', [CategoryController::class, 'getAllCategories']);
     Route::get('categories/{id}/courses', [CategoryController::class, 'getCategoryCourses']);
+    Route::get('categories/{id}/quizzes', [CategoryController::class, 'getCategoryQuizzes']);
 
     Route::get('enrollments', [EnrollmentController::class, 'index']);
     Route::post('enrollments/check', [EnrollmentController::class, 'checkEnrollment']);
@@ -45,9 +46,3 @@ Route::middleware(['student.check'])->group(function () {
 
     Route::get('sliders', [SliderController::class, 'getSliders']);
 });
-
-
-
-
-
-

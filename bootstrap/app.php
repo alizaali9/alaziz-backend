@@ -20,12 +20,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->respond(function (Response $response) {
-            if ($response->getStatusCode() == 404) {
-                // dd($response->getStatusCode() == 404);
-                return response()->view('errors.404');
-            } else if ($response->getStatusCode() == 500) {
-                return response()->view('errors.500');
-            }
+            // if ($response->getStatusCode() == 404) {
+            //     return response()->view('errors.404');
+            // } else if ($response->getStatusCode() == 500) {
+            //     return response()->view('errors.500');
+            // }
             return $response;
         });
     })

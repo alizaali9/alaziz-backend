@@ -223,10 +223,9 @@ class QuizEnrollmentController extends Controller
                 $quiz->questions_count = $quiz->questions()->count();
 
                 return $quiz;
-            }else{
+            } else {
                 return null;
             }
-
         });
 
         $quizzes = $quizzes->filter();
@@ -243,12 +242,14 @@ class QuizEnrollmentController extends Controller
     public function toggleStatus(Request $request, $id)
     {
         $enrollment = QuizEnrollment::find($id);
+        $quiz = Quiz::find($enrollment->quiz_id);
 
         if (!$enrollment) {
             return response()->json(['success' => false, 'message' => 'Enrollment not found.']);
         }
 
         $enrollment->is_active = $request->status;
+        $enrollment->remaining_tries = $quiz->tries;
         $enrollment->save();
 
         return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
