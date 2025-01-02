@@ -10,6 +10,17 @@
     <meta name="author" content="Aliza Ali">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo_without_bg.png') }}" type="image/x-icon">
     <title>Al Aziz Institute</title>
+    <style>
+        .app-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 93vh;
+        }
+
+        .app-wrapper>.app-wrapper-content {
+            flex: 1;
+        }
+    </style>
 
     @include('includes.links')
 </head>
@@ -18,7 +29,9 @@
     @include('includes.header')
 
     <div class="app-wrapper">
-        @yield('content')
+        <div class="app-wrapper-content">
+            @yield('content')
+        </div>
         @include('includes.footer')
     </div>
 
